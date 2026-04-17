@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="The Long Run">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAFsElEQVR4nO3cPZYbNxBFYfQc78ChjjLFTrQIp9qH1+N9aCOTOJ501kFHLXE4JLsBFFBVD/cL9dNkcPmEIaneShCXy+Xi/RzQZ9u2zf05eD0wAevzCHzqAxLxumbFPfxBiBi3RsY97MKEjCMjwja/ICGjlmXYL1YXKoWY0cayG5NXBiHDSu9ady80McNSb09dQRMzRujpqmneCRmz1B5BqheamDFTbW9VQRMzPNR0dzpoYoans/2Zvg8NeDsVNOuMCM50eBg0MSOSox6fBk3MiOhZl5yhIeVh0KwzInvU592giRkZ3OuUIwekfAqadUYmt72y0JDyIWjWGRldd8tCQwpBQ8qvoDluILO9XxYaUggaUrZSOG5ABwsNKQQNKQQNKS+cn6GEhYYUgoYUgoYUgoYUgoYUgoYUgoYUgoYUgoYUgoaUP7yfAOx8+fb906+9v706PBM/LLSIezE/+3VVG19Oyu1ssKssNQu9iFWWmqATq410hagJGlIIOqnWtVVfaYJekHLUBJ2QRZCqURP0whSjJuhkrCNUi5qgIYWgExm1pkorTdAopehETdBJzAhOIWqCFtX6ZaTsURN0Aq2RrRg1QQu6DnmVr43uCBp3ZV1pgg6uNqx7i7zS0YOgF7FK1AQdmMU61/y+1fPwRNCLUY+aoIMaGZBy1NyXQ0RtpO9vr82B/vXPj4e/99+/P5uuaYXbGATUElrL6tY8zp9/f62+vkfcHDkEtB4hzv69lphLeb7koxB0MLPPqUdRt8a8mx01QSdn8dH2o2v0xrybGTVBB+L5LsJt1FYx72ZFTdCJWX/xaL+edcy7GVETND4YFfNudNRLvg8d8T7K1h9zr2q5heY+ytqW+WAl8n2Uo6zzzHcjRn3ostxCH2Gpc1si6Mj3UY6yziqWCLoFS52TfNA9YY6OmheNPfmge0WKjuPGMemgrWIcEXWkF4oS6aAteQc4Y51nfX955OPIBh15Vb1fHMpkgx7FI0bOzudJBh353Yno6zz62DH6+pJBzzArTI91HhXdjDO6XNCRP+XLxDq+WT9wygVd6/3ttWsFv3z7fjrsbB9zW0U4839/SwXds5i98aiudW+Ms29lIBV0rduIR0adbZ2vtUbpcV8Ome9DW96cpXdt7103c9C3uHPSBNbBWEY9605IEDlyjDi/ep6pibndkv9J9mww+59rjVP1B8XI0i/0jGhmLibr3Cd90LVG39gQvlIHHe3GhtGvv4LUQdcaeWNDxJA26Eg3Nox6zRWlDbrWqBsbIpaUQUd5O8wqal4cdlIGXWtkMMQYyxJBj9YTNS8IW+mCjvolH8KMIV3QkRG1v1RBR11n78fEb6mCzqL2y0+wkyboDOtc8/jez09VmqAzehQtMY+T4vvQUT5IaUG8c0kuNBGtK3zQmdcZ84UPuhbrvLbQQbPOqBU66FqsM8IGzTqjRdiga7HOKCVo0KwzWoUMuhbrjF24oFln9AgXdC3WGddCBc06o1eooGuxzrgVJmjWGRbCBF2LdcY9IYJmnWElRNC1WGc84h406wxL7kHXYp3xjGvQrDOspVpo1hlHUgUNHEkTNOuMM9IEDZxB0JBC0JDiGjR36YQ194XmLp2w5B50KdylE3a2y+Vy8X4SgJUQCw1YIWhIedm2bfN+EoAVFhpSCBpSCBpSXkophXM0FGzbtrHQkELQkPIraI4dyGzvl4WGFIKGlA9Bc+xARtfdstCQ8iloVhqZ3PbKQkPK3aBZaWRwr9OHC03UiOxRnxw5IOVp0Kw0InrW5eFCEzUiOerx1JGDqBHBmQ45Q0PK6aBZaXg621/VQhM1PNR0V33kIGrMVNtbV5zcRgyjtA5n1w+FrDVG6Omq+10Oooal3p5MY+QIglZWw2j6PjRrjRaW3QwLkLXGkREDOHxRCRu3Rv5LPvWIQNzrmnUcdTvzErc+j5+p/gcL5SRceSHYtQAAAABJRU5ErkJggg==">
+<title>The Long Run</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy:#1a2332;--navy-mid:#243043;--navy-light:#2e3d54;
+  --muted:#718096;--pale:#a0aec0;--cream:#f7f4ef;
+  --green:#2d6a4f;--green-light:#52b788;--green-pale:#d8f3dc;
+  --amber:#92400e;--amber-light:#f59e0b;--amber-pale:#fef3c7;
+  --blue:#1e40af;--blue-pale:#dbeafe;
+  --orange:#9a3412;--orange-pale:#ffedd5;
+  --purple:#4c1d95;--purple-pale:#ede9fe;
+  --red:#991b1b;--red-pale:#fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);height:100vh;overflow:hidden;user-select:none}
+#app{display:flex;flex-direction:column;height:100vh}
+.app-header{background:var(--navy);padding:14px 20px 0;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
+.header-top{display:flex;align-items:center;justify-content:space-between}
+.app-title{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.3px}
+.header-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;letter-spacing:.05em}
+.tab-bar{display:flex;padding:10px 0 0}
+.tab{flex:1;text-align:center;padding:8px 4px;font-size:11px;font-weight:500;color:var(--pale);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;cursor:pointer;transition:color .2s,border-color .2s}
+.tab.active{color:var(--green-light);border-bottom-color:var(--green-light)}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
+.page{display:none;padding:20px}
+.page.active{display:block}
+.card{background:var(--navy-mid);border-radius:16px;border:1px solid rgba(255,255,255,.07);margin-bottom:14px;overflow:hidden}
+.card-header{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-family:'DM Serif Display',serif;font-size:16px}
+.card-body{padding:14px 16px}
+.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
+.badge-ramp{background:var(--green-pale);color:var(--green)}
+.badge-build{background:var(--blue-pale);color:var(--blue)}
+.badge-recover{background:var(--amber-pale);color:var(--amber)}
+.badge-heat{background:var(--orange-pale);color:var(--orange)}
+.badge-taper{background:var(--purple-pale);color:var(--purple)}
+.badge-race{background:var(--red-pale);color:var(--red)}
+.badge-post{background:rgba(255,255,255,.1);color:var(--pale)}
+.badge-bridge{background:var(--green-pale);color:var(--green)}
+
+/* DAY SLOTS */
+.day-slot{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px}
+.day-slot.run-anchor{background:var(--green)}
+.day-slot.run-other{background:var(--navy-light);border:1px solid rgba(255,255,255,.08)}
+.day-slot.rest{padding:5px 12px;opacity:.35}
+.day-slot.today-slot{box-shadow:0 0 0 2px var(--green-light)}
+.day-slot.completed.run-anchor{background:#1a4731;border:1px solid var(--green-light)}
+.day-slot.completed.run-other{background:var(--navy-light);border:1px solid var(--green-light)}
+.day-slot.completed .day-run-dist{text-decoration:line-through;opacity:.5}
+.day-name{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;width:30px;flex-shrink:0}
+.day-slot.run-anchor .day-name{color:rgba(255,255,255,.7)}
+.day-slot.run-other .day-name{color:var(--pale)}
+.day-slot.rest .day-name{color:var(--muted);font-size:10px}
+.day-divider{width:1px;height:24px;background:rgba(255,255,255,.12);flex-shrink:0}
+.day-slot.rest .day-divider{background:rgba(255,255,255,.05)}
+.day-run-info{flex:1}
+.day-run-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
+.day-slot.run-anchor .day-run-label{color:rgba(255,255,255,.6)}
+.day-slot.run-other .day-run-label{color:var(--pale)}
+.day-run-dist{font-family:'DM Serif Display',serif;font-size:20px;line-height:1}
+.day-slot.run-anchor .day-run-dist{color:white}
+.day-slot.run-other .day-run-dist{color:var(--green-light)}
+.day-slot.rest .day-run-dist{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);font-weight:300}
+.day-slots-wrap{padding:6px 12px 6px;display:flex;flex-direction:column;gap:5px}
+.check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;transition:background .15s,border-color .15s;color:transparent}
+.day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
+.day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
+
+/* PROGRESS BAR */
+.week-progress{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05)}
+.week-progress-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
+.week-progress-bar{height:100%;background:var(--green-light);border-radius:2px;transition:width .3s ease}
+.week-progress-label{font-size:12px;color:var(--pale);font-family:'DM Mono',monospace;white-space:nowrap}
+.week-progress-miles{font-size:12px;color:var(--green-light);font-family:'DM Mono',monospace;white-space:nowrap}
+
+/* ACTION BUTTONS */
+.action-btns{display:flex;gap:8px;padding:0 12px 12px}
+.reset-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--pale);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
+.reset-btn:active{background:rgba(255,255,255,.1)}
+.lock-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(82,183,136,.15);border:1px solid var(--green-light);border-radius:12px;color:var(--green-light);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
+.lock-btn:active{background:rgba(82,183,136,.25)}
+.week-modified-note{font-size:11px;color:var(--amber-light);text-align:center;padding:8px 12px 2px;font-style:italic}
+
+/* DRAG AND DROP */
+.day-slot.draggable{cursor:grab}
+.day-slot.drag-over{outline:2px dashed var(--green-light);outline-offset:-2px;background:rgba(82,183,136,.15) !important}
+.day-slot.dragging{opacity:.3;transform:scale(.97);transition:opacity .1s,transform .1s}
+.drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--green);border-radius:12px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:white;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.5);white-space:nowrap;transform:translate(-50%,-50%)}
+.drag-hint{font-size:11px;color:var(--muted);text-align:center;padding:4px 12px 8px;font-style:italic}
+
+/* NOTES */
+.notes-wrap{padding:6px 14px 12px}
+.notes-toggle{font-size:12px;color:var(--pale);cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 0}
+.notes-toggle:active{color:var(--cream)}
+.notes-field{width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;resize:none;margin-top:6px;line-height:1.6;min-height:70px}
+.notes-field:focus{outline:none;border-color:var(--green-light)}
+.notes-dot{width:6px;height:6px;border-radius:50%;background:var(--amber-light);flex-shrink:0}
+
+/* NEXT RUN BANNER */
+.next-run-card{background:linear-gradient(135deg,var(--green) 0%,#1a4731 100%);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.next-run-label{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+.next-run-info{font-family:'DM Serif Display',serif;font-size:20px;color:white}
+.next-run-sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:2px}
+.run-arrow{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+
+/* ROLL FORWARD */
+.roll-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;margin-bottom:12px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;color:var(--cream);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
+.roll-btn:active{background:var(--navy-light)}
+.roll-btn-left{display:flex;align-items:center;gap:12px}
+.roll-btn-icon{font-size:22px;flex-shrink:0}
+.roll-btn-title{font-weight:500;font-size:15px;text-align:left}
+.roll-btn-sub{font-size:12px;color:var(--pale);margin-top:2px;text-align:left}
+.roll-btn-chevron{color:var(--pale);font-size:14px;flex-shrink:0}
+.roll-active-banner{display:flex;align-items:center;justify-content:space-between;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:10px 14px;margin-bottom:12px}
+.roll-active-text{font-size:13px;color:var(--amber-light)}
+.roll-revert-btn{font-size:12px;color:var(--amber-light);background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;white-space:nowrap;flex-shrink:0;margin-left:10px}
+.roll-revert-btn:active{background:rgba(245,158,11,.25)}
+
+
+
+/* HISTORY / SCHEDULE TAB */
+.history-week{background:var(--navy-mid);border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:10px;overflow:hidden}
+.history-week.current-week{border-color:var(--green-light)}
+.history-week-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
+.history-week-header:active{background:rgba(255,255,255,.03)}
+.history-week-left{}
+.history-week-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--pale);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.history-week-dates{font-size:14px;font-weight:500;color:var(--cream)}
+.history-week-right{display:flex;align-items:center;gap:8px}
+.history-progress-ring{position:relative;width:36px;height:36px;flex-shrink:0}
+.history-total{font-family:'DM Mono',monospace;font-size:13px;color:var(--pale)}
+.history-week-body{padding:0 12px 12px;display:none}
+.history-week-body.open{display:block}
+.history-run-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
+.history-run-row:last-child{border-bottom:none}
+.history-day-tag{width:32px;font-size:11px;font-weight:500;color:var(--pale);letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
+.history-dist{font-family:'DM Mono',monospace;font-size:14px;flex:1}
+.history-check{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px}
+.history-check.done{background:var(--green-light);color:white}
+.history-check.pending{background:rgba(255,255,255,.08);color:transparent}
+.history-note{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0 0;line-height:1.5}
+
+/* MISC */
+.narrative-text{font-size:14px;color:var(--pale);line-height:1.75;font-weight:300}
+.section-head{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px}
+.info-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.info-card-title{font-weight:500;font-size:14px;color:var(--green-light);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.info-dot{width:6px;height:6px;border-radius:50%;background:var(--green-light);flex-shrink:0}
+.info-text{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
+.phase-block{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.phase-block-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start}
+.phase-dates{font-family:'DM Mono',monospace;font-size:11px;color:var(--pale);margin-bottom:3px}
+.phase-title{font-weight:500;font-size:15px}
+.phase-body{padding:0 14px 14px;font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
+.marathon-callout{background:var(--green);border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
+.marathon-callout-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
+.marathon-callout-date{font-family:'DM Serif Display',serif;font-size:22px;color:white}
+.meal-week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.nav-btn{width:36px;height:36px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .15s;flex-shrink:0}
+.nav-btn:active{background:var(--navy-light)}
+.nav-btn.disabled{opacity:.3;pointer-events:none}
+.nav-week-info{text-align:center;flex:1;padding:0 12px}
+.nav-week-num{font-family:'DM Serif Display',serif;font-size:18px}
+.nav-week-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:1px}
+.meal-card{border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:12px;overflow:hidden}
+.meal-card-header{padding:11px 14px;display:flex;justify-content:space-between;align-items:center}
+.meal-name{font-weight:500;font-size:14px;color:var(--cream)}
+.meal-containers{font-size:11px;opacity:.7;margin-top:1px;color:var(--cream)}
+.meal-card-body{padding:12px 14px;background:var(--navy-mid)}
+.meal-detail-row{display:flex;margin-bottom:7px;font-size:13px}
+.meal-detail-label{color:var(--pale);width:70px;flex-shrink:0;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding-top:1px}
+.meal-detail-value{color:var(--cream);font-weight:300;line-height:1.5}
+.protein-badge{display:inline-flex;align-items:center;border-radius:20px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:12px}
+.sunday-tip{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--amber-light);line-height:1.55}
+.sunday-tip-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;opacity:.8}
+</style>
+</head>
+<body>
+<div id="app">
+  <div class="app-header">
+    <div class="header-top">
+      <span class="app-title">The Long Run</span>
+      <span class="header-date" id="headerDate"></span>
+    </div>
+    <div class="tab-bar">
+      <div class="tab active" onclick="showPage('home')">Home</div>
+      <div class="tab" onclick="showPage('history')">Log</div>
+      <div class="tab" onclick="showPage('meals')">Meals</div>
+      <div class="tab" onclick="showPage('nutrition')">Tips</div>
+      <div class="tab" onclick="showPage('bridge')">2027</div>
+    </div>
+  </div>
+  <div class="content">
+    <div class="page active" id="page-home"><div id="homeContent"></div></div>
+    <div class="page" id="page-history"><div id="historyContent"></div></div>
+    <div class="page" id="page-meals">
+      <div class="meal-week-nav">
+        <div class="nav-btn" id="mealPrevBtn" onclick="changeMealWeek(-1)">&#8249;</div>
+        <div class="nav-week-info"><div class="nav-week-num" id="mealWeekNum"></div><div class="nav-week-date" id="mealWeekSub"></div></div>
+        <div class="nav-btn" id="mealNextBtn" onclick="changeMealWeek(1)">&#8250;</div>
+      </div>
+      <div id="mealContent"></div>
+    </div>
+    <div class="page" id="page-nutrition">
+      <div class="section-head">Sleep</div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Sleep is the highest-leverage thing</div><div class="info-text">Your body does not get fitter during runs - it adapts during recovery, and that process is almost entirely sleep-dependent. During heavy training weeks (20+ miles) you likely need 30-60 min more than usual. Persistent fatigue that does not resolve after two easy days often means sleep debt, not overtraining.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Two nights before matters most</div><div class="info-text">The night before Saturday long run matters less than Wednesday and Thursday nights. One bad Friday does not derail a long run nearly as much as poor mid-week sleep. Friday nights are often socially busier - worth knowing.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Alcohol and sleep quality</div><div class="info-text">Alcohol disrupts sleep depth even when it does not reduce hours. You get the hours but not the restorative depth. Particularly relevant the night before any hard effort.</div></div>
+      <div class="section-head" style="margin-top:8px">Nutrition</div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Protein timing</div><div class="info-text">The 30-60 min window after Saturday long run is when muscles are most receptive to protein. Eating one of your meal prep containers Saturday afternoon is genuinely useful - aim for 25-40g. During heavier training weeks, target 100-130g protein per day total.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Do not run fasted on long runs</div><div class="info-text">As Saturday distances grow past 7-8 miles, running without breakfast compromises quality and recovery. A simple breakfast 60-90 minutes before is enough. Do not skip this.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Carbs are your fuel</div><div class="info-text">During weeks above 15 miles, carbohydrates are your primary fuel. Restricting them makes runs harder, slows recovery, and raises injury risk. The grain pouches in meal prep are doing important work - do not second-guess them.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Anti-inflammatory eating</div><div class="info-text">During Phase 2 build and HM build, salmon weekly is genuinely valuable - omega-3s are anti-inflammatory. Ultra-processed foods and excess alcohol amplify the inflammatory response to training load.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Eat enough</div><div class="info-text">Appetite suppresses after long runs so under-fueling is common. Signs: persistent fatigue, runs feeling inexplicably hard, getting sick during build phases. On days with a long run you need meaningfully more food than rest days.</div></div>
+      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Hydration - especially in winter</div><div class="info-text">Indoor heating is extremely dehydrating. Light yellow urine in the morning = good. Dark yellow = you are behind. One of the most commonly overlooked things among recreational runners.</div></div>
+    </div>
+    <div class="page" id="page-bridge">
+      <div style="margin-bottom:16px">
+        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Post-race</div>
+        <div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1.2">Bridge to Marathon<br>Training 2027</div>
+        <div style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:300;line-height:1.7">You have been running since March 2026. Here is the deliberate wind-down, reset, and restart before marathon training begins.</div>
+      </div>
+      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">Oct 19 - Nov 15, 2026</div><div class="phase-title">Recovery</div></div><span class="badge badge-post">No targets</span></div><div class="phase-body">Run when you feel like it. Saturday and Tuesday remain natural anchors if you want structure, but neither distance nor frequency is required. 15-20 miles per week is a soft ceiling, not a goal. The only measure of success: enjoying running without obligation.</div></div>
+      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">Nov 16 - Dec 31, 2026</div><div class="phase-title">Maintenance</div></div><span class="badge badge-post">~20 mi/wk</span></div><div class="phase-body">Three easy runs per week, roughly 20 miles. Saturday carries the long run (5-6 miles), Tuesday anchors the midweek (3 miles), and one optional day fills out the week. No targets beyond showing up.</div></div>
+      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">January 2027</div><div class="phase-title">Mental Reset</div></div><span class="badge badge-post">No running</span></div><div class="phase-body">No running. You have been at this since March 2026 - ten months of consistent training. A full month off is not a failure; it is the reward. Come back in February wanting to run.</div></div>
+      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">Feb 1 - Feb 28, 2027</div><div class="phase-title">Easy Restart</div></div><span class="badge badge-bridge">~15 to 20 mi/wk</span></div><div class="phase-body">Rebuild the Saturday/Tuesday anchor structure at easy mileage across four weeks. Effort genuinely easy throughout.</div>
+        <div style="padding:0 14px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <div style="background:var(--navy-light);border-radius:10px;padding:10px 12px"><div style="font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Feb 1</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Sat 4-5 mi</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Tue 2.5-3 mi</div><div style="font-size:11px;color:var(--muted);margin-top:3px">~15 mi/wk</div></div>
+          <div style="background:var(--navy-light);border-radius:10px;padding:10px 12px"><div style="font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Feb 8</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Sat 5-6 mi</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Tue 3-3.5 mi</div><div style="font-size:11px;color:var(--muted);margin-top:3px">~17 mi/wk</div></div>
+          <div style="background:var(--navy-light);border-radius:10px;padding:10px 12px"><div style="font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Feb 15</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Sat 6-7 mi</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Tue 3-3.5 mi</div><div style="font-size:11px;color:var(--muted);margin-top:3px">~18 mi/wk</div></div>
+          <div style="background:var(--navy-light);border-radius:10px;padding:10px 12px"><div style="font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Feb 22</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Sat 7-8 mi</div><div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--green-light)">Tue 3.5-4 mi</div><div style="font-size:11px;color:var(--muted);margin-top:3px">~20 mi/wk</div></div>
+        </div>
+      </div>
+      <div class="marathon-callout"><div class="marathon-callout-label">Next goal</div><div class="marathon-callout-date">March 1, 2027</div><div style="font-size:13px;color:rgba(255,255,255,.7);margin-top:4px">Begin marathon training ramp</div></div>
+    </div>
+  </div>
+</div>
+<script>
+// ─── DATA ─────────────────────────────────────────────────────────
+var WEEKS = [
+  {n:1,date:"Mar 2",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:null,thu:null,fri:null,sat:3,sun:2},total:7,narrative:"This is your first week back. The goal is simply to reestablish the habit of running - three easy efforts, nothing more. Tuesday is your midweek anchor at 2 miles, and Saturday carries the long run at 3 miles. Both should feel comfortable and conversational. Do not push the pace. Resist any urge to add mileage if you feel good."},
+  {n:2,date:"Mar 9",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:2,thu:null,fri:null,sat:3.5,sun:2},total:9.5,narrative:"A modest step up to 9.5 miles. Saturday grows to 3.5 miles. Tuesday stays at 2 miles. Wednesday joins for the first time. Sunday adds a short 2-mile easy effort. The goal this week is simply showing up consistently in whatever combination works."},
+  {n:3,date:"Mar 16",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2.5,wed:2,thu:null,fri:null,sat:3.5,sun:2},total:10,narrative:"A very slight increase - Tuesday nudges up to 2.5 miles. Saturday and Sunday hold steady. This week is about building consistency rather than mileage. Same structure, same days. If you feel strong, save it for next week."},
+  {n:4,date:"Mar 23",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2.5,wed:2.5,thu:null,fri:null,sat:4,sun:2.5},total:11.5,narrative:"Saturday reaches 4 miles - the longest run so far. The Saturday-as-long-run hierarchy is becoming clear: it is meaningfully longer than anything else in the week. Tuesday holds at 2.5 miles. Wednesday and Sunday grow slightly."},
+  {n:5,date:"Mar 30",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:4,sun:3},total:12.5,narrative:"Tuesday reaches 3 miles for the first time - the midweek anchor distance you will hold through the ramp phase. Saturday stays at 4 miles and Sunday grows to 3. The week permanent shape is taking form. All easy effort throughout."},
+  {n:6,date:"Apr 6",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:3,thu:null,fri:null,sat:4.5,sun:3},total:13.5,narrative:"Saturday grows to 4.5 miles. Tuesday holds at 3 miles. Wednesday matches Tuesday at 3 miles. You are now at a volume where four solid running days makes a genuinely strong training week. The goal is demonstrating that 13+ miles feels manageable, not hard."},
+  {n:7,date:"Apr 13",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:3,thu:null,fri:null,sat:5,sun:3.5},total:14.5,narrative:"Saturday reaches 5 miles for the first time - a real long run. Sunday grows to 3.5 miles. Tuesday holds at 3 miles. You are one week away from the first mileage milestone. Stay patient; 14.5 miles this week should feel like solid, sustainable training - not a push."},
+  {n:8,date:"Apr 20",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:2,thu:null,fri:null,sat:5.5,sun:4.5},total:15,narrative:"First goal reached: 15 miles per week. Saturday at 5.5 miles is your longest run yet. Notice that Wednesday drops to 2 miles - intentional. With Saturday growing, keeping Wednesday light protects the Tuesday-to-Saturday recovery window. This logic carries through Phase 2."},
+  {n:9,date:"Apr 27",type:"build",label:"BUILD",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:6,sun:4},total:15.5,narrative:"Phase 2 begins. Saturday long run jumps to 6 miles. Tuesday stays at 3 miles. The watchword for Phase 2 is patience: every build week should feel sustainable, not heroic. Wednesday steps back to 2.5 miles to protect the Tuesday-to-Saturday recovery window."},
+  {n:10,date:"May 4",type:"build",label:"BUILD",days:{mon:null,tue:3,wed:3,thu:null,fri:null,sat:6.5,sun:4.5},total:17,narrative:"A solid step up to 17 miles. Saturday grows to 6.5 miles and Sunday to 4.5. You are now running meaningful distances. Do not let the good feeling tempt you to add more."},
+  {n:11,date:"May 11",type:"build",label:"BUILD",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7,sun:5},total:18.5,narrative:"Tuesday nudges up to 3.5 miles - your longest midweek run yet. Saturday at 7 miles is a genuine long run. Sunday at 5 miles rounds out the weekend. Run Saturday and Sunday with intention: aerobic pace, conversational effort, building base rather than burning matches."},
+  {n:12,date:"May 18",type:"recover",label:"RECOVERY",days:{mon:null,tue:2.5,wed:2,thu:null,fri:null,sat:5,sun:3.5},total:13,narrative:"First scheduled recovery week. Drop to 13 miles - a deliberate 30% pullback. This is not optional. Your history shows a clear burnout pattern and this week interrupts it. Let your body consolidate the fitness built. You will come back stronger next week."},
+  {n:13,date:"May 25",type:"build",label:"BUILD",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7.5,sun:5.5},total:19.5,narrative:"Back to building after recovery. Saturday reaches 7.5 miles and Sunday 5.5, both new highs. Tuesday at 3.5 miles holds its anchor distance. You are now approaching 20 miles per week. The recovery week last week was the key to arriving here fresh."},
+  {n:14,date:"Jun 1",type:"build",label:"BUILD",days:{mon:null,tue:3.5,wed:3.5,thu:null,fri:null,sat:8,sun:5.5},total:20.5,narrative:"The 20-mile barrier falls this week. Saturday reaches 8 miles - proper preparation required: do not skip breakfast, start hydrated, carry water. Keep the effort aerobic on all runs; this is base-building, not race simulation."},
+  {n:15,date:"Jun 8",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8.5,sun:6},total:22,narrative:"Tuesday reaches 4 miles for the first time. Saturday at 8.5 miles and Sunday at 6 make this the hardest week so far at 22 total miles. Pay attention to how your body responds. Recovery week is coming next week."},
+  {n:16,date:"Jun 15",type:"recover",label:"RECOVERY",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:5.5,sun:4},total:15,narrative:"Second recovery week. Pull back to 15 miles after three hard build weeks. Saturday falls to 5.5 miles, Tuesday to 3. This is the same mileage as your goal eight weeks ago - it should feel easy now, which is the point. The body adapts during rest, not work."},
+  {n:17,date:"Jun 22",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:9,sun:6.5},total:23,narrative:"A big week. Saturday at 9 miles and Sunday at 6.5 are the longest runs of the program so far. Tuesday anchors the midweek at 4 miles. Keep Saturday slow: at 9 miles, pace matters. A conversational effort builds far more fitness than a hard effort that leaves you wrecked for Tuesday."},
+  {n:18,date:"Jun 29",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:9.5,sun:7},total:24.5,narrative:"Nearly there. Saturday reaches 9.5 miles and Sunday 7. This is the second-hardest week in the entire program. Simple execution: hit the distances, keep effort easy, arrive at next week healthy."},
+  {n:19,date:"Jul 6",type:"build",label:"25 MI GOAL",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:9.5,sun:7.5},total:25,narrative:"Second goal reached: 25 miles per week. Saturday at 9.5 miles and Sunday at 7.5 are your weekend pillars. Tuesday holds firmly at 4 miles. Take a moment to appreciate the arc: from 7 miles in early March to 25 miles now, achieved without a burnout in sight."},
+  {n:20,date:"Jul 13",type:"recover",label:"RECOVERY",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:7,sun:5},total:17.5,narrative:"Third recovery week - well-earned after the biggest build of the program. This recovery week is especially important because the heat block starts next week. Rest. Recover. Be ready."},
+  {n:21,date:"Jul 20",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:4.5,wed:4,thu:2,fri:null,sat:7.5,sun:3.5},total:21.5,narrative:"Heat block begins. Saturday stays as long run anchor at 7.5 miles. Thursday adds a short 2-mile recovery run. The key adjustment is pace: slow down 30-90 seconds per mile and go by effort. Run early, run slow, carry water."},
+  {n:22,date:"Jul 27",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:4.5,wed:4,thu:2,fri:null,sat:8,sun:3.5},total:22,narrative:"Saturday long run grows to 8 miles. Sunday stays short at 3.5 miles as easy recovery. Prioritize early morning starts for Saturday especially. If extreme, shorten to 6 miles rather than skipping."},
+  {n:23,date:"Aug 3",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:4.5,wed:4.5,thu:2,fri:null,sat:8,sun:3.5},total:22.5,narrative:"Holding steady. Saturday stays at 8 miles and Wednesday grows to 4.5 miles. Every Saturday long run in summer builds heat acclimatization and mental toughness simultaneously."},
+  {n:24,date:"Aug 10",type:"recover",label:"RECOVERY",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:5.5,sun:2.5},total:13.5,narrative:"Recovery week in the heat. Pull back to 13.5 miles. Skip Thursday entirely. Run easy, stay hydrated."},
+  {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:4.5,wed:4.5,thu:2,fri:null,sat:7.5,sun:3.5},total:22,narrative:"Back to the heat routine. Saturday returns to 7.5 miles. August heat is typically at its worst. If conditions are severe, start before sunrise or shorten Saturday to 6 miles rather than skipping."},
+  {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:2,fri:null,sat:8,sun:3.5},total:23,narrative:"Tuesday reaches 5 miles - the longest midweek anchor run of the entire program. End of the heat block is one week away. Arrive at that transition healthy rather than pushing through warning signs."},
+  {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:2,fri:null,sat:8,sun:3.5},total:23,narrative:"Final heat-adjusted week. Saturday 8 miles, Tuesday 5 miles, Wednesday 4.5. You have maintained Saturday as long run anchor through seven weeks of summer heat. Next week the half marathon build begins."},
+  {n:28,date:"Sep 7",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:4,sun:10},total:22.5,narrative:"The half marathon build begins. Sunday long run jumps to 10 miles - the biggest single leap in the program. September brings your best running conditions. Practice race-day hydration strategy on the long run."},
+  {n:29,date:"Sep 14",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4.5,thu:null,fri:null,sat:4,sun:10.5},total:23.5,narrative:"Sunday extends to 10.5 miles. You are now running half marathon distance in training - the race itself is only 2.6 miles more. If Sunday feels manageable at 10.5 miles, October 18th is well within reach."},
+  {n:30,date:"Sep 21",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:null,fri:null,sat:4,sun:11},total:24.5,narrative:"Peak long run week: Sunday reaches 11 miles, the longest training run of the entire program. Your last hard week before the taper. Treat Sunday with respect: proper warm-up, steady pace, good nutrition. Practice everything you will do on race day."},
+  {n:31,date:"Sep 28",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:3,sun:7},total:16.5,narrative:"Final recovery week before the taper. Pull back to 16.5 miles. Do not add miles. This week serves one purpose: arriving at the two-week taper with fresh legs."},
+  {n:32,date:"Oct 5",type:"taper",label:"TAPER",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:3.5,sun:8},total:19,narrative:"Taper begins. Volume drops to 19 miles but effort should still feel purposeful. Heavy legs and doubt are normal. Trust the training. Everything is working as it should."},
+  {n:33,date:"Oct 12",type:"taper",label:"TAPER",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:2.5,sun:5},total:13,narrative:"Final taper week. Volume drops to 13 miles - lightest since early April. Arrive at race day feeling rested, energized, and slightly antsy to run. Prepare race-day logistics: course review, gear check, breakfast plan, start time, parking at Tsongas Arena in Lowell."},
+  {n:34,date:"Oct 19",type:"race",label:"RACE WEEK",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:"RACE",sun:3},total:"13.1",narrative:"Race week. Tuesday 3 miles and Wednesday 2.5 miles are easy shakeout runs only. Saturday, October 18th: Baystate Half Marathon in Lowell, MA, 8am from the Tsongas Arena. You have run 33 weeks to get here, built from 7 miles to 25, survived a summer of heat, and arrived with a peak long run of 11 miles. Run the first half conservatively. You have earned this."}
+];
+var MEAL_WEEKS = [
+  {n:1,theme:"The Classic Grill",tip:"Start grill, season while it heats. Chicken goes on first, sausage last. About 25 minutes total.",meals:[
+    {name:"Chicken Thighs + Rice + Black Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, garlic powder, smoked paprika, salt, pepper",sides:"Canned black beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Grill 6-7 min/side on medium-high. Hard to overcook. One rice pouch across both containers.",color:"#1a3a2a",accent:"#52b788"},
+    {name:"Chicken Thighs + Quinoa + Corn",containers:1,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, cumin, chili powder, salt",sides:"Canned corn (drain) | 90-sec quinoa pouch",protein_g:50,note:"Same grill batch - season half differently. Zero extra time.",color:"#1a3a2a",accent:"#52b788"},
+    {name:"Sausage + Chickpeas + Bagged Greens",containers:1,protein:"Kielbasa or Italian sausage - 2 links per container",seasoning:"No prep needed - grill straight from package",sides:"Canned chickpeas (drain, rinse) | Pre-washed bagged spinach",protein_g:38,note:"10-12 min on medium, turning occasionally. Add spinach raw - fine cold or microwaved.",color:"#3a2a0a",accent:"#f59e0b"}]},
+  {n:2,theme:"Salmon & Pork Week",tip:"Pork tenderloin takes longest - about 20 minutes. Start it first, add salmon for the last 8 minutes. Let pork rest before slicing.",meals:[
+    {name:"Salmon + Farro + White Beans",containers:2,protein:"Salmon fillet (skin-on) - 1 fillet per container (~6 oz)",seasoning:"Olive oil, bottled lemon juice, salt, dill or garlic powder",sides:"Canned white beans / cannellini (drain, rinse) | 90-sec farro pouch",protein_g:54,note:"Grill skin-side down 4-5 min, flip, 3-4 min more. Done when it flakes easily.",color:"#0a1a3a",accent:"#3b82f6"},
+    {name:"Pork Tenderloin + Rice + Lentils",containers:2,protein:"Pork tenderloin, sliced - 4-5 slices per container (~5 oz)",seasoning:"Olive oil, dried rosemary, garlic powder, salt, pepper",sides:"Canned lentils (drain, rinse) | 90-sec rice pouch",protein_g:48,note:"Sear on high all sides (~2 min each), then indirect heat 15 min to 145F internal. Slice across the grain.",color:"#2a1a0a",accent:"#f97316"}]},
+  {n:3,theme:"Steak & Turkey Week",tip:"Steak and turkey burgers both do well on high heat. Grill steak first, let it rest while turkey burgers cook. Under 20 minutes.",meals:[
+    {name:"Steak + Quinoa + Kidney Beans",containers:2,protein:"Sirloin or flank steak, sliced - about 5 oz per container",seasoning:"Salt, pepper, garlic powder",sides:"Canned kidney beans (drain, rinse) | 90-sec quinoa pouch",protein_g:56,note:"High heat, 3-4 min/side for medium. Rest 5 min before slicing against the grain.",color:"#3a2a0a",accent:"#f59e0b"},
+    {name:"Turkey Burgers + Rice + Black-Eyed Peas",containers:2,protein:"Ground turkey patties, grilled and crumbled",seasoning:"Onion powder, garlic powder, salt, Worcestershire sauce",sides:"Canned black-eyed peas (drain, rinse) | 90-sec rice pouch",protein_g:45,note:"Grill 5-6 min/side. Break into chunks once cooled. Mix Worcestershire into raw turkey before forming patties.",color:"#2a0a3a",accent:"#8b5cf6"}]},
+  {n:4,theme:"Lamb & Chicken Week",tip:"Lamb chops are fast - 3-4 min/side max. Grill chicken first, chops finish last. About 25 minutes total.",meals:[
+    {name:"Lamb Chops + Farro + Chickpeas",containers:2,protein:"Loin lamb chops - 2 chops per container (~5 oz meat)",seasoning:"Olive oil, dried rosemary, garlic powder, salt, pepper",sides:"Canned chickpeas (drain, rinse) | 90-sec farro pouch",protein_g:46,note:"High heat, 3-4 min/side, rest 3 min. Most impressive lunch container with almost no skill required.",color:"#2a1a0a",accent:"#f97316"},
+    {name:"Chicken Thighs + Rice + White Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, Italian seasoning, salt, pepper",sides:"Canned white beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Same chicken prep as Week 1. Italian seasoning gives a different flavor profile.",color:"#1a3a2a",accent:"#52b788"}]}
+];
+var DAYS=["mon","tue","wed","thu","fri","sat","sun"];
+var DAY_LABELS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+var DAY_NAMES_FULL=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
+var JS_TO_IDX={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
+var currentWeekIdx=0, currentMealWeek=0;
+var weekOverrides={}, completedRuns={}, weekNotes={};
+var homeWeekOffset=0;
+var dragState={active:false,fromDay:null,dist:null,label:null,ghost:null,overDay:null};
+var dragHintShown=false;
+
+function sGet(k){try{return JSON.parse(localStorage.getItem('r26_'+k));}catch(e){return null;}}
+function sSet(k,v){try{localStorage.setItem('r26_'+k,JSON.stringify(v));}catch(e){}}
+
+function getWeekDays(idx){
+  var w=WEEKS[idx];
+  var b={mon:w.days.mon,tue:w.days.tue,wed:w.days.wed,thu:w.days.thu,fri:w.days.fri,sat:w.days.sat,sun:w.days.sun};
+  if(weekOverrides[idx]){var ov=weekOverrides[idx];for(var k in ov)b[k]=ov[k];}
+  return b;
+}
+function isModified(idx){
+  if(!weekOverrides[idx])return false;
+  var w=WEEKS[idx],ov=weekOverrides[idx];
+  for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}
+  return false;
+}
+function resetWeek(idx){delete weekOverrides[idx];sSet('overrides',weekOverrides);renderHome();}
+function lockWeek(idx){
+  var days=getWeekDays(idx);
+  WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};
+  delete weekOverrides[idx];sSet('overrides',weekOverrides);
+  var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);
+  renderHome();
+}
+function getProgress(idx){
+  var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;
+  for(var i=0;i<DAYS.length;i++){
+    var dk=DAYS[i],dist=days[dk];
+    if(dist&&dist!=='RACE'){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}
+  }
+  return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};
+}
+function isCompleted(idx,dk){return !!(completedRuns[idx]&&completedRuns[idx][dk]);}
+function toggleCompleted(idx,dk){
+  if(!completedRuns[idx])completedRuns[idx]={};
+  if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;
+  sSet('completed',completedRuns);renderHome();renderHistory();
+}
+function getAutoWeekIdx(){
+  var START=new Date('2026-03-02'),now=new Date(),d=new Date(now);
+  if(d.getDay()===0&&d.getHours()>=18)d=new Date(d.getTime()+24*60*60*1000);
+  var idx=Math.floor((d-START)/(7*24*60*60*1000));
+  return Math.max(0,Math.min(WEEKS.length-1,idx));
+}
+function getHomeWeekIdx(){return Math.min(WEEKS.length-1,getAutoWeekIdx()+homeWeekOffset);}
+function rollToNext(){
+  var auto=getAutoWeekIdx(),max=WEEKS.length-1-auto;
+  if(homeWeekOffset<max){homeWeekOffset++;sSet('rollOffset',homeWeekOffset);currentWeekIdx=getHomeWeekIdx();renderHome();}
+}
+function revertRoll(){homeWeekOffset=0;sSet('rollOffset',0);currentWeekIdx=getHomeWeekIdx();renderHome();}
+
+function saveNote(idx){
+  var el=document.getElementById('note-'+idx);
+  if(el){weekNotes[idx]=el.value;sSet('notes',weekNotes);}
+}
+function toggleNote(idx){
+  var body=document.getElementById('notebody-'+idx);
+  if(body){body.style.display=body.style.display==='none'?'block':'none';}
+}
+
+
+
+// ─── DRAG & DROP ──────────────────────────────────────────────────
+function createGhost(label,dist){
+  var el=document.createElement('div');el.className='drag-ghost';
+  el.textContent=(dist&&dist!=='RACE')?dist+' mi':label;
+  document.body.appendChild(el);return el;
+}
+function moveGhost(x,y){if(dragState.ghost){dragState.ghost.style.left=x+'px';dragState.ghost.style.top=y+'px';}}
+function getSlotAt(x,y){
+  var els=document.querySelectorAll('#home-slots .day-slot');
+  for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return els[i];}
+  return null;
+}
+function clearDragOver(){document.querySelectorAll('.drag-over').forEach(function(el){el.classList.remove('drag-over');});}
+function finalizeDrop(from,to,idx){
+  if(from===to)return;
+  var days=getWeekDays(idx),fd=days[from],td=days[to];
+  if(!weekOverrides[idx])weekOverrides[idx]={};
+  weekOverrides[idx][from]=td||null;weekOverrides[idx][to]=fd;
+  // mark hint shown
+  if(!dragHintShown){dragHintShown=true;sSet('dragHint',1);}
+  sSet('overrides',weekOverrides);renderHome();
+}
+function onTouchStart(e){
+  var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;
+  e.preventDefault();
+  dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');
+  var t=e.touches[0];dragState.ghost=createGhost(dragState.label,dist);moveGhost(t.clientX,t.clientY);slot.classList.add('dragging');
+  document.addEventListener('touchmove',onTouchMove,{passive:false});document.addEventListener('touchend',onTouchEnd);
+}
+function onTouchMove(e){
+  if(!dragState.active)return;e.preventDefault();
+  var t=e.touches[0];moveGhost(t.clientX,t.clientY);clearDragOver();
+  var target=getSlotAt(t.clientX,t.clientY);
+  if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;
+}
+function onTouchEnd(e){
+  if(!dragState.active)return;
+  document.removeEventListener('touchmove',onTouchMove);document.removeEventListener('touchend',onTouchEnd);
+  if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();
+  document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});
+  if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);
+  dragState.active=false;dragState.fromDay=null;dragState.overDay=null;
+}
+function onMouseDown(e){
+  var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();
+  dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');
+  dragState.ghost=createGhost(dragState.label,dist);moveGhost(e.clientX,e.clientY);slot.classList.add('dragging');
+  document.addEventListener('mousemove',onMouseMove);document.addEventListener('mouseup',onMouseUp);
+}
+function onMouseMove(e){
+  if(!dragState.active)return;moveGhost(e.clientX,e.clientY);clearDragOver();
+  var target=getSlotAt(e.clientX,e.clientY);
+  if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;
+}
+function onMouseUp(e){
+  if(!dragState.active)return;
+  document.removeEventListener('mousemove',onMouseMove);document.removeEventListener('mouseup',onMouseUp);
+  if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();
+  document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});
+  if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);
+  dragState.active=false;dragState.fromDay=null;dragState.overDay=null;
+}
+function setupDragDrop(idx){
+  var slots=document.querySelectorAll('#home-slots .day-slot');
+  slots.forEach(function(slot){
+    slot.addEventListener('touchstart',onTouchStart,{passive:false});
+    slot.addEventListener('mousedown',onMouseDown);
+  });
+  var checkBtns=document.querySelectorAll('#home-slots .check-btn');
+  checkBtns.forEach(function(btn){
+    var wi=parseInt(btn.getAttribute('data-week')),dk=btn.getAttribute('data-checkday');
+    btn.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:false});
+    btn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();toggleCompleted(wi,dk);});
+    btn.addEventListener('mousedown',function(e){e.stopPropagation();});
+    btn.addEventListener('click',function(e){e.stopPropagation();toggleCompleted(wi,dk);});
+  });
+}
+
+// ─── BUILD SLOTS ──────────────────────────────────────────────────
+function buildSlots(idx,todayDayIdx){
+  var days=getWeekDays(idx),w=WEEKS[idx],html='';
+  for(var i=0;i<7;i++){
+    var dk=DAYS[i],label=DAY_LABELS[i],dist=days[dk];
+    var isToday=(i===todayDayIdx),hasRun=dist!==null&&dist!==undefined;
+    var isOrigAnchor=(dk==='sat'||dk==='tue')&&w.days[dk];
+    var isAnchor=false;
+    if(dist){if(dist===w.days.sat)isAnchor=true;if(dist===w.days.tue)isAnchor=true;if(isOrigAnchor)isAnchor=true;}
+    var done=isCompleted(idx,dk)&&hasRun;
+    var cls='day-slot ';
+    if(hasRun&&isAnchor)cls+='run-anchor';else if(hasRun)cls+='run-other';else cls+='rest';
+    if(isToday)cls+=' today-slot';if(hasRun)cls+=' draggable';if(done)cls+=' completed';
+    var runLabel='',runDist='';
+    if(hasRun){
+      if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';
+      if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';
+    }else{runDist='Rest';}
+    html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+(dist||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
+    html+='<div class="day-name">'+label+'</div>';
+    if(hasRun){
+      html+='<div class="day-divider"></div>';
+      html+='<div class="day-run-info">';
+      if(runLabel)html+='<div class="day-run-label">'+runLabel+'</div>';
+      html+='<div class="day-run-dist">'+runDist+'</div>';
+      html+='</div>';
+      if(dist!=='RACE')html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+    }else{
+      html+='<div class="day-divider"></div><div class="day-run-dist">'+runDist+'</div>';
+    }
+    html+='</div>';
+  }
+  return html;
+}
+
+function buildProgressBar(idx){
+  var p=getProgress(idx);if(p.totalRuns===0)return '';
+  var pct=Math.round(p.doneMiles/p.totalMiles*100)||0;
+  var label=p.doneRuns+' of '+p.totalRuns+' runs';
+  var miles=p.doneRuns>0?p.doneMiles.toFixed(1)+' / '+p.totalMiles.toFixed(1)+' mi':p.totalMiles.toFixed(1)+' mi planned';
+  return '<div class="week-progress"><div class="week-progress-label">'+label+'</div><div class="week-progress-bar-wrap"><div class="week-progress-bar" style="width:'+pct+'%"></div></div><div class="week-progress-miles">'+miles+'</div></div>';
+}
+
+// ─── HOME ─────────────────────────────────────────────────────────
+function renderHome(){
+  var idx=currentWeekIdx,w=WEEKS[idx];
+  var today=new Date(),todayDayIdx=JS_TO_IDX[today.getDay()];
+  var p=getProgress(idx);
+
+  // Miles summary
+  var milesMain=w.total;
+  var milesSummary='';
+  if(p.totalRuns>0&&p.doneRuns>0){
+    milesSummary='<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>';
+  }
+
+  // Next run with full date
+  var nextRunText='',nextRunSub='';
+  var wkStartDate=new Date('2026-03-02');wkStartDate.setDate(wkStartDate.getDate()+(idx)*7);
+  for(var offset=0;offset<7;offset++){
+    var di=(todayDayIdx+offset)%7,dk=DAYS[di],dist=getWeekDays(idx)[dk];
+    if(dist!==null&&dist!==undefined){
+      var dayDate=new Date(wkStartDate);dayDate.setDate(dayDate.getDate()+di);
+      var mon=dayDate.toLocaleDateString('en-US',{month:'short'});
+      var dayNum=dayDate.getDate();
+      var distStr=dist==='RACE'?'Race Day':dist+' mi';
+      if(offset===0){nextRunText='Today \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
+      else if(offset===1){nextRunText='Tomorrow \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
+      else{nextRunText=DAY_NAMES_FULL[di]+' \u00b7 '+distStr;nextRunSub=mon+' '+dayNum;}
+      break;
+    }
+  }
+
+  // Notes
+  var noteVal=weekNotes[idx]||'';
+  var hasNote=noteVal.trim().length>0;
+  var noteHtml='<div class="notes-wrap">'+
+    '<div class="notes-toggle" onclick="toggleNote('+idx+')">'+
+    (hasNote?'<span class="notes-dot"></span>':'<span style="font-size:14px;opacity:.5">&#9998;</span>')+
+    '<span>'+(hasNote?'Week notes':'Add week notes')+'</span></div>'+
+    '<div id="notebody-'+idx+'" style="display:'+(hasNote?'block':'none')+'">'+
+    '<textarea class="notes-field" id="note-'+idx+'" placeholder="How did the week go?" oninput="saveNote('+idx+')">'+noteVal+'</textarea>'+
+    '</div></div>';
+
+  // Next week button
+  var nextWkBtn='';
+  if(idx<WEEKS.length-1){
+    var nw=WEEKS[idx+1];
+    nextWkBtn=(homeWeekOffset>0?'<div class="roll-active-banner"><div class="roll-active-text">Showing week '+(idx+1)+' (rolled forward)</div><button class="roll-revert-btn" onclick="revertRoll()">&#8635; Back to now</button></div>':'')+
+    '<div class="roll-btn" onclick="rollToNext()"><div class="roll-btn-left"><div class="roll-btn-icon">&#8614;</div><div><div class="roll-btn-title">Plan next week</div><div class="roll-btn-sub">Week '+(idx+2)+' \u00b7 '+nw.date+'</div></div></div><div class="roll-btn-chevron">&#8250;</div></div>';
+  }
+
+  var badgeHtml='<span class="badge badge-'+w.type+'">'+w.label+'</span>';
+
+  document.getElementById('homeContent').innerHTML=
+    '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
+    '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 34</div>'+
+    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:#1a2332">'+milesMain+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+'</div>'+
+    '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
+    badgeHtml+'</div>'+
+
+    '<div class="card" style="margin-top:14px"><div class="card-header"><span class="card-title">This week\'s goal</span></div>'+
+    '<div class="card-body"><p class="narrative-text">'+w.narrative+'</p></div></div>'+
+
+    '<div class="card">'+
+    (isModified(idx)?'<div class="week-modified-note">Schedule adjusted \u2014 drag to rearrange</div>':'')+
+    (!dragHintShown?'<div class="drag-hint">Hold and drag any run to reschedule it</div>':'')+
+    '<div id="home-slots" class="day-slots-wrap">'+buildSlots(idx,todayDayIdx)+'</div>'+
+    buildProgressBar(idx)+
+    (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
+    noteHtml+
+    '</div>'+
+
+    '<div class="next-run-card"><div><div class="next-run-label">Next run</div>'+
+    '<div class="next-run-info">'+nextRunText+'</div>'+
+    '<div class="next-run-sub">'+nextRunSub+'</div></div>'+
+    '<div class="run-arrow">&#8594;</div></div>'+
+
+    nextWkBtn;
+
+  setupDragDrop(idx);
+}
+
+// ─── HISTORY / LOG ────────────────────────────────────────────────
+function renderHistory(){
+  var autoIdx=getAutoWeekIdx(),html='';
+  for(var i=0;i<WEEKS.length;i++){
+    var w=WEEKS[i],days=getWeekDays(i),p=getProgress(i);
+    var isCurrent=(i===autoIdx);
+    var isPast=i<autoIdx;
+    var note=weekNotes[i]||'';
+    var pct=p.totalRuns>0?Math.round(p.doneRuns/p.totalRuns*100):0;
+
+    // Progress ring SVG
+    var r=14,circ=2*Math.PI*r,filled=circ*(pct/100);
+    var ringColor=isPast?(pct===100?'#52b788':'#f59e0b'):'#52b788';
+    var ringHtml='<svg width="36" height="36" style="transform:rotate(-90deg)">'+
+      '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="2.5"/>'+
+      '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="'+ringColor+'" stroke-width="2.5" stroke-dasharray="'+filled+' '+circ+'" stroke-linecap="round"/>'+
+      '</svg>'+
+      '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:\'DM Mono\',monospace;color:var(--pale)">'+pct+'%</div>';
+
+    html+='<div class="history-week'+(isCurrent?' current-week':'')+'" id="hw-'+i+'">'+
+      '<div class="history-week-header" onclick="toggleHistoryWeek('+i+')">'+
+      '<div class="history-week-left">'+
+      '<div class="history-week-num">'+(isCurrent?'CURRENT WEEK \u2014 ':'')+'Week '+w.n+' \u00b7 '+w.label+'</div>'+
+      '<div class="history-week-dates">'+w.date+' \u00b7 '+w.total+' mi</div>'+
+      '</div>'+
+      '<div class="history-week-right">'+
+      (p.totalRuns>0?'<div class="history-progress-ring" style="position:relative">'+ringHtml+'</div>':'')+
+      '</div>'+
+      '</div>'+
+      '<div class="history-week-body'+(isCurrent?' open':'')+(i<autoIdx&&isPast?' open':'')+'" id="hwb-'+i+'">'+
+      buildHistoryBody(i,days,note)+
+      '</div>'+
+      '</div>';
+  }
+  document.getElementById('historyContent').innerHTML=html;
+  // Scroll current week into view
+  setTimeout(function(){
+    var el=document.getElementById('hw-'+autoIdx);
+    if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
+  },100);
+}
+
+function buildHistoryBody(idx,days,note){
+  var w=WEEKS[idx],html='<div style="padding:0 4px">';
+  for(var i=0;i<DAYS.length;i++){
+    var dk=DAYS[i],dist=days[dk];
+    if(!dist)continue;
+    var done=isCompleted(idx,dk);
+    var distStr=dist==='RACE'?'&#127937; Race':dist+' mi';
+    html+='<div class="history-run-row">'+
+      '<div class="history-day-tag">'+DAY_LABELS[i]+'</div>'+
+      '<div class="history-dist" style="color:'+(done?'var(--green-light)':'var(--cream)')+'">'+distStr+'</div>'+
+      '<div class="history-check '+(done?'done':'pending')+'">'+(done?'&#10003;':'')+'</div>'+
+      '</div>';
+  }
+  if(note)html+='<div class="history-note">'+note+'</div>';
+  html+='</div>';
+  return html;
+}
+
+function toggleHistoryWeek(idx){
+  var body=document.getElementById('hwb-'+idx);
+  if(body)body.classList.toggle('open');
+}
+
+// ─── MEALS ────────────────────────────────────────────────────────
+function getMealWeekIdx(){
+  // Auto-sync: current week mod 4 (0-indexed)
+  return getAutoWeekIdx()%4;
+}
+function renderMeals(){
+  var wk=MEAL_WEEKS[currentMealWeek];
+  var autoMeal=getMealWeekIdx();
+  document.getElementById('mealWeekNum').textContent='Week '+wk.n+' \u2014 '+wk.theme;
+  document.getElementById('mealWeekSub').textContent=(currentMealWeek+1)+' of 4'+(currentMealWeek===autoMeal?' \u00b7 This week':'');
+  document.getElementById('mealPrevBtn').className='nav-btn'+(currentMealWeek===0?' disabled':'');
+  document.getElementById('mealNextBtn').className='nav-btn'+(currentMealWeek===MEAL_WEEKS.length-1?' disabled':'');
+  var totalProtein=wk.meals.reduce(function(s,m){return s+m.protein_g*m.containers;},0);
+  var mealsHtml=wk.meals.map(function(m){
+    return '<div class="meal-card"><div class="meal-card-header" style="background:'+m.color+'"><div><div class="meal-name">'+m.name+'</div><div class="meal-containers">Makes '+m.containers+' container'+(m.containers>1?'s':'')+'</div></div><span class="protein-badge" style="background:rgba(0,0,0,.2);color:'+m.accent+'">'+m.protein_g+'g protein</span></div><div class="meal-card-body"><div class="meal-detail-row"><div class="meal-detail-label">Protein</div><div class="meal-detail-value">'+m.protein+'</div></div><div class="meal-detail-row"><div class="meal-detail-label">Season</div><div class="meal-detail-value">'+m.seasoning+'</div></div><div class="meal-detail-row"><div class="meal-detail-label">Sides</div><div class="meal-detail-value">'+m.sides+'</div></div><div style="font-size:12px;color:var(--muted);font-style:italic;line-height:1.55;margin-top:8px;font-weight:300">'+m.note+'</div></div></div>';
+  }).join('');
+  document.getElementById('mealContent').innerHTML='<div class="sunday-tip"><div class="sunday-tip-label">Sunday evening</div>'+wk.tip+'</div>'+mealsHtml+'<div style="text-align:center;padding:8px 0 4px;font-size:13px;color:var(--muted)">Weekly protein from lunches: <span style="color:var(--green-light);font-family:\'DM Mono\',monospace;font-weight:500">'+totalProtein+'g</span> across 4 containers</div>';
+}
+function changeMealWeek(dir){
+  var n=currentMealWeek+dir;if(n<0||n>=MEAL_WEEKS.length)return;
+  currentMealWeek=n;renderMeals();
+}
+
+// ─── PAGE NAV ─────────────────────────────────────────────────────
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
+  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
+  document.getElementById('page-'+id).classList.add('active');
+  var tabMap={home:0,history:1,meals:2,nutrition:3,bridge:4};
+  document.querySelectorAll('.tab')[tabMap[id]].classList.add('active');
+  document.querySelector('.content').scrollTop=0;
+  if(id==='history')renderHistory();
+}
+
+// ─── INIT ─────────────────────────────────────────────────────────
+function init(){
+  // Load persisted data
+  var ov=sGet('overrides');if(ov)weekOverrides=ov;
+  var locked=sGet('locked');if(locked){for(var k in locked){var idx=parseInt(k);WEEKS[idx].days=locked[k];}}
+  var comp=sGet('completed');if(comp)completedRuns=comp;
+  var notes=sGet('notes');if(notes)weekNotes=notes;
+  var ro=sGet('rollOffset');if(ro!==null&&!isNaN(parseInt(ro)))homeWeekOffset=parseInt(ro);
+  dragHintShown=!!sGet('dragHint');
+
+  // Auto-clear completed runs for past weeks
+  var autoIdx=getAutoWeekIdx(),lastSeen=sGet('lastSeenWeek');
+  if(lastSeen===null){sSet('lastSeenWeek',autoIdx);}
+  else if(autoIdx>lastSeen){
+    for(var i=lastSeen;i<autoIdx;i++){if(completedRuns[i])delete completedRuns[i];}
+    sSet('completed',completedRuns);sSet('lastSeenWeek',autoIdx);
+  }
+
+  currentWeekIdx=getHomeWeekIdx();
+  currentMealWeek=getMealWeekIdx();
+
+  var today=new Date();
+  document.getElementById('headerDate').textContent=today.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
+
+  renderHome();
+  renderMeals();
+}
+init();
+</script>
+</body>
+</html>
