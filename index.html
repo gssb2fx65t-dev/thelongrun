@@ -24,15 +24,18 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);height:100vh;overflow:hidden;user-select:none}
 #app{display:flex;flex-direction:column;height:100vh}
-.app-header{background:var(--navy);padding:calc(env(safe-area-inset-top, 20px) + 14px) 20px 0;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
-.header-top{display:flex;align-items:center;justify-content:space-between}
+.app-header{background:var(--navy);padding:calc(env(safe-area-inset-top,20px) + 14px) 20px 0;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.06)}
+.header-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .app-title{font-family:'DM Serif Display',serif;font-size:22px;letter-spacing:-.3px}
+.header-right{display:flex;align-items:center;gap:10px}
 .header-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;letter-spacing:.05em}
-.tab-bar{display:flex;padding:10px 0 0}
-.tab{flex:1;text-align:center;padding:8px 4px;font-size:11px;font-weight:500;color:var(--pale);letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid transparent;cursor:pointer;transition:color .2s,border-color .2s}
+.guide-btn{font-size:18px;cursor:pointer;opacity:.7;padding:2px 4px}
+.guide-btn:active{opacity:1}
+.tab-bar{display:flex}
+.tab{flex:1;text-align:center;padding:8px 2px;font-size:10px;font-weight:500;color:var(--pale);letter-spacing:.03em;text-transform:uppercase;border-bottom:2px solid transparent;cursor:pointer;transition:color .2s,border-color .2s}
 .tab.active{color:var(--green-light);border-bottom-color:var(--green-light)}
-.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-.page{display:none;padding:20px}
+.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:20px}
+.page{display:none}
 .page.active{display:block}
 .card{background:var(--navy-mid);border-radius:16px;border:1px solid rgba(255,255,255,.07);margin-bottom:14px;overflow:hidden}
 .card-header{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between}
@@ -47,12 +50,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .badge-race{background:var(--red-pale);color:var(--red)}
 .badge-post{background:rgba(255,255,255,.1);color:var(--pale)}
 .badge-bridge{background:var(--green-pale);color:var(--green)}
-
+ 
 /* DAY SLOTS */
-.day-slot{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px}
+.day-slot{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;position:relative}
 .day-slot.run-anchor{background:var(--green)}
 .day-slot.run-other{background:var(--navy-light);border:1px solid rgba(255,255,255,.08)}
-.day-slot.rest{padding:5px 12px;opacity:.35}
+.day-slot.rest{padding:5px 12px}
+.day-slot.rest .day-name,.day-slot.rest .day-divider,.day-slot.rest .day-run-dist{opacity:.35}
+.day-slot.rest .comfort-badge{opacity:.75}
 .day-slot.today-slot{box-shadow:0 0 0 2px var(--green-light)}
 .day-slot.completed.run-anchor{background:#1a4731;border:1px solid var(--green-light)}
 .day-slot.completed.run-other{background:var(--navy-light);border:1px solid var(--green-light)}
@@ -72,47 +77,65 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .day-slot.run-other .day-run-dist{color:var(--green-light)}
 .day-slot.rest .day-run-dist{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);font-weight:300}
 .day-slots-wrap{padding:6px 12px 6px;display:flex;flex-direction:column;gap:5px}
-.check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;transition:background .15s,border-color .15s;color:transparent}
+.check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;color:transparent}
 .day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
 .day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
-
+ 
+/* COMFORT BADGE ON DAY SLOTS */
+.comfort-badge{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;flex-shrink:0;font-family:'DM Serif Display',serif;font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s;border:2px solid transparent}
+.comfort-badge:active{transform:scale(.92)}
+.comfort-badge.loading-badge{background:rgba(255,255,255,.07);color:var(--muted);font-size:10px;font-family:'DM Sans',sans-serif;font-weight:400}
+ 
+/* COMFORT EXPAND POPUP */
+.comfort-expand{display:none;padding:8px 12px 10px;border-top:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.15)}
+.comfort-expand.open{display:block}
+.comfort-expand-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.comfort-expand-label{color:var(--pale)}
+.comfort-expand-val{color:var(--cream);font-family:'DM Mono',monospace}
+.comfort-expand-route{font-size:11px;color:var(--pale);line-height:1.5;margin-top:6px;font-style:italic}
+ 
+/* WEEKLY COMFORT DOTS */
+.week-comfort-row{display:flex;align-items:center;gap:6px;padding:8px 16px 10px;border-top:1px solid rgba(255,255,255,.05)}
+.comfort-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
+.comfort-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1)}
+.comfort-dot-label{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.03em}
+ 
 /* PROGRESS BAR */
 .week-progress{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05)}
 .week-progress-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
 .week-progress-bar{height:100%;background:var(--green-light);border-radius:2px;transition:width .3s ease}
 .week-progress-label{font-size:12px;color:var(--pale);font-family:'DM Mono',monospace;white-space:nowrap}
 .week-progress-miles{font-size:12px;color:var(--green-light);font-family:'DM Mono',monospace;white-space:nowrap}
-
+ 
 /* ACTION BUTTONS */
 .action-btns{display:flex;gap:8px;padding:0 12px 12px}
 .reset-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--pale);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
-.reset-btn:active{background:rgba(255,255,255,.1)}
 .lock-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(82,183,136,.15);border:1px solid var(--green-light);border-radius:12px;color:var(--green-light);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
-.lock-btn:active{background:rgba(82,183,136,.25)}
 .week-modified-note{font-size:11px;color:var(--amber-light);text-align:center;padding:8px 12px 2px;font-style:italic}
-
-/* DRAG AND DROP */
+ 
+/* DRAG */
 .day-slot.draggable{cursor:grab}
 .day-slot.drag-over{outline:2px dashed var(--green-light);outline-offset:-2px;background:rgba(82,183,136,.15) !important}
 .day-slot.dragging{opacity:.3;transform:scale(.97);transition:opacity .1s,transform .1s}
 .drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--green);border-radius:12px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:white;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.5);white-space:nowrap;transform:translate(-50%,-50%)}
 .drag-hint{font-size:11px;color:var(--muted);text-align:center;padding:4px 12px 8px;font-style:italic}
-
+ 
 /* NOTES */
 .notes-wrap{padding:6px 14px 12px}
 .notes-toggle{font-size:12px;color:var(--pale);cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 0}
-.notes-toggle:active{color:var(--cream)}
 .notes-field{width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;resize:none;margin-top:6px;line-height:1.6;min-height:70px}
 .notes-field:focus{outline:none;border-color:var(--green-light)}
 .notes-dot{width:6px;height:6px;border-radius:50%;background:var(--amber-light);flex-shrink:0}
-
+ 
 /* NEXT RUN BANNER */
 .next-run-card{background:linear-gradient(135deg,var(--green) 0%,#1a4731 100%);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .next-run-label{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
 .next-run-info{font-family:'DM Serif Display',serif;font-size:20px;color:white}
 .next-run-sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:2px}
+.next-run-comfort{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:12px;color:rgba(255,255,255,.7)}
+.next-run-comfort-score{font-family:'DM Mono',monospace;font-weight:500}
 .run-arrow{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-
+ 
 /* ROLL FORWARD */
 .roll-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;margin-bottom:12px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;color:var(--cream);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
 .roll-btn:active{background:var(--navy-light)}
@@ -124,21 +147,14 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .roll-active-banner{display:flex;align-items:center;justify-content:space-between;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:10px 14px;margin-bottom:12px}
 .roll-active-text{font-size:13px;color:var(--amber-light)}
 .roll-revert-btn{font-size:12px;color:var(--amber-light);background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;white-space:nowrap;flex-shrink:0;margin-left:10px}
-.roll-revert-btn:active{background:rgba(245,158,11,.25)}
-
-
-
-/* HISTORY / SCHEDULE TAB */
+ 
+/* HISTORY */
 .history-week{background:var(--navy-mid);border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:10px;overflow:hidden}
 .history-week.current-week{border-color:var(--green-light)}
 .history-week-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.history-week-header:active{background:rgba(255,255,255,.03)}
-.history-week-left{}
 .history-week-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--pale);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
-.history-week-dates{font-size:14px;font-weight:500;color:var(--cream)}
-.history-week-right{display:flex;align-items:center;gap:8px}
+.history-week-dates{font-size:14px;font-weight:500}
 .history-progress-ring{position:relative;width:36px;height:36px;flex-shrink:0}
-.history-total{font-family:'DM Mono',monospace;font-size:13px;color:var(--pale)}
 .history-week-body{padding:0 12px 12px;display:none}
 .history-week-body.open{display:block}
 .history-run-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
@@ -149,29 +165,81 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .history-check.done{background:var(--green-light);color:white}
 .history-check.pending{background:rgba(255,255,255,.08);color:transparent}
 .history-note{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0 0;line-height:1.5}
-
-/* MISC */
+ 
+/* NARRATIVE */
 .narrative-text{font-size:14px;color:var(--pale);line-height:1.75;font-weight:300}
-.section-head{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px}
+ 
+/* COMFORT (NOW) TAB */
+.loc-selector{display:flex;gap:6px;margin-bottom:14px}
+.loc-pill{flex:1;text-align:center;padding:8px 6px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.04em;cursor:pointer;transition:background .15s,color .15s;background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);color:var(--pale)}
+.loc-pill.active{background:var(--green);border-color:var(--green);color:white}
+.score-wrap{display:flex;flex-direction:column;align-items:center;padding:24px 16px 20px}
+.score-ring{position:relative;width:140px;height:140px;margin-bottom:16px}
+.score-ring svg{transform:rotate(-90deg)}
+.score-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.score-big{font-family:'DM Serif Display',serif;font-size:48px;line-height:1}
+.score-outof{font-size:12px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:2px}
+.score-label-cs{font-size:18px;font-weight:500;margin-bottom:6px}
+.score-desc-cs{font-size:13px;color:var(--muted);text-align:center;max-width:290px;line-height:1.65;font-weight:300}
+.score-route-cs{margin-top:10px;padding:8px 14px;background:rgba(255,255,255,.05);border-radius:10px;font-size:12px;color:var(--pale);line-height:1.55;text-align:center;max-width:290px}
+.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 14px 0}
+.cond-cell{background:var(--navy-light);border-radius:10px;padding:10px 12px}
+.cond-label{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.cond-value{font-family:'DM Mono',monospace;font-size:16px;font-weight:500}
+.cond-sub{font-size:11px;color:var(--muted);margin-top:1px}
+.factor-section{padding:8px 14px 14px}
+.factor-section-label{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;margin-top:4px}
+.factor-row{display:flex;align-items:center;gap:10px;padding:5px 0}
+.factor-name{font-size:12px;color:var(--pale);width:90px;flex-shrink:0}
+.factor-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
+.factor-bar{height:100%;border-radius:3px;transition:width .7s ease}
+.factor-score{font-family:'DM Mono',monospace;font-size:12px;color:var(--pale);width:30px;text-align:right;flex-shrink:0}
+.alert-cs{margin:0 0 14px;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.6;font-weight:300}
+.alert-danger{background:rgba(153,27,27,.15);border:1px solid rgba(239,68,68,.25);color:#fca5a5}
+.alert-warn{background:rgba(146,64,14,.12);border:1px solid rgba(245,158,11,.25);color:var(--amber-light)}
+.rec-section{padding:14px}
+.rec-title{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-family:'DM Mono',monospace}
+.rec-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
+.rec-item:last-child{margin-bottom:0}
+.rec-icon{font-size:18px;flex-shrink:0;width:24px;text-align:center;margin-top:1px}
+.rec-text{font-size:13px;color:var(--cream);font-weight:300;line-height:1.65}
+.rec-text strong{font-weight:500}
+.refresh-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.25);border-radius:14px;color:var(--green-light);font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background .15s;margin-bottom:10px}
+.refresh-btn:active{background:rgba(82,183,136,.22)}
+.last-updated-cs{text-align:center;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.04em;margin-bottom:16px}
+ 
+/* FORECAST TAB */
+.forecast-day{background:var(--navy-mid);border-radius:16px;border:1px solid rgba(255,255,255,.07);margin-bottom:12px;overflow:hidden}
+.forecast-day.today-day{border-color:var(--green-light)}
+.forecast-day-header{padding:12px 14px 8px;border-bottom:1px solid rgba(255,255,255,.05)}
+.forecast-day-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
+.forecast-day-name{font-size:14px;font-weight:500}
+.forecast-day-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace}
+.forecast-cond{font-size:12px;color:var(--muted);font-weight:300;margin-bottom:6px}
+.day-loc-selector{display:flex;gap:5px}
+.day-loc-pill{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:500;cursor:pointer;transition:background .12s;background:var(--navy-light);border:1px solid rgba(255,255,255,.07);color:var(--pale)}
+.day-loc-pill.active{background:var(--green);border-color:var(--green);color:white}
+.forecast-slots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 12px 4px}
+.forecast-slot{background:var(--navy-light);border-radius:10px;padding:10px 8px;text-align:center}
+.forecast-slot-time{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.forecast-slot-score{font-family:'DM Serif Display',serif;font-size:26px;line-height:1;margin-bottom:3px}
+.forecast-slot-label{font-size:10px;margin-bottom:4px}
+.forecast-slot-temp{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace}
+.forecast-optimal{margin:0 12px 12px;background:rgba(82,183,136,.08);border:1px solid rgba(82,183,136,.15);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--green-light);line-height:1.55}
+.forecast-optimal-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;opacity:.7;margin-bottom:3px}
+ 
+/* GUIDE OVERLAY */
+.guide-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,16,25,.92);overflow-y:auto;padding:calc(env(safe-area-inset-top,20px) + 16px) 20px 40px}
+.guide-overlay.open{display:block}
+.guide-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.guide-title{font-family:'DM Serif Display',serif;font-size:20px}
+.guide-close{font-size:24px;cursor:pointer;color:var(--pale);padding:4px}
+.guide-section{margin-bottom:24px}
+.guide-section-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:12px;color:var(--cream)}
 .info-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;margin-bottom:12px}
 .info-card-title{font-weight:500;font-size:14px;color:var(--green-light);margin-bottom:8px;display:flex;align-items:center;gap:8px}
 .info-dot{width:6px;height:6px;border-radius:50%;background:var(--green-light);flex-shrink:0}
 .info-text{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
-.phase-block{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:12px;overflow:hidden}
-.phase-block-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start}
-.phase-dates{font-family:'DM Mono',monospace;font-size:11px;color:var(--pale);margin-bottom:3px}
-.phase-title{font-weight:500;font-size:15px}
-.phase-body{padding:0 14px 14px;font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
-.marathon-callout{background:var(--green);border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
-.marathon-callout-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
-.marathon-callout-date{font-family:'DM Serif Display',serif;font-size:22px;color:white}
-.meal-week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
-.nav-btn{width:36px;height:36px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:background .15s;flex-shrink:0}
-.nav-btn:active{background:var(--navy-light)}
-.nav-btn.disabled{opacity:.3;pointer-events:none}
-.nav-week-info{text-align:center;flex:1;padding:0 12px}
-.nav-week-num{font-family:'DM Serif Display',serif;font-size:18px}
-.nav-week-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:1px}
 .meal-card{border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:12px;overflow:hidden}
 .meal-card-header{padding:11px 14px;display:flex;justify-content:space-between;align-items:center}
 .meal-name{font-weight:500;font-size:14px;color:var(--cream)}
@@ -182,7 +250,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .meal-detail-value{color:var(--cream);font-weight:300;line-height:1.5}
 .protein-badge{display:inline-flex;align-items:center;border-radius:20px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:12px}
 .sunday-tip{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--amber-light);line-height:1.55}
-.sunday-tip-label{font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;opacity:.8}
+.meal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.nav-btn{width:36px;height:36px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0}
+.nav-btn.disabled{opacity:.3;pointer-events:none}
+.nav-info{text-align:center;flex:1;padding:0 10px}
+.nav-title{font-family:'DM Serif Display',serif;font-size:16px}
+.nav-sub{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:1px}
+ 
+/* 2027 / BRIDGE */
+.section-head{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px}
+.phase-block{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:12px;overflow:hidden}
+.phase-block-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start}
+.phase-dates{font-family:'DM Mono',monospace;font-size:11px;color:var(--pale);margin-bottom:3px}
+.phase-title{font-weight:500;font-size:15px}
+.phase-body{padding:0 14px 14px;font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
+.marathon-callout{background:var(--green);border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
+.marathon-callout-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
+.marathon-callout-date{font-family:'DM Serif Display',serif;font-size:22px;color:white}
+ 
+/* LOADING / SPINNER */
+.loading-wrap{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:14px}
+.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--green-light);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-text{font-size:13px;color:var(--muted);text-align:center;line-height:1.6}
+.error-wrap{padding:24px 20px;text-align:center}
+.error-icon{font-size:36px;margin-bottom:12px}
+.error-msg{font-size:13px;color:var(--muted);line-height:1.7}
 </style>
 </head>
 <body>
@@ -190,45 +283,34 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
   <div class="app-header">
     <div class="header-top">
       <span class="app-title">The Long Run</span>
-      <span class="header-date" id="headerDate"></span>
+      <div class="header-right">
+        <span class="header-date" id="headerDate"></span>
+        <span class="guide-btn" onclick="openGuide()" title="Guide">&#9776;</span>
+      </div>
     </div>
     <div class="tab-bar">
       <div class="tab active" onclick="showPage('home')">Home</div>
       <div class="tab" onclick="showPage('history')">Log</div>
-      <div class="tab" onclick="showPage('meals')">Meals</div>
-      <div class="tab" onclick="showPage('nutrition')">Tips</div>
+      <div class="tab" onclick="showPage('comfort')">Now</div>
+      <div class="tab" onclick="showPage('forecast')">7-Day</div>
       <div class="tab" onclick="showPage('bridge')">2027</div>
     </div>
   </div>
   <div class="content">
     <div class="page active" id="page-home"><div id="homeContent"></div></div>
     <div class="page" id="page-history"><div id="historyContent"></div></div>
-    <div class="page" id="page-meals">
-      <div class="meal-week-nav">
-        <div class="nav-btn" id="mealPrevBtn" onclick="changeMealWeek(-1)">&#8249;</div>
-        <div class="nav-week-info"><div class="nav-week-num" id="mealWeekNum"></div><div class="nav-week-date" id="mealWeekSub"></div></div>
-        <div class="nav-btn" id="mealNextBtn" onclick="changeMealWeek(1)">&#8250;</div>
-      </div>
-      <div id="mealContent"></div>
+    <div class="page" id="page-comfort">
+      <div class="loc-selector" id="nowLocSelector"></div>
+      <div class="card" id="csScoreCard"><div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fetching conditions...</div></div></div>
+      <div class="card" id="csCondCard" style="display:none"></div>
+      <div id="csWeekCard"></div>
+      <div id="csAlertBox"></div>
+      <div class="card" id="csRecCard" style="display:none"><div class="rec-section"><div class="rec-title">Recommendations</div><div id="csRecList"></div></div></div>
+      <button class="refresh-btn" onclick="loadNow(nowLocIdx)">&#8635;&nbsp; Refresh conditions</button>
+      <div class="last-updated-cs" id="csLastUpdated"></div>
     </div>
-    <div class="page" id="page-nutrition">
-      <div class="section-head">Sleep</div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Sleep is the highest-leverage thing</div><div class="info-text">Your body does not get fitter during runs - it adapts during recovery, and that process is almost entirely sleep-dependent. During heavy training weeks (20+ miles) you likely need 30-60 min more than usual. Persistent fatigue that does not resolve after two easy days often means sleep debt, not overtraining.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Two nights before matters most</div><div class="info-text">The night before Saturday long run matters less than Wednesday and Thursday nights. One bad Friday does not derail a long run nearly as much as poor mid-week sleep. Friday nights are often socially busier - worth knowing.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Alcohol and sleep quality</div><div class="info-text">Alcohol disrupts sleep depth even when it does not reduce hours. You get the hours but not the restorative depth. Particularly relevant the night before any hard effort.</div></div>
-      <div class="section-head" style="margin-top:8px">Nutrition</div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Protein timing</div><div class="info-text">The 30-60 min window after Saturday long run is when muscles are most receptive to protein. Eating one of your meal prep containers Saturday afternoon is genuinely useful - aim for 25-40g. During heavier training weeks, target 100-130g protein per day total.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Do not run fasted on long runs</div><div class="info-text">As Saturday distances grow past 7-8 miles, running without breakfast compromises quality and recovery. A simple breakfast 60-90 minutes before is enough. Do not skip this.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Carbs are your fuel</div><div class="info-text">During weeks above 15 miles, carbohydrates are your primary fuel. Restricting them makes runs harder, slows recovery, and raises injury risk. The grain pouches in meal prep are doing important work - do not second-guess them.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Anti-inflammatory eating</div><div class="info-text">During Phase 2 build and HM build, salmon weekly is genuinely valuable - omega-3s are anti-inflammatory. Ultra-processed foods and excess alcohol amplify the inflammatory response to training load.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Eat enough</div><div class="info-text">Appetite suppresses after long runs so under-fueling is common. Signs: persistent fatigue, runs feeling inexplicably hard, getting sick during build phases. On days with a long run you need meaningfully more food than rest days.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Hydration - especially in winter</div><div class="info-text">Indoor heating is extremely dehydrating. Light yellow urine in the morning = good. Dark yellow = you are behind. One of the most commonly overlooked things among recreational runners.</div></div>
-      <div class="section-head" style="margin-top:8px">Hydration &amp; Fueling</div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>When to start</div><div class="info-text">There are two separate thresholds. Hydration awareness starts now - build the habit of pre-run hydration before it is critical. The first fueling threshold arrives at Week 14 (Saturday hits 8 miles) - start experimenting with mid-run fuel to train your gut. The second threshold is Week 17 (Saturday at 9 miles, likely over 90 minutes) - fueling becomes essential, not optional. Heat block Week 21 is when hydration strategy shifts to active pre-hydration starting Thursday evening.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Tailwind as an all-in-one solution</div><div class="info-text">Tailwind Endurance Fuel handles hydration and fueling simultaneously - calories, carbohydrates, and electrolytes in a single drink mix. Mix two scoops in 20oz water and drink every 15-20 minutes from the first mile rather than waiting until thirsty. It is gentler on the stomach than most gels because it uses glucose and sucrose rather than fructose-heavy formulations. For your distance range (7-11 miles), one 20oz bottle at standard mix covers a full long run effort.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Bottles that do not swish</div><div class="info-text">The Nathan SpeedDraw Plus 18oz is the most proven handheld - a strap holds it against your palm without gripping, and a bite valve prevents sloshing when closed. Around $30, widely available. Soft flasks (Salomon, Nathan) eliminate sloshing almost entirely because the flask collapses as you drink, removing the air space that causes movement. For the heat block, a simple two-flask waist belt (Nathan Pinnacle or Ultimate Direction FK) frees your hands and distributes weight better on longer efforts.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>The 36-hour protocol</div><div class="info-text">Thursday evening (36 hours out): familiar dinner, lean protein, white rice or pasta, cooked vegetables, no raw salad, no fried food, no heavy fat. Early bedtime. Friday breakfast: simple carbohydrate-forward, avoid high-fiber cereal or seeded bread. Friday lunch: your most important meal - large serving of white rice or pasta with lean protein, 60-70% carbohydrate by plate volume. Friday dinner by 7pm: white pasta or rice, simple sauce, lean protein, no raw vegetables, no cream. Saturday breakfast 60-75 minutes before running: plain bagel with peanut butter and banana, or oatmeal with honey, or two eggs on white toast. 16-20oz water with breakfast. Nothing new in the entire 36-hour window.</div></div>
-      <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Race day at Seacoast</div><div class="info-text">Confirm before race day what Seacoast provides at aid stations - water and electrolyte drink are standard but gels are not guaranteed. If you have trained exclusively with Tailwind, plan to carry a handheld or a small waist flask rather than relying on course products. The cardinal rule: race day is not the time to try anything new. Every element of your race-day fueling - the breakfast, the timing, the product, the intervals - should have been practiced on multiple Saturday long runs before October 25th.</div></div>
+    <div class="page" id="page-forecast">
+      <div id="forecastContent"><div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading 7-day forecast...</div></div></div>
     </div>
     <div class="page" id="page-bridge">
       <div style="margin-bottom:16px">
@@ -251,9 +333,57 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
     </div>
   </div>
 </div>
+ 
+<!-- GUIDE OVERLAY -->
+<div class="guide-overlay" id="guideOverlay">
+  <div class="guide-header">
+    <span class="guide-title">Guide</span>
+    <span class="guide-close" onclick="closeGuide()">&#10005;</span>
+  </div>
+  <div class="guide-section">
+    <div class="guide-section-title">Meals</div>
+    <div class="meal-nav">
+      <div class="nav-btn" id="mealPrevBtn" onclick="changeMealWeek(-1)">&#8249;</div>
+      <div class="nav-info"><div class="nav-title" id="mealWeekNum"></div><div class="nav-sub" id="mealWeekSub"></div></div>
+      <div class="nav-btn" id="mealNextBtn" onclick="changeMealWeek(1)">&#8250;</div>
+    </div>
+    <div id="mealContent"></div>
+  </div>
+  <div class="guide-section">
+    <div class="guide-section-title">Sleep</div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Sleep is the highest-leverage thing</div><div class="info-text">Your body does not get fitter during runs - it adapts during recovery, and that process is almost entirely sleep-dependent. During heavy training weeks (20+ miles) you likely need 30-60 min more than usual.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Two nights before matters most</div><div class="info-text">The night before Saturday long run matters less than Wednesday and Thursday nights. One bad Friday does not derail a long run nearly as much as poor mid-week sleep.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Alcohol and sleep quality</div><div class="info-text">Alcohol disrupts sleep depth even when it does not reduce hours. You get the hours but not the restorative depth. Particularly relevant the night before any hard effort.</div></div>
+  </div>
+  <div class="guide-section">
+    <div class="guide-section-title">Nutrition</div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Protein timing</div><div class="info-text">The 30-60 min window after Saturday long run is when muscles are most receptive to protein. Aim for 25-40g in that window. During heavier training weeks, target 100-130g protein per day total.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Do not run fasted on long runs</div><div class="info-text">As Saturday distances grow past 7-8 miles, running without breakfast compromises quality and recovery. A simple breakfast 60-90 minutes before is enough. Do not skip this.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Carbs are your fuel</div><div class="info-text">During weeks above 15 miles, carbohydrates are your primary fuel. Restricting them makes runs harder, slows recovery, and raises injury risk. The grain pouches in meal prep are doing important work.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Eat enough</div><div class="info-text">Appetite suppresses after long runs so under-fueling is common. On days with a long run you need meaningfully more food than rest days.</div></div>
+  </div>
+  <div class="guide-section">
+    <div class="guide-section-title">Hydration &amp; Fueling</div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>When to start</div><div class="info-text">Hydration awareness starts now. Mid-run fueling threshold: Week 14 (Saturday hits 8 miles) — start experimenting. Essential by Week 17 (Saturday at 9 miles, over 90 minutes). Heat block Week 21: shift to active pre-hydration starting Thursday evening.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Tailwind as an all-in-one</div><div class="info-text">Handles hydration and fueling simultaneously. Mix 2 scoops in 20oz water, drink every 15-20 minutes from mile 1. Gentler on the stomach than most gels. One bottle covers a 90-minute effort.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>The 36-hour protocol</div><div class="info-text">Thursday evening: familiar dinner, lean protein, white rice or pasta, low fat, low fiber. Friday: carbohydrate-forward meals, light electrolyte drink afternoon, dinner by 7pm. Saturday breakfast 60-75 min before: plain bagel with peanut butter and banana, or oatmeal. 16-20oz water with breakfast. Nothing new in the entire 36-hour window.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Bottles that do not swish</div><div class="info-text">Nathan SpeedDraw Plus 18oz — strap holds bottle against palm, bite valve prevents sloshing. ~$30. Soft flasks collapse as you drink, eliminating sloshing entirely. Nathan Pinnacle belt or Ultimate Direction FK for high-heat long runs when you want hands free.</div></div>
+  </div>
+</div>
+ 
 <script>
-// ─── DATA ─────────────────────────────────────────────────────────
-var WEEKS = [
+// ── LOCATIONS ─────────────────────────────────────────────────────
+var LOCS=[
+  {name:'Marblehead',short:'Mhd',lat:42.5002,lon:-70.8591},
+  {name:'Boston',short:'Bos',lat:42.3601,lon:-71.0512},
+  {name:'Plymouth NH',short:'Ply',lat:43.7573,lon:-71.6884},
+];
+var nowLocIdx=0;
+var dayLocIdx={};
+var forecastCache={};
+ 
+// ── SCHEDULE DATA ─────────────────────────────────────────────────
+var WEEKS=[
   {n:1,date:"Mar 2",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:null,thu:null,fri:null,sat:3,sun:2},total:7,narrative:"This is your first week back. The goal is simply to reestablish the habit of running - three easy efforts, nothing more. Tuesday is your midweek anchor at 2 miles, and Saturday carries the long run at 3 miles. Both should feel comfortable and conversational. Do not push the pace. Resist any urge to add mileage if you feel good."},
   {n:2,date:"Mar 9",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:2,thu:null,fri:null,sat:3.5,sun:2},total:9.5,narrative:"A modest step up to 9.5 miles. Saturday grows to 3.5 miles. Tuesday stays at 2 miles. Wednesday joins for the first time. Sunday adds a short 2-mile easy effort. The goal this week is simply showing up consistently in whatever combination works."},
   {n:3,date:"Mar 16",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2.5,wed:2,thu:null,fri:null,sat:3.5,sun:2},total:10,narrative:"A very slight increase - Tuesday nudges up to 2.5 miles. Saturday and Sunday hold steady. This week is about building consistency rather than mileage. Same structure, same days. If you feel strong, save it for next week."},
@@ -289,7 +419,8 @@ var WEEKS = [
   {n:33,date:"Oct 12",type:"taper",label:"TAPER",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3.5},total:19,narrative:"Taper begins. Volume drops to 19 miles with Saturday carrying an 8-mile long run - shorter than recent weeks but still purposeful. Tuesday at 4 miles, Wednesday at 3.5, Sunday at 3.5. The taper can feel psychologically uncomfortable - legs feel heavy, energy seems off, doubt creeps in. This is normal and universal among runners. Trust the training. Prepare race-day logistics: course review, gear check, breakfast plan. The Seacoast Half Marathon is in Portsmouth, NH - confirm parking and start time in advance. Fueling note: finalize your race-day fueling plan this week and do not change it. Confirm what Seacoast provides at aid stations - if they do not carry your Tailwind flavor or a gel brand you have trained with, plan to carry your own. Saturday 8-miler this week is your last full rehearsal of the race-day fueling protocol."},
   {n:34,date:"Oct 19",type:"race",label:"RACE WEEK",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:2,sun:"RACE"},total:"7.5",narrative:"Race week. Tuesday 3 miles and Wednesday 2.5 miles are easy shakeout runs - keep the legs moving without adding fatigue. Saturday is a 2-mile shakeout only. Sunday, October 25th is the Seacoast Half Marathon in Portsmouth, NH. You have run 34 weeks to get here, built from 7 miles to 25, survived a summer of heat, and arrived with a peak long run of 11 miles under your belt. Run the first half conservatively. You have earned this."}
 ];
-var MEAL_WEEKS = [
+ 
+var MEAL_WEEKS=[
   {n:1,theme:"The Classic Grill",tip:"Start grill, season while it heats. Chicken goes on first, sausage last. About 25 minutes total.",meals:[
     {name:"Chicken Thighs + Rice + Black Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, garlic powder, smoked paprika, salt, pepper",sides:"Canned black beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Grill 6-7 min/side on medium-high. Hard to overcook. One rice pouch across both containers.",color:"#1a3a2a",accent:"#52b788"},
     {name:"Chicken Thighs + Quinoa + Corn",containers:1,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, cumin, chili powder, salt",sides:"Canned corn (drain) | 90-sec quinoa pouch",protein_g:50,note:"Same grill batch - season half differently. Zero extra time.",color:"#1a3a2a",accent:"#52b788"},
@@ -304,156 +435,187 @@ var MEAL_WEEKS = [
     {name:"Lamb Chops + Farro + Chickpeas",containers:2,protein:"Loin lamb chops - 2 chops per container (~5 oz meat)",seasoning:"Olive oil, dried rosemary, garlic powder, salt, pepper",sides:"Canned chickpeas (drain, rinse) | 90-sec farro pouch",protein_g:46,note:"High heat, 3-4 min/side, rest 3 min. Most impressive lunch container with almost no skill required.",color:"#2a1a0a",accent:"#f97316"},
     {name:"Chicken Thighs + Rice + White Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, Italian seasoning, salt, pepper",sides:"Canned white beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Same chicken prep as Week 1. Italian seasoning gives a different flavor profile.",color:"#1a3a2a",accent:"#52b788"}]}
 ];
+ 
 var DAYS=["mon","tue","wed","thu","fri","sat","sun"];
 var DAY_LABELS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 var DAY_NAMES_FULL=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 var JS_TO_IDX={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
-var currentWeekIdx=0, currentMealWeek=0;
-var weekOverrides={}, completedRuns={}, weekNotes={};
+var currentWeekIdx=0,currentMealWeek=0;
+var weekOverrides={},completedRuns={},weekNotes={};
 var homeWeekOffset=0;
 var dragState={active:false,fromDay:null,dist:null,label:null,ghost:null,overDay:null};
 var dragHintShown=false;
-
+// Comfort scores per day keyed by YYYY-MM-DD
+var dayComfortScores={};
+var weekComfortDots=[];
+ 
+// ── STORAGE ───────────────────────────────────────────────────────
 function sGet(k){try{return JSON.parse(localStorage.getItem('r26_'+k));}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem('r26_'+k,JSON.stringify(v));}catch(e){}}
-
-function getWeekDays(idx){
-  var w=WEEKS[idx];
-  var b={mon:w.days.mon,tue:w.days.tue,wed:w.days.wed,thu:w.days.thu,fri:w.days.fri,sat:w.days.sat,sun:w.days.sun};
-  if(weekOverrides[idx]){var ov=weekOverrides[idx];for(var k in ov)b[k]=ov[k];}
-  return b;
-}
-function isModified(idx){
-  if(!weekOverrides[idx])return false;
-  var w=WEEKS[idx],ov=weekOverrides[idx];
-  for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}
-  return false;
-}
+ 
+// ── WEEK HELPERS ──────────────────────────────────────────────────
+function getWeekDays(idx){var w=WEEKS[idx];var b={mon:w.days.mon,tue:w.days.tue,wed:w.days.wed,thu:w.days.thu,fri:w.days.fri,sat:w.days.sat,sun:w.days.sun};if(weekOverrides[idx]){var ov=weekOverrides[idx];for(var k in ov)b[k]=ov[k];}return b;}
+function isModified(idx){if(!weekOverrides[idx])return false;var w=WEEKS[idx],ov=weekOverrides[idx];for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}return false;}
 function resetWeek(idx){delete weekOverrides[idx];sSet('overrides',weekOverrides);renderHome();}
-function lockWeek(idx){
-  var days=getWeekDays(idx);
-  WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};
-  delete weekOverrides[idx];sSet('overrides',weekOverrides);
-  var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);
-  renderHome();
-}
-function getProgress(idx){
-  var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;
-  for(var i=0;i<DAYS.length;i++){
-    var dk=DAYS[i],dist=days[dk];
-    if(dist&&dist!=='RACE'){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}
-  }
-  return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};
-}
+function lockWeek(idx){var days=getWeekDays(idx);WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};delete weekOverrides[idx];sSet('overrides',weekOverrides);var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);renderHome();}
+function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};}
 function isCompleted(idx,dk){return !!(completedRuns[idx]&&completedRuns[idx][dk]);}
-function toggleCompleted(idx,dk){
-  if(!completedRuns[idx])completedRuns[idx]={};
-  if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;
-  sSet('completed',completedRuns);renderHome();renderHistory();
-}
-function getAutoWeekIdx(){
-  var START=new Date('2026-03-02'),now=new Date(),d=new Date(now);
-  if(d.getDay()===0&&d.getHours()>=18)d=new Date(d.getTime()+24*60*60*1000);
-  var idx=Math.floor((d-START)/(7*24*60*60*1000));
-  return Math.max(0,Math.min(WEEKS.length-1,idx));
-}
+function toggleCompleted(idx,dk){if(!completedRuns[idx])completedRuns[idx]={};if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;sSet('completed',completedRuns);renderHome();renderHistory();}
+function getAutoWeekIdx(){var S=new Date('2026-03-02'),d=new Date();if(d.getDay()===0&&d.getHours()>=18)d=new Date(d.getTime()+86400000);return Math.max(0,Math.min(WEEKS.length-1,Math.floor((d-S)/604800000)));}
 function getHomeWeekIdx(){return Math.min(WEEKS.length-1,getAutoWeekIdx()+homeWeekOffset);}
-function rollToNext(){
-  var auto=getAutoWeekIdx(),max=WEEKS.length-1-auto;
-  if(homeWeekOffset<max){homeWeekOffset++;sSet('rollOffset',homeWeekOffset);currentWeekIdx=getHomeWeekIdx();renderHome();}
-}
+function rollToNext(){var auto=getAutoWeekIdx(),max=WEEKS.length-1-auto;if(homeWeekOffset<max){homeWeekOffset++;sSet('rollOffset',homeWeekOffset);currentWeekIdx=getHomeWeekIdx();renderHome();}}
 function revertRoll(){homeWeekOffset=0;sSet('rollOffset',0);currentWeekIdx=getHomeWeekIdx();renderHome();}
-
-function saveNote(idx){
-  var el=document.getElementById('note-'+idx);
-  if(el){weekNotes[idx]=el.value;sSet('notes',weekNotes);}
+function saveNote(idx){var el=document.getElementById('note-'+idx);if(el){weekNotes[idx]=el.value;sSet('notes',weekNotes);}}
+function toggleNote(idx){var body=document.getElementById('notebody-'+idx);if(body){body.style.display=body.style.display==='none'?'block':'none';}}
+ 
+// ── WMO / SCORING ─────────────────────────────────────────────────
+function precipFromCode(c){if(c===null||c===undefined)return'none';if([56,57,66,67].includes(c))return'freezingRain';if([71,73,75,77,85,86].includes(c))return'snow';if((c>=51&&c<=67)||(c>=80&&c<=82))return'rain';if(c>=95)return'thunder';return'none';}
+function overcastFromCode(c){return c!==null&&c!==undefined&&c>=2;}
+function forecastLabel(c){if(c===0)return'Clear sky';if(c===1)return'Mostly clear';if(c===2)return'Partly cloudy';if(c===3)return'Overcast';if(c>=51&&c<=55)return'Drizzle';if(c>=61&&c<=65)return'Rain';if(c===66||c===67)return'Freezing rain';if(c>=71&&c<=77)return'Snow';if(c>=80&&c<=82)return'Rain showers';if(c===85||c===86)return'Snow showers';if(c>=95)return'Thunderstorm';return'Mixed';}
+function heatIndex(T,R){if(T<80)return T;return -42.379+2.04901523*T+10.14333127*R-0.22475541*T*R-0.00683783*T*T-0.05481717*R*R+0.00122874*T*T*R+0.00085282*T*R*R-0.00000199*T*T*R*R;}
+function windChill(T,W){if(T>50||W<3)return T;return 35.74+0.6215*T-35.75*Math.pow(W,0.16)+0.4275*T*Math.pow(W,0.16);}
+function sTemp(T,wc,hi){var e=T>70?hi:(T<50?wc:T);if(e>=52&&e<=65)return 10;if(e>=45&&e<52||e>65&&e<=70)return 9;if(e>=38&&e<45||e>70&&e<=75)return 7.5;if(e>=30&&e<38||e>75&&e<=80)return 5.5;if(e>=20&&e<30||e>80&&e<=87)return 3.5;if(e>=10&&e<20||e>87&&e<=93)return 2;return 1;}
+function sDew(dp){if(dp<=50)return 10;if(dp<=55)return 9;if(dp<=60)return 7.5;if(dp<=65)return 5.5;if(dp<=70)return 3.5;if(dp<=75)return 2;return 1;}
+function sSun(hour,oc){if(oc)return 8;if(hour<6||hour>=20)return 10;if(hour<7||hour>=19)return 9;if(hour<8||hour>=18)return 7.5;if(hour<9||hour>=17)return 6;if(hour<10||hour>=16)return 5;if(hour<11||hour>=15)return 4;return 3;}
+function sWind(W,T){if(T>70){if(W<2)return 5;if(W<8)return 8;if(W<15)return 9;return 7;}else{if(W<5)return 10;if(W<10)return 8;if(W<15)return 6;if(W<20)return 4;return 2;}}
+function sPrecip(p){if(!p||p==='none')return 10;if(p==='rain')return 5;if(p==='snow')return 4;if(p==='freezingRain'||p==='ice')return 1;if(p==='thunder')return 2;return 6;}
+function computeScore(obs){var T=obs.tempF,R=obs.rh,W=obs.windMph,dp=obs.dewF;var hi=heatIndex(T,R),wc=windChill(T,W);var fT=sTemp(T,wc,hi),fD=sDew(dp),fS=sSun(obs.hour,obs.overcast),fW=sWind(W,T),fP=sPrecip(obs.precip);var score=Math.max(1,Math.min(10,fT*.25+fD*.35+fS*.20+fW*.10+fP*.10));return{score:Math.round(score*10)/10,factors:{temp:fT,dew:fD,sun:fS,wind:fW,precip:fP},hi:Math.round(hi),wc:Math.round(wc)};}
+ 
+// ── LABELS ────────────────────────────────────────────────────────
+function scoreColor(s){if(s>=8.5)return'#52b788';if(s>=7)return'#74c69d';if(s>=5.5)return'#f59e0b';if(s>=3.5)return'#f97316';return'#ef4444';}
+function scoreLabel(s){if(s>=8.5)return'Excellent';if(s>=7)return'Good';if(s>=5.5)return'Moderate';if(s>=3.5)return'Difficult';return'Dangerous';}
+function scoreDesc(s,obs){var T=obs.tempF;if(s>=8.5)return'Near-ideal running conditions. Get out there.';if(s>=7)return T>65?'Good conditions with some heat — stay hydrated.':T<40?'Good conditions — dress in layers.':'Solid conditions for any training effort.';if(s>=5.5)return T>70?'Manageable with adjustments. Slow down and carry water.':T<35?'Cold conditions — proper gear required.':'Adequate but requires modification.';if(s>=3.5)return T>75?'Tough heat. Significant pace adjustment needed.':'Challenging — shorten or modify the run.';return T>80?'Heat advisory. Move indoors or skip today.':'Dangerous cold. Treadmill or rest day.';}
+ 
+// ── ROUTE GUIDANCE ────────────────────────────────────────────────
+function routeRec(locIdx,T,dp){
+  if(locIdx===0){
+    if(T>80||dp>68)return'<strong>Willowdale</strong> or <strong>Bradley Palmer</strong> — avoid open roads entirely. Start before 8am.';
+    if(T>75||dp>65)return'<strong>Willowdale or Bradley Palmer</strong> preferred — shaded trails 5–10°F cooler. If roads, <strong>Marblehead Neck</strong> early for the ocean breeze.';
+    if(T>68)return'<strong>Marblehead Neck / waterfront</strong> — ocean breeze provides natural cooling. Willowdale also solid at this temperature.';
+    if(T>=55&&T<=68)return'<strong>Any route works</strong> — ideal conditions. Marblehead Neck for scenery, Willowdale for softer surface and variety.';
+    if(T>=40&&T<55)return'<strong>Roads preferred</strong> — good cool-weather running. Willowdale fine if footing is dry.';
+    if(T>=32&&T<40)return'<strong>Roads over trails</strong> — check Willowdale before heading out; shaded trails hold ice longer than sun-exposed roads.';
+    return'<strong>Roads only</strong> — avoid Willowdale and Bradley Palmer trails. Shaded forest trails significantly icier than open roads. Stick to plowed Marblehead streets.';
+  } else if(locIdx===1){
+    if(T>75||dp>65)return'<strong>Shade on the Greenway or under highway underpasses</strong> — avoid open Harborwalk sections midday.';
+    if(T>68)return'<strong>Harborwalk near the Aquarium</strong> — sea breeze off the harbor provides natural cooling.';
+    if(T<32)return'<strong>Stay on plowed paths</strong> — the Greenway and Harborwalk are typically cleared but watch for ice near the water.';
+    return'<strong>Harborwalk or the Greenway</strong> — great conditions for either route.';
+  } else {
+    if(T>75||dp>65)return'<strong>Shaded trails near Pemigewasset or wooded sections</strong> — open roads will be significantly hotter.';
+    if(T>68)return'<strong>Wooded trails</strong> preferred over open roads in these temperatures.';
+    if(T<32)return'<strong>Check trail conditions</strong> — Plymouth NH trails can be icy or snow-covered. Roads are safer in winter.';
+    return'<strong>Any Plymouth route works</strong> — trails or roads in current conditions.';
+  }
 }
-function toggleNote(idx){
-  var body=document.getElementById('notebody-'+idx);
-  if(body){body.style.display=body.style.display==='none'?'block':'none';}
+ 
+// ── FETCH WEATHER ─────────────────────────────────────────────────
+async function fetchWeather(lat,lon){
+  var url='https://api.open-meteo.com/v1/forecast'
+    +'?latitude='+lat+'&longitude='+lon
+    +'&current=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m'
+    +'&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,wind_speed_10m,weather_code'
+    +'&temperature_unit=fahrenheit&wind_speed_unit=mph'
+    +'&precipitation_unit=inch&timezone=America%2FNew_York&forecast_days=7';
+  var resp=await fetch(url);
+  if(!resp.ok)throw new Error('HTTP '+resp.status);
+  return resp.json();
 }
-
-
-
-// ─── DRAG & DROP ──────────────────────────────────────────────────
-function createGhost(label,dist){
-  var el=document.createElement('div');el.className='drag-ghost';
-  el.textContent=(dist&&dist!=='RACE')?dist+' mi':label;
-  document.body.appendChild(el);return el;
+ 
+function parseHourly(data){
+  var hourly=data.hourly,times=hourly.time,dailyMap={};
+  for(var i=0;i<times.length;i++){
+    var t=new Date(times[i]),dateKey=times[i].substring(0,10);
+    if(!dailyMap[dateKey])dailyMap[dateKey]={date:dateKey,hourly:[],condLabel:forecastLabel(hourly.weather_code[i])};
+    var hObs={tempF:Math.round(hourly.temperature_2m[i]),dewF:Math.round(hourly.dew_point_2m[i]),rh:Math.round(hourly.relative_humidity_2m[i]),windMph:Math.round(hourly.wind_speed_10m[i]),hour:t.getHours(),overcast:overcastFromCode(hourly.weather_code[i]),precip:precipFromCode(hourly.weather_code[i])};
+    var hr=computeScore(hObs);
+    dailyMap[dateKey].hourly.push({hour:t.getHours(),score:hr.score,tempF:hObs.tempF,dewF:hObs.dewF});
+    if(t.getHours()===12)dailyMap[dateKey].condLabel=forecastLabel(hourly.weather_code[i]);
+  }
+  return Object.values(dailyMap).slice(0,7);
 }
-function moveGhost(x,y){if(dragState.ghost){dragState.ghost.style.left=x+'px';dragState.ghost.style.top=y+'px';}}
-function getSlotAt(x,y){
-  var els=document.querySelectorAll('#home-slots .day-slot');
-  for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return els[i];}
-  return null;
+ 
+// optimal run window score for a given day's hourly data
+function optimalWindow(hourly){
+  var windows=[{label:'Early morning',hours:[5,6,7]},{label:'Mid-morning',hours:[8,9,10]},{label:'Midday',hours:[11,12,13]},{label:'Afternoon',hours:[14,15,16]},{label:'Evening',hours:[17,18,19,20]}];
+  var best=null,bestScore=-1;
+  windows.forEach(function(w){var s=w.hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.score:0;});var avg=s.reduce(function(a,b){return a+b;},0)/s.length;if(avg>bestScore){bestScore=avg;best=w;}});
+  var midHour=best.hours[Math.floor(best.hours.length/2)];
+  var midEntry=hourly.find(function(e){return e.hour===midHour;});
+  var dewVals=best.hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e&&e.dewF!==undefined?e.dewF:null;}).filter(function(x){return x!==null;});
+  var avgDew=dewVals.length?Math.round(dewVals.reduce(function(a,b){return a+b;},0)/dewVals.length):null;
+  return{label:best.label,score:Math.round(bestScore*10)/10,temp:midEntry?midEntry.tempF:null,dewF:avgDew};
 }
-function clearDragOver(){document.querySelectorAll('.drag-over').forEach(function(el){el.classList.remove('drag-over');});}
-function finalizeDrop(from,to,idx){
-  if(from===to)return;
-  var days=getWeekDays(idx),fd=days[from],td=days[to];
-  if(!weekOverrides[idx])weekOverrides[idx]={};
-  weekOverrides[idx][from]=td||null;weekOverrides[idx][to]=fd;
-  // mark hint shown
-  if(!dragHintShown){dragHintShown=true;sSet('dragHint',1);}
-  sSet('overrides',weekOverrides);renderHome();
+ 
+// slot averages for forecast
+function slotScore(hours,hourly){var s=hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.score:null;}).filter(function(x){return x!==null;});if(!s.length)return null;return Math.round(s.reduce(function(a,b){return a+b;},0)/s.length*10)/10;}
+function slotTemp(hours,hourly){var t=hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.tempF:null;}).filter(function(x){return x!==null;});if(!t.length)return null;return Math.round(t.reduce(function(a,b){return a+b;},0)/t.length);}
+ 
+// ── HOME TAB COMFORT BADGES ───────────────────────────────────────
+// Get best score for a specific date (using Marblehead data)
+function getDateComfortScore(dateStr){
+  if(!forecastCache[0])return null;
+  var day=forecastCache[0].find(function(d){return d.date===dateStr;});
+  if(!day)return null;
+  return optimalWindow(day.hourly);
 }
-function onTouchStart(e){
-  var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;
-  e.preventDefault();
-  dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');
-  var t=e.touches[0];dragState.ghost=createGhost(dragState.label,dist);moveGhost(t.clientX,t.clientY);slot.classList.add('dragging');
-  document.addEventListener('touchmove',onTouchMove,{passive:false});document.addEventListener('touchend',onTouchEnd);
+ 
+function getWeekDateStr(weekIdx,dayKey){
+  // Calculate actual date for a given week and day
+  var START=new Date('2026-03-02');
+  var weekStart=new Date(START.getTime()+weekIdx*7*24*60*60*1000);
+  var dayOffset={mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6};
+  var d=new Date(weekStart.getTime()+dayOffset[dayKey]*24*60*60*1000);
+  return d.toISOString().substring(0,10);
 }
-function onTouchMove(e){
-  if(!dragState.active)return;e.preventDefault();
-  var t=e.touches[0];moveGhost(t.clientX,t.clientY);clearDragOver();
-  var target=getSlotAt(t.clientX,t.clientY);
-  if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;
+ 
+function buildComfortBadge(weekIdx,dayKey){
+  var dateStr=getWeekDateStr(weekIdx,dayKey);
+  var opt=getDateComfortScore(dateStr);
+  if(!opt)return'<div class="comfort-badge loading-badge" id="cbadge-'+dayKey+'">...</div>';
+  var c=scoreColor(opt.score);
+  return'<div class="comfort-badge" id="cbadge-'+dayKey+'" style="background:rgba(0,0,0,.2);color:'+c+';border-color:'+c+'40" onclick="event.stopPropagation();toggleComfortExpand(\''+dayKey+'\')">'+opt.score.toFixed(1)+'</div>';
 }
-function onTouchEnd(e){
-  if(!dragState.active)return;
-  document.removeEventListener('touchmove',onTouchMove);document.removeEventListener('touchend',onTouchEnd);
-  if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();
-  document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});
-  if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);
-  dragState.active=false;dragState.fromDay=null;dragState.overDay=null;
+ 
+function toggleComfortExpand(dayKey){
+  var el=document.getElementById('cexpand-'+dayKey);
+  if(!el)return;
+  el.classList.toggle('open');
 }
-function onMouseDown(e){
-  var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();
-  dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');
-  dragState.ghost=createGhost(dragState.label,dist);moveGhost(e.clientX,e.clientY);slot.classList.add('dragging');
-  document.addEventListener('mousemove',onMouseMove);document.addEventListener('mouseup',onMouseUp);
+ 
+function buildComfortExpand(weekIdx,dayKey){
+  var dateStr=getWeekDateStr(weekIdx,dayKey);
+  var opt=getDateComfortScore(dateStr);
+  if(!opt)return'';
+  var c=scoreColor(opt.score);
+  return'<div class="comfort-expand" id="cexpand-'+dayKey+'">'+
+    '<div class="comfort-expand-row"><span class="comfort-expand-label">Best window</span><span class="comfort-expand-val" style="color:'+c+'">'+opt.label+' &middot; '+opt.score.toFixed(1)+'</span></div>'+
+    (opt.temp!==null?'<div class="comfort-expand-row"><span class="comfort-expand-label">Temperature</span><span class="comfort-expand-val">~'+opt.temp+'°F</span></div>':'')+
+    '<div class="comfort-expand-route">'+routeRec(0,opt.temp||60,opt.dewF||50)+'</div>'+
+    '</div>';
 }
-function onMouseMove(e){
-  if(!dragState.active)return;moveGhost(e.clientX,e.clientY);clearDragOver();
-  var target=getSlotAt(e.clientX,e.clientY);
-  if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;
-}
-function onMouseUp(e){
-  if(!dragState.active)return;
-  document.removeEventListener('mousemove',onMouseMove);document.removeEventListener('mouseup',onMouseUp);
-  if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();
-  document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});
-  if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);
-  dragState.active=false;dragState.fromDay=null;dragState.overDay=null;
-}
-function setupDragDrop(idx){
-  var slots=document.querySelectorAll('#home-slots .day-slot');
-  slots.forEach(function(slot){
-    slot.addEventListener('touchstart',onTouchStart,{passive:false});
-    slot.addEventListener('mousedown',onMouseDown);
+ 
+function buildWeekComfortDots(weekIdx){
+  var days=getWeekDays(weekIdx);
+  var runDays=DAYS.filter(function(dk){return days[dk]&&days[dk]!=='RACE';});
+  if(!forecastCache[0]||runDays.length===0)return'';
+  var html='<div class="week-comfort-row">';
+  DAYS.forEach(function(dk,i){
+    var dist=days[dk];
+    if(!dist||dist==='RACE'){return;}
+    var dateStr=getWeekDateStr(weekIdx,dk);
+    var opt=getDateComfortScore(dateStr);
+    var dotColor=opt?scoreColor(opt.score):'rgba(255,255,255,.15)';
+    html+='<div class="comfort-dot-wrap">'+
+      '<div class="comfort-dot" style="background:'+dotColor+'"></div>'+
+      '<div class="comfort-dot-label">'+DAY_LABELS[i]+'</div>'+
+      '</div>';
   });
-  var checkBtns=document.querySelectorAll('#home-slots .check-btn');
-  checkBtns.forEach(function(btn){
-    var wi=parseInt(btn.getAttribute('data-week')),dk=btn.getAttribute('data-checkday');
-    btn.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:false});
-    btn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();toggleCompleted(wi,dk);});
-    btn.addEventListener('mousedown',function(e){e.stopPropagation();});
-    btn.addEventListener('click',function(e){e.stopPropagation();toggleCompleted(wi,dk);});
-  });
+  html+='</div>';
+  return html;
 }
-
-// ─── BUILD SLOTS ──────────────────────────────────────────────────
+ 
+// ── HOME RENDER ───────────────────────────────────────────────────
 function buildSlots(idx,todayDayIdx){
   var days=getWeekDays(idx),w=WEEKS[idx],html='';
   for(var i=0;i<7;i++){
@@ -467,66 +629,67 @@ function buildSlots(idx,todayDayIdx){
     if(hasRun&&isAnchor)cls+='run-anchor';else if(hasRun)cls+='run-other';else cls+='rest';
     if(isToday)cls+=' today-slot';if(hasRun)cls+=' draggable';if(done)cls+=' completed';
     var runLabel='',runDist='';
-    if(hasRun){
-      if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';
-      if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';
-    }else{runDist='Rest';}
+    if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
+ 
+    // Build slot with comfort badge for all days
     html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+(dist||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
     html+='<div class="day-name">'+label+'</div>';
+    html+='<div class="day-divider"></div>';
     if(hasRun){
-      html+='<div class="day-divider"></div>';
-      html+='<div class="day-run-info">';
-      if(runLabel)html+='<div class="day-run-label">'+runLabel+'</div>';
-      html+='<div class="day-run-dist">'+runDist+'</div>';
-      html+='</div>';
-      if(dist!=='RACE')html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+      html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+      if(dist!=='RACE'){
+        html+=buildComfortBadge(idx,dk);
+        html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+      }
     }else{
-      html+='<div class="day-divider"></div><div class="day-run-dist">'+runDist+'</div>';
+      html+='<div class="day-run-dist" style="flex:1">'+runDist+'</div>';
+      html+=buildComfortBadge(idx,dk);
     }
     html+='</div>';
+    // Comfort expand panel for all days
+    html+=buildComfortExpand(idx,dk);
   }
   return html;
 }
-
+ 
 function buildProgressBar(idx){
-  var p=getProgress(idx);if(p.totalRuns===0)return '';
+  var p=getProgress(idx);if(p.totalRuns===0)return'';
   var pct=Math.round(p.doneMiles/p.totalMiles*100)||0;
   var label=p.doneRuns+' of '+p.totalRuns+' runs';
   var miles=p.doneRuns>0?p.doneMiles.toFixed(1)+' / '+p.totalMiles.toFixed(1)+' mi':p.totalMiles.toFixed(1)+' mi planned';
-  return '<div class="week-progress"><div class="week-progress-label">'+label+'</div><div class="week-progress-bar-wrap"><div class="week-progress-bar" style="width:'+pct+'%"></div></div><div class="week-progress-miles">'+miles+'</div></div>';
+  return'<div class="week-progress"><div class="week-progress-label">'+label+'</div><div class="week-progress-bar-wrap"><div class="week-progress-bar" style="width:'+pct+'%"></div></div><div class="week-progress-miles">'+miles+'</div></div>';
 }
-
-// ─── HOME ─────────────────────────────────────────────────────────
+ 
 function renderHome(){
   var idx=currentWeekIdx,w=WEEKS[idx];
   var today=new Date(),todayDayIdx=JS_TO_IDX[today.getDay()];
   var p=getProgress(idx);
-
-  // Miles summary
-  var milesMain=w.total;
-  var milesSummary='';
-  if(p.totalRuns>0&&p.doneRuns>0){
-    milesSummary='<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>';
-  }
-
-  // Next run with full date
-  var nextRunText='',nextRunSub='';
-  var wkStartDate=new Date('2026-03-02');wkStartDate.setDate(wkStartDate.getDate()+(idx)*7);
+  var milesSummary=p.doneRuns>0?'<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>':'';
+ 
+  // Next run with comfort score
+  var nextRunText='',nextRunSub='',nextRunComfort='';
+  var wkStartDate=new Date('2026-03-02');wkStartDate.setDate(wkStartDate.getDate()+idx*7);
   for(var offset=0;offset<7;offset++){
     var di=(todayDayIdx+offset)%7,dk=DAYS[di],dist=getWeekDays(idx)[dk];
     if(dist!==null&&dist!==undefined){
       var dayDate=new Date(wkStartDate);dayDate.setDate(dayDate.getDate()+di);
-      var mon=dayDate.toLocaleDateString('en-US',{month:'short'});
-      var dayNum=dayDate.getDate();
+      var mon=dayDate.toLocaleDateString('en-US',{month:'short'}),dayNum=dayDate.getDate();
       var distStr=dist==='RACE'?'Race Day':dist+' mi';
       if(offset===0){nextRunText='Today \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
       else if(offset===1){nextRunText='Tomorrow \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
       else{nextRunText=DAY_NAMES_FULL[di]+' \u00b7 '+distStr;nextRunSub=mon+' '+dayNum;}
+      // Add comfort score for next run day
+      var dateStr=getWeekDateStr(idx,dk);
+      var opt=getDateComfortScore(dateStr);
+      if(opt){
+        var c=scoreColor(opt.score);
+        nextRunComfort='<div class="next-run-comfort"><span style="color:'+c+'">&#11044;</span> <span class="next-run-comfort-score" style="color:'+c+'">'+opt.score.toFixed(1)+'</span> <span>comfort &middot; best: '+opt.label+'</span></div>';
+      }
       break;
     }
   }
-
-  // Notes
+ 
+  var badgeHtml='<span class="badge badge-'+w.type+'">'+w.label+'</span>';
   var noteVal=weekNotes[idx]||'';
   var hasNote=noteVal.trim().length>0;
   var noteHtml='<div class="notes-wrap">'+
@@ -536,116 +699,285 @@ function renderHome(){
     '<div id="notebody-'+idx+'" style="display:'+(hasNote?'block':'none')+'">'+
     '<textarea class="notes-field" id="note-'+idx+'" placeholder="How did the week go?" oninput="saveNote('+idx+')">'+noteVal+'</textarea>'+
     '</div></div>';
-
-  // Next week button
+ 
   var nextWkBtn='';
   if(idx<WEEKS.length-1){
     var nw=WEEKS[idx+1];
     nextWkBtn=(homeWeekOffset>0?'<div class="roll-active-banner"><div class="roll-active-text">Showing week '+(idx+1)+' (rolled forward)</div><button class="roll-revert-btn" onclick="revertRoll()">&#8635; Back to now</button></div>':'')+
     '<div class="roll-btn" onclick="rollToNext()"><div class="roll-btn-left"><div class="roll-btn-icon">&#8614;</div><div><div class="roll-btn-title">Plan next week</div><div class="roll-btn-sub">Week '+(idx+2)+' \u00b7 '+nw.date+'</div></div></div><div class="roll-btn-chevron">&#8250;</div></div>';
   }
-
-  var badgeHtml='<span class="badge badge-'+w.type+'">'+w.label+'</span>';
-
+ 
   document.getElementById('homeContent').innerHTML=
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
     '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 34</div>'+
-    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:#1a2332">'+milesMain+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+'</div>'+
+    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:#1a2332">'+w.total+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+'</div>'+
     '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
     badgeHtml+'</div>'+
-
+ 
     '<div class="card" style="margin-top:14px"><div class="card-header"><span class="card-title">This week\'s goal</span></div>'+
     '<div class="card-body"><p class="narrative-text">'+w.narrative+'</p></div></div>'+
-
+ 
     '<div class="card">'+
     (isModified(idx)?'<div class="week-modified-note">Schedule adjusted \u2014 drag to rearrange</div>':'')+
     (!dragHintShown?'<div class="drag-hint">Hold and drag any run to reschedule it</div>':'')+
     '<div id="home-slots" class="day-slots-wrap">'+buildSlots(idx,todayDayIdx)+'</div>'+
     buildProgressBar(idx)+
+    buildWeekComfortDots(idx)+
     (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
     noteHtml+
     '</div>'+
-
+ 
     '<div class="next-run-card"><div><div class="next-run-label">Next run</div>'+
     '<div class="next-run-info">'+nextRunText+'</div>'+
-    '<div class="next-run-sub">'+nextRunSub+'</div></div>'+
+    '<div class="next-run-sub">'+nextRunSub+'</div>'+
+    nextRunComfort+'</div>'+
     '<div class="run-arrow">&#8594;</div></div>'+
-
     nextWkBtn;
-
+ 
   setupDragDrop(idx);
 }
-
-// ─── HISTORY / LOG ────────────────────────────────────────────────
+ 
+// ── DRAG & DROP ───────────────────────────────────────────────────
+function createGhost(label,dist){var el=document.createElement('div');el.className='drag-ghost';el.textContent=(dist&&dist!=='RACE')?dist+' mi':label;document.body.appendChild(el);return el;}
+function moveGhost(x,y){if(dragState.ghost){dragState.ghost.style.left=x+'px';dragState.ghost.style.top=y+'px';}}
+function getSlotAt(x,y){var els=document.querySelectorAll('#home-slots .day-slot');for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return els[i];}return null;}
+function clearDragOver(){document.querySelectorAll('.drag-over').forEach(function(el){el.classList.remove('drag-over');});}
+function finalizeDrop(from,to,idx){if(from===to)return;var days=getWeekDays(idx),fd=days[from],td=days[to];if(!weekOverrides[idx])weekOverrides[idx]={};weekOverrides[idx][from]=td||null;weekOverrides[idx][to]=fd;if(!dragHintShown){dragHintShown=true;sSet('dragHint',1);}sSet('overrides',weekOverrides);renderHome();}
+function onTouchStart(e){var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');var t=e.touches[0];dragState.ghost=createGhost(dragState.label,dist);moveGhost(t.clientX,t.clientY);slot.classList.add('dragging');document.addEventListener('touchmove',onTouchMove,{passive:false});document.addEventListener('touchend',onTouchEnd);}
+function onTouchMove(e){if(!dragState.active)return;e.preventDefault();var t=e.touches[0];moveGhost(t.clientX,t.clientY);clearDragOver();var target=getSlotAt(t.clientX,t.clientY);if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;}
+function onTouchEnd(e){if(!dragState.active)return;document.removeEventListener('touchmove',onTouchMove);document.removeEventListener('touchend',onTouchEnd);if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);dragState.active=false;dragState.fromDay=null;dragState.overDay=null;}
+function onMouseDown(e){var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');dragState.ghost=createGhost(dragState.label,dist);moveGhost(e.clientX,e.clientY);slot.classList.add('dragging');document.addEventListener('mousemove',onMouseMove);document.addEventListener('mouseup',onMouseUp);}
+function onMouseMove(e){if(!dragState.active)return;moveGhost(e.clientX,e.clientY);clearDragOver();var target=getSlotAt(e.clientX,e.clientY);if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;}
+function onMouseUp(e){if(!dragState.active)return;document.removeEventListener('mousemove',onMouseMove);document.removeEventListener('mouseup',onMouseUp);if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);dragState.active=false;dragState.fromDay=null;dragState.overDay=null;}
+function setupDragDrop(idx){
+  var slots=document.querySelectorAll('#home-slots .day-slot');
+  slots.forEach(function(slot){slot.addEventListener('touchstart',onTouchStart,{passive:false});slot.addEventListener('mousedown',onMouseDown);});
+  var checkBtns=document.querySelectorAll('#home-slots .check-btn');
+  checkBtns.forEach(function(btn){
+    var wi=parseInt(btn.getAttribute('data-week')),dk=btn.getAttribute('data-checkday');
+    btn.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:false});
+    btn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();toggleCompleted(wi,dk);});
+    btn.addEventListener('mousedown',function(e){e.stopPropagation();});
+    btn.addEventListener('click',function(e){e.stopPropagation();toggleCompleted(wi,dk);});
+  });
+}
+ 
+// ── HISTORY TAB ───────────────────────────────────────────────────
 function renderHistory(){
   var autoIdx=getAutoWeekIdx(),html='';
   for(var i=0;i<WEEKS.length;i++){
     var w=WEEKS[i],days=getWeekDays(i),p=getProgress(i);
-    var isCurrent=(i===autoIdx);
-    var isPast=i<autoIdx;
+    var isCurrent=(i===autoIdx),isPast=i<autoIdx;
     var note=weekNotes[i]||'';
     var pct=p.totalRuns>0?Math.round(p.doneRuns/p.totalRuns*100):0;
-
-    // Progress ring SVG
     var r=14,circ=2*Math.PI*r,filled=circ*(pct/100);
     var ringColor=isPast?(pct===100?'#52b788':'#f59e0b'):'#52b788';
     var ringHtml='<svg width="36" height="36" style="transform:rotate(-90deg)">'+
       '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="2.5"/>'+
-      '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="'+ringColor+'" stroke-width="2.5" stroke-dasharray="'+filled+' '+circ+'" stroke-linecap="round"/>'+
-      '</svg>'+
+      '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="'+ringColor+'" stroke-width="2.5" stroke-dasharray="'+filled+' '+circ+'" stroke-linecap="round"/></svg>'+
       '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:\'DM Mono\',monospace;color:var(--pale)">'+pct+'%</div>';
-
     html+='<div class="history-week'+(isCurrent?' current-week':'')+'" id="hw-'+i+'">'+
       '<div class="history-week-header" onclick="toggleHistoryWeek('+i+')">'+
-      '<div class="history-week-left">'+
-      '<div class="history-week-num">'+(isCurrent?'CURRENT WEEK \u2014 ':'')+'Week '+w.n+' \u00b7 '+w.label+'</div>'+
-      '<div class="history-week-dates">'+w.date+' \u00b7 '+w.total+' mi</div>'+
-      '</div>'+
-      '<div class="history-week-right">'+
+      '<div><div class="history-week-num">'+(isCurrent?'CURRENT WEEK \u2014 ':'')+'Week '+w.n+' \u00b7 '+w.label+'</div>'+
+      '<div class="history-week-dates">'+w.date+' \u00b7 '+w.total+' mi</div></div>'+
+      '<div style="display:flex;align-items:center;gap:8px">'+
       (p.totalRuns>0?'<div class="history-progress-ring" style="position:relative">'+ringHtml+'</div>':'')+
-      '</div>'+
-      '</div>'+
-      '<div class="history-week-body'+(isCurrent?' open':'')+(i<autoIdx&&isPast?' open':'')+'" id="hwb-'+i+'">'+
+      '</div></div>'+
+      '<div class="history-week-body'+(isCurrent||isPast?' open':'')+'" id="hwb-'+i+'">'+
       buildHistoryBody(i,days,note)+
-      '</div>'+
-      '</div>';
+      '</div></div>';
   }
   document.getElementById('historyContent').innerHTML=html;
-  // Scroll current week into view
-  setTimeout(function(){
-    var el=document.getElementById('hw-'+autoIdx);
-    if(el)el.scrollIntoView({behavior:'smooth',block:'center'});
-  },100);
+  setTimeout(function(){var el=document.getElementById('hw-'+autoIdx);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},100);
 }
-
 function buildHistoryBody(idx,days,note){
   var w=WEEKS[idx],html='<div style="padding:0 4px">';
   for(var i=0;i<DAYS.length;i++){
-    var dk=DAYS[i],dist=days[dk];
-    if(!dist)continue;
+    var dk=DAYS[i],dist=days[dk];if(!dist)continue;
     var done=isCompleted(idx,dk);
     var distStr=dist==='RACE'?'&#127937; Race':dist+' mi';
     html+='<div class="history-run-row">'+
       '<div class="history-day-tag">'+DAY_LABELS[i]+'</div>'+
       '<div class="history-dist" style="color:'+(done?'var(--green-light)':'var(--cream)')+'">'+distStr+'</div>'+
-      '<div class="history-check '+(done?'done':'pending')+'">'+(done?'&#10003;':'')+'</div>'+
-      '</div>';
+      '<div class="history-check '+(done?'done':'pending')+'">'+(done?'&#10003;':'')+'</div></div>';
   }
   if(note)html+='<div class="history-note">'+note+'</div>';
-  html+='</div>';
-  return html;
+  html+='</div>';return html;
 }
-
-function toggleHistoryWeek(idx){
-  var body=document.getElementById('hwb-'+idx);
-  if(body)body.classList.toggle('open');
+function toggleHistoryWeek(idx){var body=document.getElementById('hwb-'+idx);if(body)body.classList.toggle('open');}
+ 
+// ── NOW TAB ───────────────────────────────────────────────────────
+function renderNowLocSelector(){
+  document.getElementById('nowLocSelector').innerHTML=LOCS.map(function(l,i){
+    return'<div class="loc-pill'+(i===nowLocIdx?' active':'')+'" onclick="selectNowLoc('+i+')">'+l.name+'</div>';
+  }).join('');
 }
-
-// ─── MEALS ────────────────────────────────────────────────────────
-function getMealWeekIdx(){
-  // Auto-sync: current week mod 4 (0-indexed)
-  return getAutoWeekIdx()%4;
+function selectNowLoc(idx){nowLocIdx=idx;renderNowLocSelector();loadNow(idx);}
+ 
+async function loadNow(locIdx){
+  document.getElementById('csScoreCard').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fetching conditions for '+LOCS[locIdx].name+'...</div></div>';
+  document.getElementById('csCondCard').style.display='none';
+  document.getElementById('csWeekCard').innerHTML='';
+  document.getElementById('csAlertBox').innerHTML='';
+  document.getElementById('csRecCard').style.display='none';
+  document.getElementById('csLastUpdated').textContent='';
+  try{
+    var loc=LOCS[locIdx];
+    var data=await fetchWeather(loc.lat,loc.lon);
+    var c=data.current,code=c.weather_code;
+    var obs={tempF:Math.round(c.temperature_2m),dewF:Math.round(c.dew_point_2m),rh:Math.round(c.relative_humidity_2m),windMph:Math.round(c.wind_speed_10m),hour:new Date().getHours(),overcast:overcastFromCode(code),precip:precipFromCode(code),condLabel:forecastLabel(code)};
+    renderNow(obs,locIdx);
+    if(!forecastCache[locIdx])forecastCache[locIdx]=parseHourly(data);
+    // If this is Marblehead, re-render home to update comfort badges
+    if(locIdx===0){renderHome();renderHistory();}
+    if(document.getElementById('page-forecast').classList.contains('active'))renderForecast();
+  }catch(e){
+    console.error(e);
+    document.getElementById('csScoreCard').innerHTML='<div class="error-wrap"><div class="error-icon">&#9728;</div><div class="error-msg">Could not load conditions for '+LOCS[locIdx].name+'.<br>Check your connection and tap refresh.</div></div>';
+    document.getElementById('csLastUpdated').textContent='Failed at '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+  }
 }
+ 
+function buildRecs(result,obs,week,locIdx){
+  var s=result.score,T=obs.tempF,dp=obs.dewF,hour=obs.hour,recs=[];
+  if(s<5.5&&T>70){recs.push({i:'⏰',t:hour>=9?'<strong>Reschedule to early morning</strong> — before 7am is significantly cooler.':'<strong>You are in the best window</strong> for a hot day. Start now.'});}
+  else if(hour>=11&&hour<=15&&T>65){recs.push({i:'⏰',t:'<strong>Midday heat</strong> — if possible, wait for evening or run tomorrow morning.'});}
+  else if(s>=7){recs.push({i:'⏰',t:'<strong>Good time to run</strong> — conditions are favorable right now.'});}
+  if(T>80||dp>68){recs.push({i:'🐢',t:'<strong>Slow 60–90 sec/mile</strong> from easy pace. Run by effort — ignore GPS pace.'});}
+  else if(T>73||dp>62){recs.push({i:'🐢',t:'<strong>Slow 30–45 sec/mile.</strong> Go by feel.'});}
+  else if(T<25){recs.push({i:'🐢',t:'<strong>Start slow</strong> — first mile easy regardless of plan.'});}
+  else{recs.push({i:'✅',t:'<strong>Normal pace</strong> is fine in current conditions.'});}
+  if(T>72||dp>60){recs.push({i:'💧',t:'<strong>Carry Tailwind</strong> — start drinking from mile 1, every 15–20 min. Pre-hydrate 16oz before heading out.'+(dp>65?' Sweat losses can reach 24–32oz/hour.':'')});}
+  else if(T>60){recs.push({i:'💧',t:'<strong>Hydrate before the run.</strong> Carry water on efforts over 7 miles.'});}
+  else{recs.push({i:'💧',t:'<strong>Standard hydration.</strong> Carrying water optional under 8 miles.'});}
+  if(T<20||result.wc<15){recs.push({i:'🧤',t:'<strong>Full cold-weather kit</strong> — balaclava, insulated gloves, base layer, wind shell. Cover all exposed skin.'});}
+  else if(T<32){recs.push({i:'🧤',t:'<strong>Gloves, hat, wind layer</strong> — moisture-wicking base under a shell. Watch for ice.'});}
+  else if(T<45){recs.push({i:'🧤',t:'<strong>Light gloves and hat advisable.</strong>'});}
+  if(obs.precip==='freezingRain'||obs.precip==='ice'){recs.push({i:'🚫',t:'<strong>Do not run outdoors</strong> — freezing rain. Treadmill only.'});}
+  else if(obs.precip==='snow'){recs.push({i:'⚠️',t:'<strong>Snow</strong> — trail shoes, slow down, watch for ice.'});}
+  else if(obs.precip==='rain'){recs.push({i:'🌧',t:'<strong>Rain</strong> — waterproof layer if cold. Warm rain helps cooling.'});}
+  else if(obs.precip==='thunder'){recs.push({i:'⛈',t:'<strong>Thunderstorm</strong> — do not run outdoors.'});}
+  if(week){
+    if(s<4&&week.sat>=8){recs.push({i:'📋',t:'<strong>Week '+week.n+':</strong> Saturday is '+week.sat+' miles. Consider treadmill or a shorter shaded trail effort.'});}
+    else if(s<6&&week.sat>=7){recs.push({i:'📋',t:'<strong>Week '+week.n+':</strong> Saturday is '+week.sat+' miles. Early start + shaded route recommended.'});}
+    else if(s>=7&&week.type==='heat'){recs.push({i:'📋',t:'<strong>Heat block week '+week.n+':</strong> Better than typical. Good day to hit the full '+week.sat+'-mile target.'});}
+  }
+  if(s<=2){recs.push({i:'🚫',t:'<strong>Consider skipping today.</strong> One missed run does not affect fitness. Treadmill or rest day.'});}
+  return recs;
+}
+ 
+function renderNow(obs,locIdx){
+  var result=computeScore(obs),s=result.score,color=scoreColor(s);
+  var circ=2*Math.PI*54,filled=circ*(s/10);
+  document.getElementById('csScoreCard').innerHTML=
+    '<div class="score-wrap">'+
+    '<div class="score-ring"><svg width="140" height="140" viewBox="0 0 140 140">'+
+    '<circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="10"/>'+
+    '<circle cx="70" cy="70" r="54" fill="none" stroke="'+color+'" stroke-width="10" stroke-dasharray="'+filled.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/></svg>'+
+    '<div class="score-num"><div class="score-big" style="color:'+color+'">'+s.toFixed(1)+'</div><div class="score-outof">out of 10</div></div></div>'+
+    '<div class="score-label-cs" style="color:'+color+'">'+scoreLabel(s)+'</div>'+
+    '<div class="score-desc-cs">'+scoreDesc(s,obs)+'</div>'+
+    '<div class="score-route-cs">'+routeRec(locIdx,obs.tempF,obs.dewF)+'</div>'+
+    '</div>';
+  var feelsLike=obs.tempF>70?result.hi:(obs.tempF<50?result.wc:obs.tempF);
+  var feelsLabel=obs.tempF>70?'Heat index':(obs.tempF<50?'Wind chill':'Feels like');
+  document.getElementById('csCondCard').innerHTML=
+    '<div class="cond-grid">'+
+    '<div class="cond-cell"><div class="cond-label">Temperature</div><div class="cond-value">'+obs.tempF+'°F</div><div class="cond-sub">'+feelsLabel+' '+feelsLike+'°F</div></div>'+
+    '<div class="cond-cell"><div class="cond-label">Dew Point</div><div class="cond-value">'+obs.dewF+'°F</div><div class="cond-sub">Humidity '+obs.rh+'%</div></div>'+
+    '<div class="cond-cell"><div class="cond-label">Wind</div><div class="cond-value">'+obs.windMph+' mph</div><div class="cond-sub">'+(obs.windMph<5?'Calm':obs.windMph<12?'Light breeze':obs.windMph<20?'Moderate':'Strong')+'</div></div>'+
+    '<div class="cond-cell"><div class="cond-label">Conditions</div><div class="cond-value" style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:500;padding-top:2px">'+obs.condLabel+'</div><div class="cond-sub">'+LOCS[locIdx].name+'</div></div>'+
+    '</div>'+
+    '<div class="factor-section"><div class="factor-section-label">Factor breakdown</div>'+
+    [['Temperature',result.factors.temp],['Dew Point',result.factors.dew],['Sun / Time',result.factors.sun],['Wind',result.factors.wind],['Precipitation',result.factors.precip]].map(function(f){
+      return'<div class="factor-row"><div class="factor-name">'+f[0]+'</div><div class="factor-bar-wrap"><div class="factor-bar" style="width:'+(f[1]*10)+'%;background:'+scoreColor(f[1])+'"></div></div><div class="factor-score">'+f[1].toFixed(1)+'</div></div>';
+    }).join('')+'</div>';
+  document.getElementById('csCondCard').style.display='block';
+  var week=WEEKS[getAutoWeekIdx()];
+  document.getElementById('csWeekCard').innerHTML=
+    '<div class="card"><div class="week-banner">'+
+    '<div><div class="week-label-sm">Current training week</div>'+
+    '<div class="week-name">Week '+week.n+' of 34 &nbsp;&middot;&nbsp; '+week.date+'</div>'+
+    '<div class="week-detail">Sat long run: '+week.sat+' mi &nbsp;&middot;&nbsp; Total: '+week.total+' mi</div></div>'+
+    '<span class="badge badge-'+week.type+'">'+week.label+'</span></div></div>';
+  var alertHtml='';
+  if(s<=2)alertHtml='<div class="alert-cs alert-danger">&#9888; Dangerous conditions — strongly recommended to move indoors or take a rest day.</div>';
+  else if(s<=3.5)alertHtml='<div class="alert-cs alert-warn">&#9888; Difficult conditions — significant modifications required.</div>';
+  document.getElementById('csAlertBox').innerHTML=alertHtml;
+  var recs=buildRecs(result,obs,week,locIdx);
+  document.getElementById('csRecList').innerHTML=recs.map(function(r){return'<div class="rec-item"><div class="rec-icon">'+r.i+'</div><div class="rec-text">'+r.t+'</div></div>';}).join('');
+  document.getElementById('csRecCard').style.display='block';
+  document.getElementById('csLastUpdated').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' \u00b7 '+LOCS[locIdx].name;
+}
+ 
+// ── FORECAST TAB ──────────────────────────────────────────────────
+function renderForecastDayLocSelector(dayIdx){
+  var locIdx=dayLocIdx[dayIdx]!==undefined?dayLocIdx[dayIdx]:0;
+  return LOCS.map(function(l,i){return'<div class="day-loc-pill'+(i===locIdx?' active':'')+'" onclick="selectDayLoc('+dayIdx+','+i+')">'+l.short+'</div>';}).join('');
+}
+function selectDayLoc(dayIdx,locIdx){
+  dayLocIdx[dayIdx]=locIdx;
+  if(!forecastCache[locIdx])loadForecastLoc(dayIdx,locIdx);
+  else renderForecast();
+}
+async function loadForecastLoc(dayIdx,locIdx){
+  try{if(!forecastCache[locIdx]){var loc=LOCS[locIdx];var data=await fetchWeather(loc.lat,loc.lon);forecastCache[locIdx]=parseHourly(data);}renderForecast();}catch(e){console.error(e);}
+}
+function renderForecast(){
+  if(!Object.keys(forecastCache).length)return;
+  var today=new Date(),todayStr=today.toDateString();
+  var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var baseLoc=Object.keys(forecastCache)[0];
+  var baseDays=forecastCache[baseLoc];
+  var html='';
+  baseDays.forEach(function(baseDay,dayIdx){
+    var d=new Date(baseDay.date+'T12:00:00');
+    var isToday=d.toDateString()===todayStr;
+    var dayLabel=isToday?'Today':dayNames[d.getDay()];
+    var dateLabel=monthNames[d.getMonth()]+' '+d.getDate();
+    var locIdx=dayLocIdx[dayIdx]!==undefined?dayLocIdx[dayIdx]:0;
+    var dayData=forecastCache[locIdx]?forecastCache[locIdx][dayIdx]:null;
+    function slot(score,temp,label){
+      if(score===null||dayData===null){return'<div class="forecast-slot"><div class="forecast-slot-time">'+label+'</div><div class="forecast-slot-score" style="color:var(--muted);font-size:18px">—</div><div class="forecast-slot-label" style="color:var(--muted);font-size:10px">'+(dayData===null?'Loading':'N/A')+'</div><div class="forecast-slot-temp"></div></div>';}
+      var c=scoreColor(score),l=scoreLabel(score);
+      return'<div class="forecast-slot"><div class="forecast-slot-time">'+label+'</div><div class="forecast-slot-score" style="color:'+c+'">'+score.toFixed(1)+'</div><div class="forecast-slot-label" style="color:'+c+'">'+l+'</div><div class="forecast-slot-temp">'+(temp!==null?temp+'°F':'')+'</div></div>';
+    }
+    var mornScore=dayData?slotScore([6,7,8],dayData.hourly):null;
+    var noonScore=dayData?slotScore([11,12,13],dayData.hourly):null;
+    var eveScore=dayData?slotScore([17,18,19],dayData.hourly):null;
+    var mornTemp=dayData?slotTemp([6,7,8],dayData.hourly):null;
+    var noonTemp=dayData?slotTemp([11,12,13],dayData.hourly):null;
+    var eveTemp=dayData?slotTemp([17,18,19],dayData.hourly):null;
+    var opt=dayData?optimalWindow(dayData.hourly):null;
+    var condLabel=dayData?dayData.condLabel:baseDay.condLabel;
+    var optHtml='';
+    if(opt){
+      var oc=scoreColor(opt.score);
+      var routeText=opt.temp!==null?routeRec(locIdx,opt.temp,opt.dewF!==null?opt.dewF:55):'';
+      optHtml='<div class="forecast-optimal">'+
+        '<div class="forecast-optimal-label">Optimal run window &nbsp;&middot;&nbsp; '+LOCS[locIdx].name+'</div>'+
+        '<strong>'+opt.label+'</strong>'+(opt.temp!==null?' &nbsp;&middot;&nbsp; ~'+opt.temp+'°F':'')+
+        ' &nbsp;&middot;&nbsp; <span style="color:'+oc+'">'+opt.score.toFixed(1)+'</span>'+
+        (routeText?'<div style="margin-top:6px;font-size:11px;color:var(--green-light);opacity:.85;line-height:1.5">'+routeText+'</div>':'')+
+        '</div>';
+    }else{
+      optHtml='<div class="forecast-optimal"><div class="forecast-optimal-label">Optimal run window</div>Loading '+LOCS[locIdx].name+' data...</div>';
+    }
+    html+='<div class="forecast-day'+(isToday?' today-day':'')+'" id="fday-'+dayIdx+'">'+
+      '<div class="forecast-day-header">'+
+      '<div class="forecast-day-top"><span class="forecast-day-name">'+dayLabel+'</span><span class="forecast-day-date">'+dateLabel+'</span></div>'+
+      '<div class="forecast-cond">'+condLabel+'</div>'+
+      '<div class="day-loc-selector">'+renderForecastDayLocSelector(dayIdx)+'</div>'+
+      '</div>'+
+      '<div class="forecast-slots">'+slot(mornScore,mornTemp,'Morning')+slot(noonScore,noonTemp,'Midday')+slot(eveScore,eveTemp,'Evening')+'</div>'+
+      optHtml+'</div>';
+  });
+  document.getElementById('forecastContent').innerHTML=html;
+}
+ 
+// ── MEALS (guide) ─────────────────────────────────────────────────
+function getMealWeekIdx(){return getAutoWeekIdx()%4;}
 function renderMeals(){
   var wk=MEAL_WEEKS[currentMealWeek];
   var autoMeal=getMealWeekIdx();
@@ -654,53 +986,59 @@ function renderMeals(){
   document.getElementById('mealPrevBtn').className='nav-btn'+(currentMealWeek===0?' disabled':'');
   document.getElementById('mealNextBtn').className='nav-btn'+(currentMealWeek===MEAL_WEEKS.length-1?' disabled':'');
   var totalProtein=wk.meals.reduce(function(s,m){return s+m.protein_g*m.containers;},0);
-  var mealsHtml=wk.meals.map(function(m){
-    return '<div class="meal-card"><div class="meal-card-header" style="background:'+m.color+'"><div><div class="meal-name">'+m.name+'</div><div class="meal-containers">Makes '+m.containers+' container'+(m.containers>1?'s':'')+'</div></div><span class="protein-badge" style="background:rgba(0,0,0,.2);color:'+m.accent+'">'+m.protein_g+'g protein</span></div><div class="meal-card-body"><div class="meal-detail-row"><div class="meal-detail-label">Protein</div><div class="meal-detail-value">'+m.protein+'</div></div><div class="meal-detail-row"><div class="meal-detail-label">Season</div><div class="meal-detail-value">'+m.seasoning+'</div></div><div class="meal-detail-row"><div class="meal-detail-label">Sides</div><div class="meal-detail-value">'+m.sides+'</div></div><div style="font-size:12px;color:var(--muted);font-style:italic;line-height:1.55;margin-top:8px;font-weight:300">'+m.note+'</div></div></div>';
+  var html='<div class="sunday-tip"><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;opacity:.8">Sunday evening</div>'+wk.tip+'</div>';
+  html+=wk.meals.map(function(m){
+    return'<div class="meal-card"><div class="meal-card-header" style="background:'+m.color+'">'+
+      '<div><div class="meal-name">'+m.name+'</div><div class="meal-containers">Makes '+m.containers+' container'+(m.containers>1?'s':'')+'</div></div>'+
+      '<span class="protein-badge" style="background:rgba(0,0,0,.2);color:'+m.accent+'">'+m.protein_g+'g protein</span></div>'+
+      '<div class="meal-card-body">'+
+      '<div class="meal-detail-row"><div class="meal-detail-label">Protein</div><div class="meal-detail-value">'+m.protein+'</div></div>'+
+      '<div class="meal-detail-row"><div class="meal-detail-label">Season</div><div class="meal-detail-value">'+m.seasoning+'</div></div>'+
+      '<div class="meal-detail-row"><div class="meal-detail-label">Sides</div><div class="meal-detail-value">'+m.sides+'</div></div>'+
+      '<div style="font-size:12px;color:var(--muted);font-style:italic;line-height:1.55;margin-top:8px;font-weight:300">'+m.note+'</div>'+
+      '</div></div>';
   }).join('');
-  document.getElementById('mealContent').innerHTML='<div class="sunday-tip"><div class="sunday-tip-label">Sunday evening</div>'+wk.tip+'</div>'+mealsHtml+'<div style="text-align:center;padding:8px 0 4px;font-size:13px;color:var(--muted)">Weekly protein from lunches: <span style="color:var(--green-light);font-family:\'DM Mono\',monospace;font-weight:500">'+totalProtein+'g</span> across 4 containers</div>';
+  html+='<div style="text-align:center;padding:8px 0 4px;font-size:13px;color:var(--muted)">Weekly protein from lunches: <span style="color:var(--green-light);font-family:\'DM Mono\',monospace;font-weight:500">'+totalProtein+'g</span> across 4 containers</div>';
+  document.getElementById('mealContent').innerHTML=html;
 }
-function changeMealWeek(dir){
-  var n=currentMealWeek+dir;if(n<0||n>=MEAL_WEEKS.length)return;
-  currentMealWeek=n;renderMeals();
-}
-
-// ─── PAGE NAV ─────────────────────────────────────────────────────
+function changeMealWeek(dir){var n=currentMealWeek+dir;if(n<0||n>=MEAL_WEEKS.length)return;currentMealWeek=n;renderMeals();}
+ 
+// ── GUIDE OVERLAY ─────────────────────────────────────────────────
+function openGuide(){document.getElementById('guideOverlay').classList.add('open');renderMeals();}
+function closeGuide(){document.getElementById('guideOverlay').classList.remove('open');}
+ 
+// ── PAGE NAV ──────────────────────────────────────────────────────
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.getElementById('page-'+id).classList.add('active');
-  var tabMap={home:0,history:1,meals:2,nutrition:3,bridge:4};
+  var tabMap={home:0,history:1,comfort:2,forecast:3,bridge:4};
   document.querySelectorAll('.tab')[tabMap[id]].classList.add('active');
   document.querySelector('.content').scrollTop=0;
   if(id==='history')renderHistory();
+  if(id==='forecast'){
+    if(Object.keys(forecastCache).length>0)renderForecast();
+    else{document.getElementById('forecastContent').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading forecast...</div></div>';loadNow(0);}
+  }
 }
-
-// ─── INIT ─────────────────────────────────────────────────────────
+ 
+// ── INIT ──────────────────────────────────────────────────────────
 function init(){
-  // Load persisted data
   var ov=sGet('overrides');if(ov)weekOverrides=ov;
   var locked=sGet('locked');if(locked){for(var k in locked){var idx=parseInt(k);WEEKS[idx].days=locked[k];}}
   var comp=sGet('completed');if(comp)completedRuns=comp;
   var notes=sGet('notes');if(notes)weekNotes=notes;
   var ro=sGet('rollOffset');if(ro!==null&&!isNaN(parseInt(ro)))homeWeekOffset=parseInt(ro);
   dragHintShown=!!sGet('dragHint');
-
-  // Auto-clear completed runs for past weeks
   var autoIdx=getAutoWeekIdx(),lastSeen=sGet('lastSeenWeek');
   if(lastSeen===null){sSet('lastSeenWeek',autoIdx);}
-  else if(autoIdx>lastSeen){
-    for(var i=lastSeen;i<autoIdx;i++){if(completedRuns[i])delete completedRuns[i];}
-    sSet('completed',completedRuns);sSet('lastSeenWeek',autoIdx);
-  }
-
+  else if(autoIdx>lastSeen){for(var i=lastSeen;i<autoIdx;i++){if(completedRuns[i])delete completedRuns[i];}sSet('completed',completedRuns);sSet('lastSeenWeek',autoIdx);}
   currentWeekIdx=getHomeWeekIdx();
   currentMealWeek=getMealWeekIdx();
-
-  var today=new Date();
-  document.getElementById('headerDate').textContent=today.toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
-
+  document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
   renderHome();
-  renderMeals();
+  // Load Marblehead weather (drives home tab comfort badges)
+  loadNow(0);
 }
 init();
 </script>
