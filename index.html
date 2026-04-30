@@ -50,7 +50,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .badge-race{background:var(--red-pale);color:var(--red)}
 .badge-post{background:rgba(255,255,255,.1);color:var(--pale)}
 .badge-bridge{background:var(--green-pale);color:var(--green)}
- 
+
 /* DAY SLOTS */
 .day-slot{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;position:relative}
 .day-slot.run-anchor{background:var(--green)}
@@ -80,12 +80,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;color:transparent}
 .day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
 .day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
- 
+
 /* COMFORT BADGE ON DAY SLOTS */
 .comfort-badge{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;flex-shrink:0;font-family:'DM Serif Display',serif;font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s;border:2px solid transparent}
 .comfort-badge:active{transform:scale(.92)}
 .comfort-badge.loading-badge{background:rgba(255,255,255,.07);color:var(--muted);font-size:10px;font-family:'DM Sans',sans-serif;font-weight:400}
- 
+
 /* COMFORT EXPAND POPUP */
 .comfort-expand{display:none;padding:8px 12px 10px;border-top:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.15)}
 .comfort-expand.open{display:block}
@@ -93,40 +93,40 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .comfort-expand-label{color:var(--pale)}
 .comfort-expand-val{color:var(--cream);font-family:'DM Mono',monospace}
 .comfort-expand-route{font-size:11px;color:var(--pale);line-height:1.5;margin-top:6px;font-style:italic}
- 
+
 /* WEEKLY COMFORT DOTS */
 .week-comfort-row{display:flex;align-items:center;gap:6px;padding:8px 16px 10px;border-top:1px solid rgba(255,255,255,.05)}
 .comfort-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
 .comfort-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1)}
 .comfort-dot-label{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.03em}
- 
+
 /* PROGRESS BAR */
 .week-progress{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05)}
 .week-progress-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
 .week-progress-bar{height:100%;background:var(--green-light);border-radius:2px;transition:width .3s ease}
 .week-progress-label{font-size:12px;color:var(--pale);font-family:'DM Mono',monospace;white-space:nowrap}
 .week-progress-miles{font-size:12px;color:var(--green-light);font-family:'DM Mono',monospace;white-space:nowrap}
- 
+
 /* ACTION BUTTONS */
 .action-btns{display:flex;gap:8px;padding:0 12px 12px}
 .reset-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--pale);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
 .lock-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(82,183,136,.15);border:1px solid var(--green-light);border-radius:12px;color:var(--green-light);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
 .week-modified-note{font-size:11px;color:var(--amber-light);text-align:center;padding:8px 12px 2px;font-style:italic}
- 
+
 /* DRAG */
 .day-slot.draggable{cursor:grab}
 .day-slot.drag-over{outline:2px dashed var(--green-light);outline-offset:-2px;background:rgba(82,183,136,.15) !important}
 .day-slot.dragging{opacity:.3;transform:scale(.97);transition:opacity .1s,transform .1s}
 .drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--green);border-radius:12px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:white;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.5);white-space:nowrap;transform:translate(-50%,-50%)}
 .drag-hint{font-size:11px;color:var(--muted);text-align:center;padding:4px 12px 8px;font-style:italic}
- 
+
 /* NOTES */
 .notes-wrap{padding:6px 14px 12px}
 .notes-toggle{font-size:12px;color:var(--pale);cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 0}
 .notes-field{width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;resize:none;margin-top:6px;line-height:1.6;min-height:70px}
 .notes-field:focus{outline:none;border-color:var(--green-light)}
 .notes-dot{width:6px;height:6px;border-radius:50%;background:var(--amber-light);flex-shrink:0}
- 
+
 /* NEXT RUN BANNER */
 .next-run-card{background:linear-gradient(135deg,var(--green) 0%,#1a4731 100%);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .next-run-label{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
@@ -135,7 +135,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .next-run-comfort{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:12px;color:rgba(255,255,255,.7)}
 .next-run-comfort-score{font-family:'DM Mono',monospace;font-weight:500}
 .run-arrow{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
- 
+
 /* ROLL FORWARD */
 .roll-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;margin-bottom:12px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;color:var(--cream);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
 .roll-btn:active{background:var(--navy-light)}
@@ -147,7 +147,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .roll-active-banner{display:flex;align-items:center;justify-content:space-between;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:10px 14px;margin-bottom:12px}
 .roll-active-text{font-size:13px;color:var(--amber-light)}
 .roll-revert-btn{font-size:12px;color:var(--amber-light);background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;white-space:nowrap;flex-shrink:0;margin-left:10px}
- 
+
 /* HISTORY */
 .history-week{background:var(--navy-mid);border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:10px;overflow:hidden}
 .history-week.current-week{border-color:var(--green-light)}
@@ -165,10 +165,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .history-check.done{background:var(--green-light);color:white}
 .history-check.pending{background:rgba(255,255,255,.08);color:transparent}
 .history-note{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0 0;line-height:1.5}
- 
+
 /* NARRATIVE */
 .narrative-text{font-size:14px;color:var(--pale);line-height:1.75;font-weight:300}
- 
+
 /* COMFORT (NOW) TAB */
 .loc-selector{display:flex;gap:6px;margin-bottom:14px}
 .loc-pill{flex:1;text-align:center;padding:8px 6px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.04em;cursor:pointer;transition:background .15s,color .15s;background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);color:var(--pale)}
@@ -207,7 +207,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .refresh-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.25);border-radius:14px;color:var(--green-light);font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background .15s;margin-bottom:10px}
 .refresh-btn:active{background:rgba(82,183,136,.22)}
 .last-updated-cs{text-align:center;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.04em;margin-bottom:16px}
- 
+
 /* FORECAST TAB */
 .forecast-day{background:var(--navy-mid);border-radius:16px;border:1px solid rgba(255,255,255,.07);margin-bottom:12px;overflow:hidden}
 .forecast-day.today-day{border-color:var(--green-light)}
@@ -227,7 +227,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .forecast-slot-temp{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace}
 .forecast-optimal{margin:0 12px 12px;background:rgba(82,183,136,.08);border:1px solid rgba(82,183,136,.15);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--green-light);line-height:1.55}
 .forecast-optimal-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;opacity:.7;margin-bottom:3px}
- 
+
 /* GUIDE OVERLAY */
 .guide-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,16,25,.92);overflow-y:auto;padding:calc(env(safe-area-inset-top,20px) + 16px) 20px 40px}
 .guide-overlay.open{display:block}
@@ -256,7 +256,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .nav-info{text-align:center;flex:1;padding:0 10px}
 .nav-title{font-family:'DM Serif Display',serif;font-size:16px}
 .nav-sub{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:1px}
- 
+
 /* 2027 / BRIDGE */
 .section-head{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px}
 .phase-block{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:12px;overflow:hidden}
@@ -267,7 +267,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .marathon-callout{background:var(--green);border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
 .marathon-callout-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
 .marathon-callout-date{font-family:'DM Serif Display',serif;font-size:22px;color:white}
- 
+
 /* LOADING / SPINNER */
 .loading-wrap{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:14px}
 .spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--green-light);border-radius:50%;animation:spin .8s linear infinite}
@@ -333,7 +333,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
     </div>
   </div>
 </div>
- 
+
 <!-- GUIDE OVERLAY -->
 <div class="guide-overlay" id="guideOverlay">
   <div class="guide-header">
@@ -370,7 +370,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Bottles that do not swish</div><div class="info-text">Nathan SpeedDraw Plus 18oz — strap holds bottle against palm, bite valve prevents sloshing. ~$30. Soft flasks collapse as you drink, eliminating sloshing entirely. Nathan Pinnacle belt or Ultimate Direction FK for high-heat long runs when you want hands free.</div></div>
   </div>
 </div>
- 
+
 <script>
 // ── LOCATIONS ─────────────────────────────────────────────────────
 var LOCS=[
@@ -381,7 +381,7 @@ var LOCS=[
 var nowLocIdx=0;
 var dayLocIdx={};
 var forecastCache={};
- 
+
 // ── SCHEDULE DATA ─────────────────────────────────────────────────
 var WEEKS=[
   {n:1,date:"Mar 2",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:null,thu:null,fri:null,sat:3,sun:2},total:7,narrative:"This is your first week back. The goal is simply to reestablish the habit of running - three easy efforts, nothing more. Tuesday is your midweek anchor at 2 miles, and Saturday carries the long run at 3 miles. Both should feel comfortable and conversational. Do not push the pace. Resist any urge to add mileage if you feel good."},
@@ -419,7 +419,7 @@ var WEEKS=[
   {n:33,date:"Oct 12",type:"taper",label:"TAPER",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3.5},total:19,narrative:"Taper begins. Volume drops to 19 miles with Saturday carrying an 8-mile long run - shorter than recent weeks but still purposeful. Tuesday at 4 miles, Wednesday at 3.5, Sunday at 3.5. The taper can feel psychologically uncomfortable - legs feel heavy, energy seems off, doubt creeps in. This is normal and universal among runners. Trust the training. Prepare race-day logistics: course review, gear check, breakfast plan. The Seacoast Half Marathon is in Portsmouth, NH - confirm parking and start time in advance. Fueling note: finalize your race-day fueling plan this week and do not change it. Confirm what Seacoast provides at aid stations - if they do not carry your Tailwind flavor or a gel brand you have trained with, plan to carry your own. Saturday 8-miler this week is your last full rehearsal of the race-day fueling protocol."},
   {n:34,date:"Oct 19",type:"race",label:"RACE WEEK",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:2,sun:"RACE"},total:"7.5",narrative:"Race week. Tuesday 3 miles and Wednesday 2.5 miles are easy shakeout runs - keep the legs moving without adding fatigue. Saturday is a 2-mile shakeout only. Sunday, October 25th is the Seacoast Half Marathon in Portsmouth, NH. You have run 34 weeks to get here, built from 7 miles to 25, survived a summer of heat, and arrived with a peak long run of 11 miles under your belt. Run the first half conservatively. You have earned this."}
 ];
- 
+
 var MEAL_WEEKS=[
   {n:1,theme:"The Classic Grill",tip:"Start grill, season while it heats. Chicken goes on first, sausage last. About 25 minutes total.",meals:[
     {name:"Chicken Thighs + Rice + Black Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, garlic powder, smoked paprika, salt, pepper",sides:"Canned black beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Grill 6-7 min/side on medium-high. Hard to overcook. One rice pouch across both containers.",color:"#1a3a2a",accent:"#52b788"},
@@ -435,7 +435,7 @@ var MEAL_WEEKS=[
     {name:"Lamb Chops + Farro + Chickpeas",containers:2,protein:"Loin lamb chops - 2 chops per container (~5 oz meat)",seasoning:"Olive oil, dried rosemary, garlic powder, salt, pepper",sides:"Canned chickpeas (drain, rinse) | 90-sec farro pouch",protein_g:46,note:"High heat, 3-4 min/side, rest 3 min. Most impressive lunch container with almost no skill required.",color:"#2a1a0a",accent:"#f97316"},
     {name:"Chicken Thighs + Rice + White Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, Italian seasoning, salt, pepper",sides:"Canned white beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Same chicken prep as Week 1. Italian seasoning gives a different flavor profile.",color:"#1a3a2a",accent:"#52b788"}]}
 ];
- 
+
 var DAYS=["mon","tue","wed","thu","fri","sat","sun"];
 var DAY_LABELS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 var DAY_NAMES_FULL=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
@@ -448,11 +448,11 @@ var dragHintShown=false;
 // Comfort scores per day keyed by YYYY-MM-DD
 var dayComfortScores={};
 var weekComfortDots=[];
- 
+
 // ── STORAGE ───────────────────────────────────────────────────────
 function sGet(k){try{return JSON.parse(localStorage.getItem('r26_'+k));}catch(e){return null;}}
 function sSet(k,v){try{localStorage.setItem('r26_'+k,JSON.stringify(v));}catch(e){}}
- 
+
 // ── WEEK HELPERS ──────────────────────────────────────────────────
 function getWeekDays(idx){var w=WEEKS[idx];var b={mon:w.days.mon,tue:w.days.tue,wed:w.days.wed,thu:w.days.thu,fri:w.days.fri,sat:w.days.sat,sun:w.days.sun};if(weekOverrides[idx]){var ov=weekOverrides[idx];for(var k in ov)b[k]=ov[k];}return b;}
 function isModified(idx){if(!weekOverrides[idx])return false;var w=WEEKS[idx],ov=weekOverrides[idx];for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}return false;}
@@ -467,7 +467,7 @@ function rollToNext(){var auto=getAutoWeekIdx(),max=WEEKS.length-1-auto;if(homeW
 function revertRoll(){homeWeekOffset=0;sSet('rollOffset',0);currentWeekIdx=getHomeWeekIdx();renderHome();}
 function saveNote(idx){var el=document.getElementById('note-'+idx);if(el){weekNotes[idx]=el.value;sSet('notes',weekNotes);}}
 function toggleNote(idx){var body=document.getElementById('notebody-'+idx);if(body){body.style.display=body.style.display==='none'?'block':'none';}}
- 
+
 // ── WMO / SCORING ─────────────────────────────────────────────────
 function precipFromCode(c){if(c===null||c===undefined)return'none';if([56,57,66,67].includes(c))return'freezingRain';if([71,73,75,77,85,86].includes(c))return'snow';if((c>=51&&c<=67)||(c>=80&&c<=82))return'rain';if(c>=95)return'thunder';return'none';}
 function overcastFromCode(c){return c!==null&&c!==undefined&&c>=2;}
@@ -480,12 +480,12 @@ function sSun(hour,oc){if(oc)return 8;if(hour<6||hour>=20)return 10;if(hour<7||h
 function sWind(W,T){if(T>70){if(W<2)return 5;if(W<8)return 8;if(W<15)return 9;return 7;}else{if(W<5)return 10;if(W<10)return 8;if(W<15)return 6;if(W<20)return 4;return 2;}}
 function sPrecip(p){if(!p||p==='none')return 10;if(p==='rain')return 5;if(p==='snow')return 4;if(p==='freezingRain'||p==='ice')return 1;if(p==='thunder')return 2;return 6;}
 function computeScore(obs){var T=obs.tempF,R=obs.rh,W=obs.windMph,dp=obs.dewF;var hi=heatIndex(T,R),wc=windChill(T,W);var fT=sTemp(T,wc,hi),fD=sDew(dp),fS=sSun(obs.hour,obs.overcast),fW=sWind(W,T),fP=sPrecip(obs.precip);var score=Math.max(1,Math.min(10,fT*.25+fD*.35+fS*.20+fW*.10+fP*.10));return{score:Math.round(score*10)/10,factors:{temp:fT,dew:fD,sun:fS,wind:fW,precip:fP},hi:Math.round(hi),wc:Math.round(wc)};}
- 
+
 // ── LABELS ────────────────────────────────────────────────────────
 function scoreColor(s){if(s>=8.5)return'#52b788';if(s>=7)return'#74c69d';if(s>=5.5)return'#f59e0b';if(s>=3.5)return'#f97316';return'#ef4444';}
 function scoreLabel(s){if(s>=8.5)return'Excellent';if(s>=7)return'Good';if(s>=5.5)return'Moderate';if(s>=3.5)return'Difficult';return'Dangerous';}
 function scoreDesc(s,obs){var T=obs.tempF;if(s>=8.5)return'Near-ideal running conditions. Get out there.';if(s>=7)return T>65?'Good conditions with some heat — stay hydrated.':T<40?'Good conditions — dress in layers.':'Solid conditions for any training effort.';if(s>=5.5)return T>70?'Manageable with adjustments. Slow down and carry water.':T<35?'Cold conditions — proper gear required.':'Adequate but requires modification.';if(s>=3.5)return T>75?'Tough heat. Significant pace adjustment needed.':'Challenging — shorten or modify the run.';return T>80?'Heat advisory. Move indoors or skip today.':'Dangerous cold. Treadmill or rest day.';}
- 
+
 // ── ROUTE GUIDANCE ────────────────────────────────────────────────
 function routeRec(locIdx,T,dp){
   if(locIdx===0){
@@ -508,7 +508,7 @@ function routeRec(locIdx,T,dp){
     return'<strong>Any Plymouth route works</strong> — trails or roads in current conditions.';
   }
 }
- 
+
 // ── FETCH WEATHER ─────────────────────────────────────────────────
 async function fetchWeather(lat,lon){
   var url='https://api.open-meteo.com/v1/forecast'
@@ -521,7 +521,7 @@ async function fetchWeather(lat,lon){
   if(!resp.ok)throw new Error('HTTP '+resp.status);
   return resp.json();
 }
- 
+
 function parseHourly(data){
   var hourly=data.hourly,times=hourly.time,dailyMap={};
   for(var i=0;i<times.length;i++){
@@ -534,7 +534,7 @@ function parseHourly(data){
   }
   return Object.values(dailyMap).slice(0,7);
 }
- 
+
 // optimal run window score for a given day's hourly data
 function optimalWindow(hourly){
   var windows=[{label:'Early morning',hours:[5,6,7]},{label:'Mid-morning',hours:[8,9,10]},{label:'Midday',hours:[11,12,13]},{label:'Afternoon',hours:[14,15,16]},{label:'Evening',hours:[17,18,19,20]}];
@@ -546,11 +546,11 @@ function optimalWindow(hourly){
   var avgDew=dewVals.length?Math.round(dewVals.reduce(function(a,b){return a+b;},0)/dewVals.length):null;
   return{label:best.label,score:Math.round(bestScore*10)/10,temp:midEntry?midEntry.tempF:null,dewF:avgDew};
 }
- 
+
 // slot averages for forecast
 function slotScore(hours,hourly){var s=hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.score:null;}).filter(function(x){return x!==null;});if(!s.length)return null;return Math.round(s.reduce(function(a,b){return a+b;},0)/s.length*10)/10;}
 function slotTemp(hours,hourly){var t=hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.tempF:null;}).filter(function(x){return x!==null;});if(!t.length)return null;return Math.round(t.reduce(function(a,b){return a+b;},0)/t.length);}
- 
+
 // ── HOME TAB COMFORT BADGES ───────────────────────────────────────
 // Get best score for a specific date (using Marblehead data)
 function getDateComfortScore(dateStr){
@@ -559,7 +559,7 @@ function getDateComfortScore(dateStr){
   if(!day)return null;
   return optimalWindow(day.hourly);
 }
- 
+
 function getWeekDateStr(weekIdx,dayKey){
   // Calculate actual date for a given week and day
   var START=new Date('2026-03-02');
@@ -568,7 +568,7 @@ function getWeekDateStr(weekIdx,dayKey){
   var d=new Date(weekStart.getTime()+dayOffset[dayKey]*24*60*60*1000);
   return d.toISOString().substring(0,10);
 }
- 
+
 function buildComfortBadge(weekIdx,dayKey){
   var dateStr=getWeekDateStr(weekIdx,dayKey);
   var opt=getDateComfortScore(dateStr);
@@ -576,13 +576,13 @@ function buildComfortBadge(weekIdx,dayKey){
   var c=scoreColor(opt.score);
   return'<div class="comfort-badge" id="cbadge-'+dayKey+'" style="background:rgba(0,0,0,.2);color:'+c+';border-color:'+c+'40" onclick="event.stopPropagation();toggleComfortExpand(\''+dayKey+'\')">'+opt.score.toFixed(1)+'</div>';
 }
- 
+
 function toggleComfortExpand(dayKey){
   var el=document.getElementById('cexpand-'+dayKey);
   if(!el)return;
   el.classList.toggle('open');
 }
- 
+
 function buildComfortExpand(weekIdx,dayKey){
   var dateStr=getWeekDateStr(weekIdx,dayKey);
   var opt=getDateComfortScore(dateStr);
@@ -594,7 +594,7 @@ function buildComfortExpand(weekIdx,dayKey){
     '<div class="comfort-expand-route">'+routeRec(0,opt.temp||60,opt.dewF||50)+'</div>'+
     '</div>';
 }
- 
+
 function buildWeekComfortDots(weekIdx){
   var days=getWeekDays(weekIdx);
   var runDays=DAYS.filter(function(dk){return days[dk]&&days[dk]!=='RACE';});
@@ -614,7 +614,7 @@ function buildWeekComfortDots(weekIdx){
   html+='</div>';
   return html;
 }
- 
+
 // ── HOME RENDER ───────────────────────────────────────────────────
 function buildSlots(idx,todayDayIdx){
   var days=getWeekDays(idx),w=WEEKS[idx],html='';
@@ -630,7 +630,7 @@ function buildSlots(idx,todayDayIdx){
     if(isToday)cls+=' today-slot';if(hasRun)cls+=' draggable';if(done)cls+=' completed';
     var runLabel='',runDist='';
     if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
- 
+
     // Build slot with comfort badge for all days
     html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+(dist||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
     html+='<div class="day-name">'+label+'</div>';
@@ -651,7 +651,7 @@ function buildSlots(idx,todayDayIdx){
   }
   return html;
 }
- 
+
 function buildProgressBar(idx){
   var p=getProgress(idx);if(p.totalRuns===0)return'';
   var pct=Math.round(p.doneMiles/p.totalMiles*100)||0;
@@ -659,13 +659,13 @@ function buildProgressBar(idx){
   var miles=p.doneRuns>0?p.doneMiles.toFixed(1)+' / '+p.totalMiles.toFixed(1)+' mi':p.totalMiles.toFixed(1)+' mi planned';
   return'<div class="week-progress"><div class="week-progress-label">'+label+'</div><div class="week-progress-bar-wrap"><div class="week-progress-bar" style="width:'+pct+'%"></div></div><div class="week-progress-miles">'+miles+'</div></div>';
 }
- 
+
 function renderHome(){
   var idx=currentWeekIdx,w=WEEKS[idx];
   var today=new Date(),todayDayIdx=JS_TO_IDX[today.getDay()];
   var p=getProgress(idx);
   var milesSummary=p.doneRuns>0?'<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>':'';
- 
+
   // Next run with comfort score
   var nextRunText='',nextRunSub='',nextRunComfort='';
   var wkStartDate=new Date('2026-03-02');wkStartDate.setDate(wkStartDate.getDate()+idx*7);
@@ -688,7 +688,7 @@ function renderHome(){
       break;
     }
   }
- 
+
   var badgeHtml='<span class="badge badge-'+w.type+'">'+w.label+'</span>';
   var noteVal=weekNotes[idx]||'';
   var hasNote=noteVal.trim().length>0;
@@ -699,24 +699,24 @@ function renderHome(){
     '<div id="notebody-'+idx+'" style="display:'+(hasNote?'block':'none')+'">'+
     '<textarea class="notes-field" id="note-'+idx+'" placeholder="How did the week go?" oninput="saveNote('+idx+')">'+noteVal+'</textarea>'+
     '</div></div>';
- 
+
   var nextWkBtn='';
   if(idx<WEEKS.length-1){
     var nw=WEEKS[idx+1];
     nextWkBtn=(homeWeekOffset>0?'<div class="roll-active-banner"><div class="roll-active-text">Showing week '+(idx+1)+' (rolled forward)</div><button class="roll-revert-btn" onclick="revertRoll()">&#8635; Back to now</button></div>':'')+
     '<div class="roll-btn" onclick="rollToNext()"><div class="roll-btn-left"><div class="roll-btn-icon">&#8614;</div><div><div class="roll-btn-title">Plan next week</div><div class="roll-btn-sub">Week '+(idx+2)+' \u00b7 '+nw.date+'</div></div></div><div class="roll-btn-chevron">&#8250;</div></div>';
   }
- 
+
   document.getElementById('homeContent').innerHTML=
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
     '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 34</div>'+
     '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:#1a2332">'+w.total+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+'</div>'+
     '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
     badgeHtml+'</div>'+
- 
+
     '<div class="card" style="margin-top:14px"><div class="card-header"><span class="card-title">This week\'s goal</span></div>'+
     '<div class="card-body"><p class="narrative-text">'+w.narrative+'</p></div></div>'+
- 
+
     '<div class="card">'+
     (isModified(idx)?'<div class="week-modified-note">Schedule adjusted \u2014 drag to rearrange</div>':'')+
     (!dragHintShown?'<div class="drag-hint">Hold and drag any run to reschedule it</div>':'')+
@@ -726,17 +726,17 @@ function renderHome(){
     (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
     noteHtml+
     '</div>'+
- 
+
     '<div class="next-run-card"><div><div class="next-run-label">Next run</div>'+
     '<div class="next-run-info">'+nextRunText+'</div>'+
     '<div class="next-run-sub">'+nextRunSub+'</div>'+
     nextRunComfort+'</div>'+
     '<div class="run-arrow">&#8594;</div></div>'+
     nextWkBtn;
- 
+
   setupDragDrop(idx);
 }
- 
+
 // ── DRAG & DROP ───────────────────────────────────────────────────
 function createGhost(label,dist){var el=document.createElement('div');el.className='drag-ghost';el.textContent=(dist&&dist!=='RACE')?dist+' mi':label;document.body.appendChild(el);return el;}
 function moveGhost(x,y){if(dragState.ghost){dragState.ghost.style.left=x+'px';dragState.ghost.style.top=y+'px';}}
@@ -761,7 +761,7 @@ function setupDragDrop(idx){
     btn.addEventListener('click',function(e){e.stopPropagation();toggleCompleted(wi,dk);});
   });
 }
- 
+
 // ── HISTORY TAB ───────────────────────────────────────────────────
 function renderHistory(){
   var autoIdx=getAutoWeekIdx(),html='';
@@ -805,7 +805,7 @@ function buildHistoryBody(idx,days,note){
   html+='</div>';return html;
 }
 function toggleHistoryWeek(idx){var body=document.getElementById('hwb-'+idx);if(body)body.classList.toggle('open');}
- 
+
 // ── NOW TAB ───────────────────────────────────────────────────────
 function renderNowLocSelector(){
   document.getElementById('nowLocSelector').innerHTML=LOCS.map(function(l,i){
@@ -813,7 +813,7 @@ function renderNowLocSelector(){
   }).join('');
 }
 function selectNowLoc(idx){nowLocIdx=idx;renderNowLocSelector();loadNow(idx);}
- 
+
 async function loadNow(locIdx){
   document.getElementById('csScoreCard').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fetching conditions for '+LOCS[locIdx].name+'...</div></div>';
   document.getElementById('csCondCard').style.display='none';
@@ -837,7 +837,7 @@ async function loadNow(locIdx){
     document.getElementById('csLastUpdated').textContent='Failed at '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
   }
 }
- 
+
 function buildRecs(result,obs,week,locIdx){
   var s=result.score,T=obs.tempF,dp=obs.dewF,hour=obs.hour,recs=[];
   if(s<5.5&&T>70){recs.push({i:'⏰',t:hour>=9?'<strong>Reschedule to early morning</strong> — before 7am is significantly cooler.':'<strong>You are in the best window</strong> for a hot day. Start now.'});}
@@ -865,7 +865,7 @@ function buildRecs(result,obs,week,locIdx){
   if(s<=2){recs.push({i:'🚫',t:'<strong>Consider skipping today.</strong> One missed run does not affect fitness. Treadmill or rest day.'});}
   return recs;
 }
- 
+
 function renderNow(obs,locIdx){
   var result=computeScore(obs),s=result.score,color=scoreColor(s);
   var circ=2*Math.PI*54,filled=circ*(s/10);
@@ -909,7 +909,7 @@ function renderNow(obs,locIdx){
   document.getElementById('csRecCard').style.display='block';
   document.getElementById('csLastUpdated').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' \u00b7 '+LOCS[locIdx].name;
 }
- 
+
 // ── FORECAST TAB ──────────────────────────────────────────────────
 function renderForecastDayLocSelector(dayIdx){
   var locIdx=dayLocIdx[dayIdx]!==undefined?dayLocIdx[dayIdx]:0;
@@ -975,7 +975,7 @@ function renderForecast(){
   });
   document.getElementById('forecastContent').innerHTML=html;
 }
- 
+
 // ── MEALS (guide) ─────────────────────────────────────────────────
 function getMealWeekIdx(){return getAutoWeekIdx()%4;}
 function renderMeals(){
@@ -1002,11 +1002,11 @@ function renderMeals(){
   document.getElementById('mealContent').innerHTML=html;
 }
 function changeMealWeek(dir){var n=currentMealWeek+dir;if(n<0||n>=MEAL_WEEKS.length)return;currentMealWeek=n;renderMeals();}
- 
+
 // ── GUIDE OVERLAY ─────────────────────────────────────────────────
 function openGuide(){document.getElementById('guideOverlay').classList.add('open');renderMeals();}
 function closeGuide(){document.getElementById('guideOverlay').classList.remove('open');}
- 
+
 // ── PAGE NAV ──────────────────────────────────────────────────────
 function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
@@ -1021,7 +1021,7 @@ function showPage(id){
     else{document.getElementById('forecastContent').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading forecast...</div></div>';loadNow(0);}
   }
 }
- 
+
 // ── INIT ──────────────────────────────────────────────────────────
 function init(){
   var ov=sGet('overrides');if(ov)weekOverrides=ov;
