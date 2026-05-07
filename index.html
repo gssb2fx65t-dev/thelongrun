@@ -511,9 +511,81 @@ function sTemp(T,wc,hi){var e=T>70?hi:(T<50?wc:T);if(e>93)return 1;if(e>87)retur
 function sDew(dp){if(dp<=54)return 10;if(dp<=58)return 7.5;if(dp<=62)return 5.5;if(dp<=66)return 3.5;if(dp<=70)return 2;return 1;}
 function sSun(hour,oc,month){var m=month||new Date().getMonth()+1;if(oc)return 8;if((m===12||m===1)&&hour<=7)return 6;if((m===11||m===2)&&hour<=7)return 7;if(hour<6||hour>=20)return 10;if(hour<7||hour>=19)return 9;if(hour<8||hour>=18)return 7.5;if(hour<9||hour>=17)return 6;if(hour<10||hour>=16)return 5;if(hour<11||hour>=15)return 4;return 3;}
 function sWind(W,T){if(T>70){if(W<2)return 5;if(W<8)return 8;if(W<15)return 9;return 7;}else{if(W<5)return 10;if(W<10)return 8;if(W<15)return 6;if(W<20)return 4;return 2;}}
-function sPrecip(p){if(!p||p==='none')return 10;if(p==='rain')return 5;if(p==='snow')return 4;if(p==='freezingRain'||p==='ice')return 1;if(p==='thunder')return 2;return 6;}
-function sConditions(T,precip,month){var base=10;if(precip==='snow')base=3;else if(precip==='freezingRain'||precip==='ice')base=1;else if(precip==='rain')base=5;else if(precip==='thunder')base=2;if(month===12||month===1||month===2){if(T<32)base=Math.min(base,4);else if(T<38)base=Math.min(base,6);}if((month===11||month===3)&&T<32)base=Math.min(base,5);if((month===12||month===1)&&T<35)base=Math.max(1,base-1);return base;}
-function computeScore(obs){var T=obs.tempF,R=obs.rh,W=obs.windMph,dp=obs.dewF;var month=obs.month||new Date().getMonth()+1;var hi=heatIndex(T,R),wc=windChill(T,W);var fT=sTemp(T,wc,hi),fD=sDew(dp),fS=sSun(obs.hour,obs.overcast,month),fW=sWind(W,T),fC=sConditions(T,obs.precip,month);var score=Math.max(1,Math.min(10,fT*.25+fD*.30+fS*.15+fW*.10+fC*.20));return{score:Math.round(score*10)/10,factors:{temp:fT,dew:fD,sun:fS,wind:fW,precip:fC},hi:Math.round(hi),wc:Math.round(wc)};}
+function sPrecip(p,T){
+  T=T||60;
+  if(!p||p==='none')return 10;
+  if(p==='thunder')return 2;
+  if(p==='freezingRain'||p==='ice')return 1;
+  if(p==='snow')return T<28?2:3;
+  if(p==='rain'){
+    if(T>65)return 7.5;   // warm rain — minor discomfort, actually cooling
+    if(T>55)return 5.5;   // cool rain — noticeable, light layer helps
+    if(T>45)return 3.5;   // cold rain — unpleasant, proper gear needed
+    return 2;             // cold wet — reconsider the run
+  }
+  return 6;
+}
+function sConditions(T,precip,month){var base=10;
+  if(precip==='freezingRain'||precip==='ice')base=1;
+  else if(precip==='thunder')base=2;
+  else if(precip==='snow')base=T<28?2:3;
+  else if(precip==='rain'){
+    if(T>65)base=7.5;       // warm rain — minor, actually cooling
+    else if(T>55)base=5.5;  // cool rain — noticeable
+    else if(T>45)base=3.5;  // cold rain — unpleasant
+    else base=2;            // cold wet — reconsider
+  }if(month===12||month===1||month===2){if(T<32)base=Math.min(base,4);else if(T<38)base=Math.min(base,6);}if((month===11||month===3)&&T<32)base=Math.min(base,5);if((month===12||month===1)&&T<35)base=Math.max(1,base-1);return base;}
+function miseryOverride(obs,wc){
+  var T=obs.tempF,dp=obs.dewF,p=obs.precip;
+  // Tier 1: floor at 1.0 — genuinely dangerous
+  if(p==='freezingRain'||p==='ice') return{floor:1.0,reason:'Freezing rain / ice — dangerous footing and hypothermia risk'};
+  if(p==='thunder') return{floor:1.0,reason:'Thunderstorm — do not run outside under any circumstances'};
+  // Tier 2: cap at 3.0 — seriously miserable
+  if(wc<=15) return{floor:3.0,reason:'Wind chill at or below 15°F — dangerous exposure and painful breathing'};
+  if(T<=45&&p==='rain') return{floor:3.0,reason:'Cold + rain — hypothermia risk, miserable regardless of other conditions'};
+  if(T<50&&p==='snow') return{floor:3.0,reason:'Cold + snow — miserable and unsafe footing'};
+  if(dp>=65&&T>=80) return{floor:3.0,reason:'High heat + high humidity — body cannot cool itself effectively'};
+  if(p==='rain'&&T<50) return{floor:3.0,reason:'Rain below 50°F — cold and wet is a miserable combination'};
+  return null;
+}
+
+function feltEffort(T, dp) {
+  // Scores the interaction between temperature and dew point
+  // This is the primary thermal signal — more meaningful than either alone
+  // Cold end: cold air is inherently dry, no meaningful interaction penalty
+  if(T < 45) return 10;
+  // Cool and dry: ideal running conditions
+  if(T < 55 && dp <= 50) return 10;
+  if(T < 55 && dp <= 55) return 9;
+  if(T < 55 && dp <= 60) return 8;
+  if(T < 55) return 7;
+  // Comfortable range: 55-65F
+  if(T <= 65 && dp <= 50) return 10;
+  if(T <= 65 && dp <= 54) return 9;
+  if(T <= 65 && dp <= 58) return 8;
+  if(T <= 65 && dp <= 62) return 7;
+  if(T <= 65) return 5.5;
+  // Warm: 65-72F — dew point starts mattering a lot
+  if(T <= 72 && dp <= 50) return 9;
+  if(T <= 72 && dp <= 54) return 8;
+  if(T <= 72 && dp <= 58) return 6.5;
+  if(T <= 72 && dp <= 62) return 5;
+  if(T <= 72 && dp <= 66) return 3;
+  if(T <= 72) return 2;
+  // Hot: 72-80F — the classic New England summer problem
+  if(T <= 80 && dp <= 50) return 8;
+  if(T <= 80 && dp <= 54) return 6.5;
+  if(T <= 80 && dp <= 58) return 5;
+  if(T <= 80 && dp <= 62) return 3.5;
+  if(T <= 80 && dp <= 66) return 2;
+  if(T <= 80) return 1;
+  // Very hot: above 80F
+  if(dp <= 54) return 5;
+  if(dp <= 60) return 3;
+  if(dp <= 65) return 2;
+  return 1;
+}
+function computeScore(obs){var T=obs.tempF,R=obs.rh,W=obs.windMph,dp=obs.dewF;var month=obs.month||new Date().getMonth()+1;var hi=heatIndex(T,R),wc=windChill(T,W);var fT=sTemp(T,wc,hi),fD=sDew(dp),fS=sSun(obs.hour,obs.overcast,month),fW=sWind(W,T),fC=sConditions(T,obs.precip,month),fE=feltEffort(T,dp);var score=Math.max(1,Math.min(10,fE*.25+fD*.15+fT*.15+fS*.15+fW*.10+fC*.20));var override=miseryOverride(obs,wc);if(override)score=Math.min(score,override.floor);return{score:Math.round(score*10)/10,factors:{feltEffort:fE,temp:fT,dew:fD,sun:fS,wind:fW,precip:fC},hi:Math.round(hi),wc:Math.round(wc),override:override};}
 
 // ── LABELS ────────────────────────────────────────────────────────
 function scoreColor(s){if(s>=8.5)return'#52b788';if(s>=7)return'#74c69d';if(s>=5.5)return'#f59e0b';if(s>=3.5)return'#f97316';return'#ef4444';}
@@ -911,6 +983,7 @@ function renderNow(obs,locIdx){
     '<div class="score-num"><div class="score-big" style="color:'+color+'">'+s.toFixed(1)+'</div><div class="score-outof">out of 10</div></div></div>'+
     '<div class="score-label-cs" style="color:'+color+'">'+scoreLabel(s)+'</div>'+
     '<div class="score-desc-cs">'+scoreDesc(s,obs)+'</div>'+
+    (result.override?'<div style="margin-top:8px;padding:8px 14px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);border-radius:10px;font-size:12px;color:#fca5a5;line-height:1.55;text-align:center;max-width:290px">&#9888; '+result.override.reason+'</div>':'')+
     '<div class="score-route-cs">'+routeRec(locIdx,obs.tempF,obs.dewF)+'</div>'+
     '</div>';
   var feelsLike=obs.tempF>70?result.hi:(obs.tempF<50?result.wc:obs.tempF);
@@ -923,7 +996,7 @@ function renderNow(obs,locIdx){
     '<div class="cond-cell"><div class="cond-label">Conditions</div><div class="cond-value" style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:500;padding-top:2px">'+obs.condLabel+'</div><div class="cond-sub">'+LOCS[locIdx].name+'</div></div>'+
     '</div>'+
     '<div class="factor-section"><div class="factor-section-label">Factor breakdown</div>'+
-    [['Temperature',result.factors.temp],['Dew Point',result.factors.dew],['Sun / Time',result.factors.sun],['Wind',result.factors.wind],['Precipitation',result.factors.precip]].map(function(f){
+    [['Felt Effort',result.factors.feltEffort],['Temperature',result.factors.temp],['Dew Point',result.factors.dew],['Sun / Time',result.factors.sun],['Wind',result.factors.wind],['Precipitation',result.factors.precip]].map(function(f){
       return'<div class="factor-row"><div class="factor-name">'+f[0]+'</div><div class="factor-bar-wrap"><div class="factor-bar" style="width:'+(f[1]*10)+'%;background:'+scoreColor(f[1])+'"></div></div><div class="factor-score">'+f[1].toFixed(1)+'</div></div>';
     }).join('')+'</div>';
   document.getElementById('csCondCard').style.display='block';
