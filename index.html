@@ -513,7 +513,7 @@ function sSun(hour,oc,month){var m=month||new Date().getMonth()+1;if(oc)return 8
 function sWind(W,T){if(T>70){if(W<2)return 5;if(W<8)return 8;if(W<15)return 9;return 7;}else{if(W<5)return 10;if(W<10)return 8;if(W<15)return 6;if(W<20)return 4;return 2;}}
 function sPrecip(p,T){
   T=T||60;
-  if(!p||p==='none')return 10;
+  if(!p||p==='none')return 7;  // neutral baseline — absence of rain is not a bonus
   if(p==='thunder')return 2;
   if(p==='freezingRain'||p==='ice')return 1;
   if(p==='snow')return T<28?2:3;
@@ -525,7 +525,7 @@ function sPrecip(p,T){
   }
   return 6;
 }
-function sConditions(T,precip,month){var base=10;
+function sConditions(T,precip,month){var base=7;
   if(precip==='freezingRain'||precip==='ice')base=1;
   else if(precip==='thunder')base=2;
   else if(precip==='snow')base=T<28?2:3;
