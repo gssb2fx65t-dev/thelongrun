@@ -52,6 +52,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .badge-maintain{background:var(--blue-pale);color:var(--blue)}
 .badge-reset{background:rgba(255,255,255,.1);color:var(--pale)}
 .badge-restart{background:var(--green-pale);color:var(--green)}
+.badge-recovery{background:rgba(245,158,11,.15);color:#f59e0b}
+.badge-ski{background:rgba(96,165,250,.15);color:#93c5fd}
 .badge-bridge{background:var(--green-pale);color:var(--green)}
 
 /* DAY SLOTS */
@@ -279,6 +281,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .error-wrap{padding:24px 20px;text-align:center}
 .error-icon{font-size:36px;margin-bottom:12px}
 .error-msg{font-size:13px;color:var(--muted);line-height:1.7}
+
+.day-slot.ski-day{background:linear-gradient(135deg,rgba(96,165,250,.14),rgba(59,130,246,.07));border:1px solid rgba(96,165,250,.22)}
+.day-slot.ski-day .day-run-label{color:#93c5fd}
+.ski-badge{margin-left:auto;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(96,165,250,.16);font-size:17px;flex-shrink:0}
+.week-ski-tag{display:inline-block;margin-left:6px;font-size:11px;color:#93c5fd;background:rgba(96,165,250,.12);padding:2px 8px;border-radius:6px;vertical-align:middle}
+.phase-tag-ski{display:inline-block;font-size:10px;color:#93c5fd;background:rgba(96,165,250,.1);padding:3px 9px;border-radius:6px;letter-spacing:.03em;margin-bottom:8px}
 </style>
 </head>
 <body>
@@ -356,15 +364,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
     <span class="guide-close" onclick="closeGuide()">&#10005;</span>
   </div>
   <div class="guide-section">
-    <div class="guide-section-title">Meals</div>
-    <div class="meal-nav">
-      <div class="nav-btn" id="mealPrevBtn" onclick="changeMealWeek(-1)">&#8249;</div>
-      <div class="nav-info"><div class="nav-title" id="mealWeekNum"></div><div class="nav-sub" id="mealWeekSub"></div></div>
-      <div class="nav-btn" id="mealNextBtn" onclick="changeMealWeek(1)">&#8250;</div>
-    </div>
-    <div id="mealContent"></div>
-  </div>
-  <div class="guide-section">
     <div class="guide-section-title">Sleep</div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Sleep is the highest-leverage thing</div><div class="info-text">Your body does not get fitter during runs - it adapts during recovery, and that process is almost entirely sleep-dependent. During heavy training weeks (20+ miles) you likely need 30-60 min more than usual.</div></div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Two nights before matters most</div><div class="info-text">The night before Saturday long run matters less than Wednesday and Thursday nights. One bad Friday does not derail a long run nearly as much as poor mid-week sleep.</div></div>
@@ -376,12 +375,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Do not run fasted on long runs</div><div class="info-text">As Saturday distances grow past 7-8 miles, running without breakfast compromises quality and recovery. A simple breakfast 60-90 minutes before is enough. Do not skip this.</div></div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Carbs are your fuel</div><div class="info-text">During weeks above 15 miles, carbohydrates are your primary fuel. Restricting them makes runs harder, slows recovery, and raises injury risk. The grain pouches in meal prep are doing important work.</div></div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Eat enough</div><div class="info-text">Appetite suppresses after long runs so under-fueling is common. On days with a long run you need meaningfully more food than rest days.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Dinner priority — normal weeks (Tue/Wed/Sat/Sun runs)</div><div class="info-text">Ranked 1 (critical) to 7 (cheat day):<br>1. <b>Friday</b> — night before the long run. White rice or pasta, lean protein, low fat/fiber, by 7pm. Zero flexibility.<br>2. <b>Thursday</b> — start of the 36-hour window. Same clean approach.<br>3. <b>Saturday</b> — recovery: carbs + protein for Sunday's run. Nourishing, not strict.<br>4. <b>Monday</b> — fuels Tuesday's anchor run. Sensible.<br>5. <b>Tuesday</b> — low stakes, Wednesday is short.<br>6. <b>Wednesday</b> — outer edge of the runway. Avoid a true blowout.<br>7. <b>Sunday</b> — the cheat day. Both runs done, longest runway. Once recovery boxes are checked, dinner is yours. Only rule: do not wreck sleep.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Dinner priority — swap weeks (Fri run, Sun long run)</div><div class="info-text">When the short run moves to Friday and the long run to Sunday:<br>1. <b>Saturday</b> — now the night before the long run. Full pre-run protocol.<br>2. <b>Friday</b> — dual role: post-run recovery + start of the window. Clean carbs and lean protein.<br>3. <b>Thursday</b> — fuels Friday's run, edge of the long runway. Sensible and clean.<br>4. <b>Sunday</b> — recovery-first, treat-second. No run until Tuesday.<br>5. <b>Monday</b> — fuels Tuesday. Sensible.<br>6. <b>Tuesday</b> — low stakes.<br>7. <b>Wednesday</b> — the cheat day on swap weeks. Longest clean runway.<br><br>Condensed: normal weeks — Thu/Fri sacred, Sun free. Swap weeks — Fri/Sat sacred, Wed free.</div></div>
   </div>
   <div class="guide-section">
     <div class="guide-section-title">Hydration &amp; Fueling</div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>When to start</div><div class="info-text">Hydration awareness starts now. Mid-run fueling threshold: Week 14 (Saturday hits 8 miles) — start experimenting. Essential by Week 17 (Saturday at 9 miles, over 90 minutes). Heat block Week 21: shift to active pre-hydration starting Thursday evening.</div></div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Tailwind as an all-in-one</div><div class="info-text">Handles hydration and fueling simultaneously. Mix 2 scoops in 20oz water, drink every 15-20 minutes from mile 1. Gentler on the stomach than most gels. One bottle covers a 90-minute effort.</div></div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>The 36-hour protocol</div><div class="info-text">Thursday evening: familiar dinner, lean protein, white rice or pasta, low fat, low fiber. Friday: carbohydrate-forward meals, light electrolyte drink afternoon, dinner by 7pm. Saturday breakfast 60-75 min before: plain bagel with peanut butter and banana, or oatmeal. 16-20oz water with breakfast. Nothing new in the entire 36-hour window.</div></div>
+    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Long run countdown — dinner to start line</div><div class="info-text"><b>Night before:</b> Dinner by 7pm — white rice or pasta, lean protein, low fat, low fiber, no beans. 16-20oz water with dinner, 8oz before bed. Nothing new.<br><b>Wake-up (60-90 min out):</b> 12-16oz water immediately. Coffee now if you have it.<br><b>Breakfast (60-75 min out):</b> Plain bagel with thin peanut butter + banana, or oatmeal with honey. 8oz water. Keep fat thin, nothing new.<br><b>10-15 min out:</b> 4-6oz water only — no more. Bathroom stop.<br><b>On the run (7+ miles, or comfort score under 8, or dew point over 55°F):</b> Carry Tailwind — 2 scoops in 18-20oz. Sip from mile 1, every 15-20 minutes. Half the bottle gone by the halfway point.<br><b>Within 30 min of finishing:</b> 20-25g protein (Recovery Mix, Greek yogurt, eggs) + keep drinking water.</div></div>
     <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Bottles that do not swish</div><div class="info-text">Nathan SpeedDraw Plus 18oz — strap holds bottle against palm, bite valve prevents sloshing. ~$30. Soft flasks collapse as you drink, eliminating sloshing entirely. Nathan Pinnacle belt or Ultimate Direction FK for high-heat long runs when you want hands free.</div></div>
   </div>
 </div>
@@ -426,54 +428,39 @@ var WEEKS=[
   {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:4.5,wed:4.5,thu:2,fri:null,sat:7.5,sun:3.5},total:22,narrative:"Back to the heat routine. Saturday returns to 7.5 miles. August heat is typically at its worst. If conditions are severe, start before sunrise or shorten Saturday to 6 miles rather than skipping."},
   {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:2,fri:null,sat:8,sun:3.5},total:23,narrative:"Tuesday reaches 5 miles - the longest midweek anchor run of the entire program. End of the heat block is one week away. Arrive at that transition healthy rather than pushing through warning signs."},
   {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:2,fri:null,sat:8,sun:3.5},total:23,narrative:"Final heat-adjusted week. Saturday 8 miles, Tuesday 5 miles, Wednesday 4.5. You have maintained Saturday as long run anchor through seven weeks of summer heat. Next week the half marathon build begins."},
-  {n:28,date:"Sep 7",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:10,sun:4},total:22.5,narrative:"The half marathon build begins. Saturday's long run jumps to 10 miles - the biggest single leap in the program, and a return to Saturday as your long run anchor. September brings your best running conditions. Practice your race-day hydration strategy on Saturday's long run. Sunday settles into a solid 4-mile recovery effort. Fueling note: the HM build weeks are your race rehearsal. Whatever you plan to do on October 25th, start doing it now on Saturdays - same breakfast timing, same Tailwind mix, same fueling intervals. By race day the protocol should feel routine, not experimental."},
-  {n:29,date:"Sep 14",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4.5,thu:null,fri:null,sat:10.5,sun:4},total:23.5,narrative:"Saturday extends to 10.5 miles. You are now running half marathon distance in training - the race itself is only 2.6 miles more. Tuesday holds at 4.5 miles and Wednesday at 4.5. This is the confidence-building week: if Saturday feels manageable at 10.5 miles, October 25th is well within reach."},
-  {n:30,date:"Sep 21",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:3,sun:7},total:16.5,narrative:"Scheduled recovery week after three hard build weeks. Pull back to 16.5 miles - Saturday drops to 3 miles and Sunday to 7, with Tuesday at 3.5 and Wednesday at 3. This is not optional. The body adapts during rest, not work, and you need to arrive at the final build block fresh. You will hit the peak long run next week."},
-  {n:31,date:"Sep 28",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4.5,thu:null,fri:null,sat:11,sun:4},total:24,narrative:"Peak long run week: Saturday reaches 11 miles - the longest training run of the entire program. Tuesday at 4.5 miles and Wednesday at 4.5 round out 24 total miles. Treat Saturday with full respect: proper warm-up, easy aerobic pace, good nutrition and hydration. Everything you practice here you will replicate on race day. This is your last big effort - the fitness is nearly fully built. Fueling note: execute the full 36-hour protocol this week exactly as you will on race weekend. Thursday evening: familiar dinner, low fat, low fiber, early bedtime. Friday: carbohydrate-forward meals, light electrolyte drink in the afternoon, in bed by 10pm. Saturday breakfast: familiar and simple, 60-75 minutes before the run. Carry Tailwind, fuel from mile one. This is your final dress rehearsal."},
-  {n:32,date:"Oct 5",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:10.5,sun:4},total:23,narrative:"One final build week before the taper - a deliberate step-down from last week's peak. Saturday drops to 10.5 miles, Sunday to 4, Tuesday at 4.5 and Wednesday at 4. This week should feel controlled and strong rather than pushed. You have done the hard work; this is about arriving at the taper with confidence rather than fatigue. Keep Saturday's long run at easy aerobic pace."},
-  {n:33,date:"Oct 12",type:"taper",label:"TAPER",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3.5},total:19,narrative:"Taper begins. Volume drops to 19 miles with Saturday carrying an 8-mile long run - shorter than recent weeks but still purposeful. Tuesday at 4 miles, Wednesday at 3.5, Sunday at 3.5. The taper can feel psychologically uncomfortable - legs feel heavy, energy seems off, doubt creeps in. This is normal and universal among runners. Trust the training. Prepare race-day logistics: course review, gear check, breakfast plan. The Seacoast Half Marathon is in Portsmouth, NH - confirm parking and start time in advance. Fueling note: finalize your race-day fueling plan this week and do not change it. Confirm what Seacoast provides at aid stations - if they do not carry your Tailwind flavor or a gel brand you have trained with, plan to carry your own. Saturday 8-miler this week is your last full rehearsal of the race-day fueling protocol."},
-  {n:34,date:"Oct 19",type:"race",label:"RACE WEEK",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:2,sun:"RACE"},total:"7.5",narrative:"Race week. Tuesday 3 miles and Wednesday 2.5 miles are easy shakeout runs - keep the legs moving without adding fatigue. Saturday is a 2-mile shakeout only. Sunday, October 25th is the Seacoast Half Marathon in Portsmouth, NH. You have run 34 weeks to get here, built from 7 miles to 25, survived a summer of heat, and arrived with a peak long run of 11 miles under your belt. Run the first half conservatively. You have earned this."},
-  {n:35,date:"Oct 26",type:"post",label:"HIGH BASE",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:5,sun:3},total:13.5,narrative:"Post-race recovery week. Easy effort only - your body has just run a half marathon. Saturday at 5 miles and Tuesday at 3 are your anchors. Wednesday is optional at 2.5 miles if you feel good. The goal is to arrive at next week feeling refreshed and ready to run with intent again. Do not push pace or add miles this week."},
-  {n:36,date:"Nov 2",type:"post",label:"HIGH BASE",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:8,sun:3},total:17.5,narrative:"High base begins. Saturday at 8 miles should feel comfortable and familiar - you ran this distance repeatedly through the summer. This is a confidence week, not a push week. Notice how your fitness held through the race and recovery. Tuesday 3.5 miles, Wednesday 3 miles."},
-  {n:37,date:"Nov 9",type:"post",label:"HIGH BASE",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:10,sun:3},total:20.5,narrative:"Saturday at 10 miles is your first real long effort since Seacoast. Run it easy and enjoyable. Plymouth NH in early November is excellent running conditions - cool temperatures, late foliage, dry footing. Tuesday 4 miles, Wednesday 3.5 miles."},
-  {n:38,date:"Nov 16",type:"post",label:"HIGH BASE",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:11,sun:4},total:22.5,narrative:"Peak long run of the post-race phase. Saturday at 11 miles - the same distance as your HM build peak, just 3.5 weeks after your race. This is the fitness base you carry into the maintenance phase and ultimately into 2027 marathon training. Treat Saturday with respect: proper warm-up, good nutrition, easy aerobic pace. This is the week prior to Thanksgiving."},
-  {n:39,date:"Nov 23",type:"maintain",label:"MAINTENANCE",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:8,sun:3},total:17.5,narrative:"Thanksgiving week. Keep the Saturday run as your anchor. Footing may be mixed - check trail conditions before heading out. Saturday 8 miles, Tuesday 3.5 miles, Wednesday 3 miles."},
-  {n:40,date:"Nov 30",type:"maintain",label:"MAINTENANCE",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:7,sun:2.5},total:15,narrative:"Saturday 7 miles, Tuesday 3 miles, Wednesday 2.5 miles, Sunday 2.5 miles. Wind chill is now a real factor in Plymouth. Road running preferred over trails which may have ice under leaf cover. Keep effort genuinely easy."},
-  {n:41,date:"Dec 7",type:"maintain",label:"MAINTENANCE",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:7,sun:2.5},total:15,narrative:"Saturday 7 miles, Tuesday 3 miles, Wednesday 2.5 miles. Dress in layers. Keep it easy and consistent. You are maintaining habit and cardiovascular base, not building anything."},
-  {n:42,date:"Dec 14",type:"maintain",label:"MAINTENANCE",days:{mon:null,tue:2.5,wed:2.5,thu:null,fri:null,sat:6,sun:2},total:13,narrative:"Saturday 6 miles, Tuesday 2.5 miles, Wednesday 2.5 miles, Sunday 2 miles. Mileage continues to step down as December deepens. The Saturday anchor remains non-negotiable. Everything else is support."},
-  {n:43,date:"Dec 21",type:"maintain",label:"MAINTENANCE",days:{mon:null,tue:2.5,wed:2,thu:null,fri:null,sat:5,sun:null},total:9.5,narrative:"Holiday week. Saturday 5 miles is the only non-negotiable. Tuesday 2.5 miles and Wednesday 2 miles are easy check-ins. Do not stress about getting every run in during the holidays."},
-  {n:44,date:"Dec 28",type:"maintain",label:"MAINTENANCE",days:{mon:null,tue:2,wed:2,thu:null,fri:null,sat:4,sun:null},total:8,narrative:"Final week of running before the January reset. Saturday 4 miles, Tuesday 2 miles, Wednesday 2 miles. Keep it genuinely easy. The goal is arriving at January 4th having maintained the habit all the way to the end of December."},
-  {n:45,date:"Jan 4",type:"reset",label:"JAN RESET",days:{mon:null,tue:null,wed:null,thu:null,fri:null,sat:null,sun:null},total:0,narrative:"No running. You have been at this since March 2, 2026 - ten months of consistent training, a half marathon, a post-race high base phase, and six weeks of maintained mileage through December. A full month off is the reward. Come back in February wanting to run."},
-  {n:46,date:"Jan 11",type:"reset",label:"JAN RESET",days:{mon:null,tue:null,wed:null,thu:null,fri:null,sat:null,sun:null},total:0,narrative:"January reset continues. No running. Rest, recover, let your body and mind fully disengage from structured training. Use this time to start thinking about the 2027 marathon plan - see the 2027 tab for the design framework."},
-  {n:47,date:"Jan 18",type:"reset",label:"JAN RESET",days:{mon:null,tue:null,wed:null,thu:null,fri:null,sat:null,sun:null},total:0,narrative:"January reset continues. No running. Three weeks in - you should be starting to feel the itch to run again. That is the goal. Come back in February wanting it."},
-  {n:48,date:"Jan 25",type:"reset",label:"JAN RESET",days:{mon:null,tue:null,wed:null,thu:null,fri:null,sat:null,sun:null},total:0,narrative:"Final reset week. No running. February begins next week. Get your gear ready, plan your first run, and arrive at Feb 1 genuinely eager to lace up again."},
-  {n:49,date:"Feb 1",type:"restart",label:"FEB RESTART",days:{mon:null,tue:2.5,wed:null,thu:null,fri:null,sat:4.5,sun:null},total:7,narrative:"February restart, Week 1. Saturday 4-5 miles, Tuesday 2.5-3 miles. Easy effort throughout - purely about reestablishing the habit. Because you maintained structured running through December, this will feel easier than expected. Total: ~15 miles."},
-  {n:50,date:"Feb 8",type:"restart",label:"FEB RESTART",days:{mon:null,tue:3,wed:null,thu:null,fri:null,sat:5.5,sun:null},total:8.5,narrative:"February restart, Week 2. Saturday 5-6 miles, Tuesday 3-3.5 miles. The rhythm is coming back. Keep effort easy throughout. Total: ~17 miles."},
-  {n:51,date:"Feb 15",type:"restart",label:"FEB RESTART",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:6.5,sun:null},total:12,narrative:"February restart, Week 3. Saturday 6-7 miles, Tuesday 3-3.5 miles, Wednesday 2.5 miles. The anchor structure is fully reestablished. You should feel like yourself again. Total: ~18 miles."},
-  {n:52,date:"Feb 22",type:"restart",label:"FEB RESTART",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7.5,sun:null},total:14,narrative:"February restart, Week 4. Saturday 7-8 miles, Tuesday 3.5-4 miles, Wednesday 3 miles. Final week before marathon training begins. Arrive at March 1 feeling strong, rested, and ready. Total: ~20 miles."}
+  {n:28,date:"Sep 7",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:2.5,fri:null,sat:10,sun:4},total:25,narrative:"Post-heat re-entry. Heat-block checkpoint passed. Thursday returns as your optional 5th day (2.5mi). Long run 10. Keep effort easy - your legs are re-adapting after a summer of heat. ~25 miles."},
+  {n:29,date:"Sep 14",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:3,fri:null,sat:11,sun:4},total:26.5,narrative:"Re-entry build continues. Long run 11. Easy effort throughout as the post-summer fitness comes back. ~26.5 miles."},
+  {n:30,date:"Sep 21",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:2.5,fri:null,sat:12,sun:4},total:27,narrative:"Build. Long run 12, approaching the 30-mile weekly cap. The 5th day stays short to keep the week under the cap. ~27 miles."},
+  {n:31,date:"Sep 28",type:"recovery",label:"RECOVERY",days:{mon:null,tue:4,wed:3,thu:null,fri:null,sat:8,sun:3},total:18,narrative:"RECOVERY WEEK - do not skip. About a 30% pullback (long run 8, ~18 miles) to clear three weeks of building before the push to peak. Thursday drops. Resist adding miles even when you feel good Thursday-Saturday - that supercompensation is meant to carry into the peak."},
+  {n:32,date:"Oct 5",type:"build",label:"HM BUILD",days:{mon:null,tue:4.5,wed:4,thu:2.5,fri:null,sat:13,sun:4},total:28,narrative:"Build resumes off the recovery week. Long run 13 - now past the original plan's peak. ~28 miles."},
+  {n:33,date:"Oct 12",type:"build",label:"PEAK",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:15,sun:4},total:27.5,narrative:"PEAK long run of the block - 15 miles. Thursday drops so the long run fits under the 30-mile cap. You arrive here off a recovery week, so the legs are fresh for the biggest effort. ~27.5 miles."},
+  {n:34,date:"Oct 19",type:"race",label:"HALF",days:{mon:null,tue:4.5,wed:4,thu:2,fri:null,sat:2,sun:"RACE"},total:27.6,narrative:"Seacoast Half Marathon week. The half (Sunday Oct 25) is run as a TRAINING long run, not a tapered race - it is a checkpoint on the road to 2027, not a destination. No taper: a normal build week with the 13.1 as the long run, Saturday a 2-mile shakeout. Run it strong and controlled. ~27.6 miles."},
+  {n:35,date:"Oct 26",type:"post",label:"PLATEAU",days:{mon:null,tue:4.5,wed:4,thu:2.5,fri:null,sat:13,sun:4},total:28,narrative:"High-base plateau begins. The half is behind you and you keep building base, but no further climbing - the long run settles to 13 and holds. ~28 miles."},
+  {n:36,date:"Nov 2",type:"post",label:"BACK-TO-BACK",days:{mon:null,tue:5,wed:4.5,thu:null,fri:null,sat:12,sun:8.5},total:30,narrative:"BACK-TO-BACK week. An intentional 4-day week with a paired weekend - 12 Saturday, 8.5 Sunday - to build tolerance for running long on tired legs (the demand of Goofy down the road). Thursday drops. At the 30-mile cap. ~30 miles."},
+  {n:37,date:"Nov 9",type:"post",label:"PLATEAU",days:{mon:null,tue:4.5,wed:4,thu:2.5,fri:null,sat:14,sun:4},total:29,narrative:"High-base plateau - long run 14, the week before Thanksgiving. Holding steady near the cap. ~29 miles."},
+  {n:38,date:"Nov 16",type:"maintain",label:"EASE",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:11,sun:4},total:22.5,narrative:"Easing toward the offseason begins. Long run steps down to 11. The structured fall is winding down. ~22.5 miles."},
+  {n:39,date:"Nov 23",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:10,sun:4},total:22.5,narrative:"Wind-down, Thanksgiving week. Last near-normal running week. Long run 10. ~22.5 miles."},
+  {n:40,date:"Nov 30",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:9,sun:4},total:21,narrative:"Wind-down. Long run 9. Running stays primary; ski opportunistically if early snow arrives in Plymouth. ~21 miles."},
+  {n:41,date:"Dec 7",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3.5},total:19,narrative:"Wind-down. Long run 8. Snow likely arriving in NH - start phasing in skiing when conditions allow. ~19 miles."},
+  {n:42,date:"Dec 14",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3},total:18.5,narrative:"Wind-down. Long run 8. ~18.5 miles. Skiing phasing in as the snowpack builds."},
+  {n:43,date:"Dec 21",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7,sun:3},total:16.5,narrative:"Holiday week. Long run 7. Keep it simple over the holidays - ski when you can. ~16.5 miles."},
+  {n:44,date:"Dec 28",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:6,sun:"ski:45"},total:12.5,narrative:"Final wind-down week. Long run 6, and the first scheduled ski session appears Sunday as the winter mode begins. ~12.5 running miles."},
+  {n:45,date:"Jan 4",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3,wed:3,thu:"opt:4-5/45",fri:null,sat:"opt:9/75",sun:"opt:5-6/45"},total:6,narrative:"Ski-primary preservation begins. Tue/Wed easy runs in MA; Thu/Sat/Sun skiing in NH (with a run option if snow is bad). Saturday is your long aerobic session - a 75-90 min ski, the winter equivalent of the long run. ~6 running miles + 3 ski sessions."},
+  {n:46,date:"Jan 11",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3,wed:3.5,thu:"opt:4-5/60",fri:null,sat:"opt:9/90",sun:"opt:5-6/45"},total:6.5,narrative:"Ski-primary. The big Saturday ski (90 min) is the keystone aerobic effort. Running held light to preserve the base while resting the running-specific tissues and the mind. ~6.5 running miles + 3 ski sessions."},
+  {n:47,date:"Jan 18",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3.5,wed:3.5,thu:"opt:4-5/60",fri:null,sat:"opt:9/90",sun:"opt:6/60"},total:7,narrative:"Ski-primary. Aerobic engine maintained by skiing, running kept to two easy MA days. This is the deep-preservation heart of the offseason. ~7 running miles + 3 ski sessions."},
+  {n:48,date:"Jan 25",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3.5,wed:4,thu:"opt:4-5/60",fri:null,sat:"opt:9/90",sun:"opt:6/60"},total:7.5,narrative:"Last pure-light week before February's running begins to rise. ~7.5 running miles + 3 ski sessions."},
+  {n:49,date:"Feb 1",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4,wed:4,thu:"opt:4-5/60",fri:null,sat:"opt:8/75",sun:"opt:5-6/45"},total:8,narrative:"February transition. Running starts rising (Tue/Wed lengthen); skiing still primary on the weekend. ~8 running miles + ski sessions."},
+  {n:50,date:"Feb 8",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:8,sun:"opt:5-6/60"},total:16,narrative:"Running takes back over. Saturday becomes a RUN long run (8). One weekend ski option remains as the ski tapers. ~16 running miles + 1 ski option."},
+  {n:51,date:"Feb 15",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:9,sun:"opt:5-6/45"},total:17.5,narrative:"Running primary now. Long run 9. Skiing down to one optional weekend session. ~17.5 running miles."},
+  {n:52,date:"Feb 22",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4.5,wed:4.5,thu:3,fri:null,sat:10,sun:null},total:22,narrative:"February finish - a full running week. Long run 10, Thursday back as a run. You arrive at March 1 aerobically sharp from the skiing, running re-adapted, and mentally fresh. Ready for a demanding 2027. ~22 miles."}
 ];
 
-var MEAL_WEEKS=[
-  {n:1,theme:"The Classic Grill",tip:"Start grill, season while it heats. Chicken goes on first, sausage last. About 25 minutes total.",meals:[
-    {name:"Chicken Thighs + Rice + Black Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, garlic powder, smoked paprika, salt, pepper",sides:"Canned black beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Grill 6-7 min/side on medium-high. Hard to overcook. One rice pouch across both containers.",color:"#1a3a2a",accent:"#52b788"},
-    {name:"Chicken Thighs + Quinoa + Corn",containers:1,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, cumin, chili powder, salt",sides:"Canned corn (drain) | 90-sec quinoa pouch",protein_g:50,note:"Same grill batch - season half differently. Zero extra time.",color:"#1a3a2a",accent:"#52b788"},
-    {name:"Sausage + Chickpeas + Bagged Greens",containers:1,protein:"Kielbasa or Italian sausage - 2 links per container",seasoning:"No prep needed - grill straight from package",sides:"Canned chickpeas (drain, rinse) | Pre-washed bagged spinach",protein_g:38,note:"10-12 min on medium, turning occasionally. Add spinach raw - fine cold or microwaved.",color:"#3a2a0a",accent:"#f59e0b"}]},
-  {n:2,theme:"Salmon & Pork Week",tip:"Pork tenderloin takes longest - about 20 minutes. Start it first, add salmon for the last 8 minutes. Let pork rest before slicing.",meals:[
-    {name:"Salmon + Farro + White Beans",containers:2,protein:"Salmon fillet (skin-on) - 1 fillet per container (~6 oz)",seasoning:"Olive oil, bottled lemon juice, salt, dill or garlic powder",sides:"Canned white beans / cannellini (drain, rinse) | 90-sec farro pouch",protein_g:54,note:"Grill skin-side down 4-5 min, flip, 3-4 min more. Done when it flakes easily.",color:"#0a1a3a",accent:"#3b82f6"},
-    {name:"Pork Tenderloin + Rice + Lentils",containers:2,protein:"Pork tenderloin, sliced - 4-5 slices per container (~5 oz)",seasoning:"Olive oil, dried rosemary, garlic powder, salt, pepper",sides:"Canned lentils (drain, rinse) | 90-sec rice pouch",protein_g:48,note:"Sear on high all sides (~2 min each), then indirect heat 15 min to 145F internal. Slice across the grain.",color:"#2a1a0a",accent:"#f97316"}]},
-  {n:3,theme:"Steak & Turkey Week",tip:"Steak and turkey burgers both do well on high heat. Grill steak first, let it rest while turkey burgers cook. Under 20 minutes.",meals:[
-    {name:"Steak + Quinoa + Kidney Beans",containers:2,protein:"Sirloin or flank steak, sliced - about 5 oz per container",seasoning:"Salt, pepper, garlic powder",sides:"Canned kidney beans (drain, rinse) | 90-sec quinoa pouch",protein_g:56,note:"High heat, 3-4 min/side for medium. Rest 5 min before slicing against the grain.",color:"#3a2a0a",accent:"#f59e0b"},
-    {name:"Turkey Burgers + Rice + Black-Eyed Peas",containers:2,protein:"Ground turkey patties, grilled and crumbled",seasoning:"Onion powder, garlic powder, salt, Worcestershire sauce",sides:"Canned black-eyed peas (drain, rinse) | 90-sec rice pouch",protein_g:45,note:"Grill 5-6 min/side. Break into chunks once cooled. Mix Worcestershire into raw turkey before forming patties.",color:"#2a0a3a",accent:"#8b5cf6"}]},
-  {n:4,theme:"Lamb & Chicken Week",tip:"Lamb chops are fast - 3-4 min/side max. Grill chicken first, chops finish last. About 25 minutes total.",meals:[
-    {name:"Lamb Chops + Farro + Chickpeas",containers:2,protein:"Loin lamb chops - 2 chops per container (~5 oz meat)",seasoning:"Olive oil, dried rosemary, garlic powder, salt, pepper",sides:"Canned chickpeas (drain, rinse) | 90-sec farro pouch",protein_g:46,note:"High heat, 3-4 min/side, rest 3 min. Most impressive lunch container with almost no skill required.",color:"#2a1a0a",accent:"#f97316"},
-    {name:"Chicken Thighs + Rice + White Beans",containers:2,protein:"Boneless skinless chicken thighs - 2 thighs per container",seasoning:"Olive oil, Italian seasoning, salt, pepper",sides:"Canned white beans (drain, rinse) | 90-sec rice pouch",protein_g:52,note:"Same chicken prep as Week 1. Italian seasoning gives a different flavor profile.",color:"#1a3a2a",accent:"#52b788"}]}
-];
 
 var DAYS=["mon","tue","wed","thu","fri","sat","sun"];
 var DAY_LABELS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
 var DAY_NAMES_FULL=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
 var JS_TO_IDX={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
-var currentWeekIdx=0,currentMealWeek=0;
+var currentWeekIdx=0;
 var weekOverrides={},completedRuns={},weekNotes={};
 var homeWeekOffset=0;
 var dragState={active:false,fromDay:null,dist:null,label:null,ghost:null,overDay:null};
@@ -491,7 +478,7 @@ function getWeekDays(idx){var w=WEEKS[idx];var b={mon:w.days.mon,tue:w.days.tue,
 function isModified(idx){if(!weekOverrides[idx])return false;var w=WEEKS[idx],ov=weekOverrides[idx];for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}return false;}
 function resetWeek(idx){delete weekOverrides[idx];sSet('overrides',weekOverrides);renderHome();}
 function lockWeek(idx){var days=getWeekDays(idx);WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};delete weekOverrides[idx];sSet('overrides',weekOverrides);var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);renderHome();}
-function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};}
+function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'&&!isSkiVal(dist)){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};}
 function isCompleted(idx,dk){return !!(completedRuns[idx]&&completedRuns[idx][dk]);}
 function toggleCompleted(idx,dk){if(!completedRuns[idx])completedRuns[idx]={};if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;sSet('completed',completedRuns);renderHome();renderHistory();}
 function getAutoWeekIdx(){var S=new Date('2026-03-02'),d=new Date();if(d.getDay()===0&&d.getHours()>=18)d=new Date(d.getTime()+86400000);return Math.max(0,Math.min(WEEKS.length-1,Math.floor((d-S)/604800000)));}
@@ -675,6 +662,21 @@ function getWeekDateStr(weekIdx,dayKey){
   return d.toISOString().substring(0,10);
 }
 
+
+// ── SKI / OPTION DAY HELPERS ──
+// Day values: number = run; "ski:MIN" = pure ski; "opt:MILES/MIN" = run-or-ski option
+function isSkiVal(v){return typeof v==='string'&&(v.indexOf('ski:')===0||v.indexOf('opt:')===0);}
+function isOptVal(v){return typeof v==='string'&&v.indexOf('opt:')===0;}
+function skiMinutes(v){if(typeof v!=='string')return 0;var m=v.match(/(\d+)$/);return m?parseInt(m[1]):0;}
+function optMiles(v){if(typeof v!=='string'||v.indexOf('opt:')!==0)return 0;var m=v.match(/opt:([\d.\-]+)\//);return m?m[1]:0;}
+function skiText(v){
+  if(typeof v!=='string')return'';
+  if(v.indexOf('ski:')===0){return'Ski '+v.slice(4)+'min';}
+  if(v.indexOf('opt:')===0){var p=v.slice(4).split('/');return'Run '+p[0]+'mi / Ski '+p[1]+'min';}
+  return'';
+}
+function buildSkiBadge(){return'<div class="ski-badge">&#9975;</div>';}
+
 function buildComfortBadge(weekIdx,dayKey){
   var dateStr=getWeekDateStr(weekIdx,dayKey);
   var opt=getDateComfortScore(dateStr);
@@ -731,17 +733,25 @@ function buildSlots(idx,todayDayIdx){
     var isAnchor=false;
     if(dist){if(dist===w.days.sat)isAnchor=true;if(dist===w.days.tue)isAnchor=true;if(isOrigAnchor)isAnchor=true;}
     var done=isCompleted(idx,dk)&&hasRun;
+    var isSki=isSkiVal(dist);
     var cls='day-slot ';
-    if(hasRun&&isAnchor)cls+='run-anchor';else if(hasRun)cls+='run-other';else cls+='rest';
-    if(isToday)cls+=' today-slot';if(hasRun)cls+=' draggable';if(done)cls+=' completed';
+    if(isSki)cls+='ski-day';else if(hasRun&&isAnchor)cls+='run-anchor';else if(hasRun)cls+='run-other';else cls+='rest';
+    if(isToday)cls+=' today-slot';if(hasRun&&!isSki)cls+=' draggable';if(done)cls+=' completed';
     var runLabel='',runDist='';
-    if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
+    if(isSki){
+      if(isOptVal(dist)){runLabel=(dk==='sat')?'Long — run or ski':'Run or ski';}else{runLabel=(dk==='sat')?'Long ski':'Cross-train';}
+      runDist=skiText(dist);
+    }else if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
 
     // Build slot with comfort badge for all days
-    html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+(dist||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
+    html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+((!isSki&&dist)||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
     html+='<div class="day-name">'+label+'</div>';
     html+='<div class="day-divider"></div>';
-    if(hasRun){
+    if(isSki){
+      html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+      html+=buildSkiBadge();
+      html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+    }else if(hasRun){
       html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
       if(dist!=='RACE'){
         html+=buildComfortBadge(idx,dk);
@@ -752,8 +762,8 @@ function buildSlots(idx,todayDayIdx){
       html+=buildComfortBadge(idx,dk);
     }
     html+='</div>';
-    // Comfort expand panel for all days
-    html+=buildComfortExpand(idx,dk);
+    // Comfort expand panel for all days (skip ski days)
+    if(!isSkiVal(dist))html+=buildComfortExpand(idx,dk);
   }
   return html;
 }
@@ -780,16 +790,20 @@ function renderHome(){
     if(dist!==null&&dist!==undefined){
       var dayDate=new Date(wkStartDate);dayDate.setDate(dayDate.getDate()+di);
       var mon=dayDate.toLocaleDateString('en-US',{month:'short'}),dayNum=dayDate.getDate();
-      var distStr=dist==='RACE'?'Race Day':dist+' mi';
+      var isSki=isSkiVal(dist);
+      var distStr=isSki?('&#9975; '+skiText(dist)):(dist==='RACE'?'Race Day':dist+' mi');
       if(offset===0){nextRunText='Today \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
       else if(offset===1){nextRunText='Tomorrow \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
       else{nextRunText=DAY_NAMES_FULL[di]+' \u00b7 '+distStr;nextRunSub=mon+' '+dayNum;}
-      // Add comfort score for next run day
-      var dateStr=getWeekDateStr(idx,dk);
-      var opt=getDateComfortScore(dateStr);
-      if(opt){
-        var c=scoreColor(opt.score);
-        nextRunComfort='<div class="next-run-comfort"><span style="color:'+c+'">&#11044;</span> <span class="next-run-comfort-score" style="color:'+c+'">'+opt.score.toFixed(1)+'</span> <span>comfort &middot; best: '+opt.label+'</span></div>';
+      // Add comfort score for next run day (skip pure ski; show for opt days as a run/ski decision aid)
+      if(!isSki||isOptVal(dist)){
+        var dateStr=getWeekDateStr(idx,dk);
+        var opt=getDateComfortScore(dateStr);
+        if(opt){
+          var c=scoreColor(opt.score);
+          var lbl=isOptVal(dist)?'comfort &middot; run if good, ski if not':'comfort &middot; best: '+opt.label;
+          nextRunComfort='<div class="next-run-comfort"><span style="color:'+c+'">&#11044;</span> <span class="next-run-comfort-score" style="color:'+c+'">'+opt.score.toFixed(1)+'</span> <span>'+lbl+'</span></div>';
+        }
       }
       break;
     }
@@ -825,7 +839,7 @@ function renderHome(){
 
     '<div class="card">'+
     (isModified(idx)?'<div class="week-modified-note">Schedule adjusted \u2014 drag to rearrange</div>':'')+
-    (!dragHintShown?'<div class="drag-hint">Hold and drag any run to reschedule it</div>':'')+
+    (!dragHintShown?'<div class="drag-hint">Press and hold a run, then drag to reschedule</div>':'')+
     '<div id="home-slots" class="day-slots-wrap">'+buildSlots(idx,todayDayIdx)+'</div>'+
     buildProgressBar(idx)+
     buildWeekComfortDots(idx)+
@@ -849,9 +863,59 @@ function moveGhost(x,y){if(dragState.ghost){dragState.ghost.style.left=x+'px';dr
 function getSlotAt(x,y){var els=document.querySelectorAll('#home-slots .day-slot');for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return els[i];}return null;}
 function clearDragOver(){document.querySelectorAll('.drag-over').forEach(function(el){el.classList.remove('drag-over');});}
 function finalizeDrop(from,to,idx){if(from===to)return;var days=getWeekDays(idx),fd=days[from],td=days[to];if(!weekOverrides[idx])weekOverrides[idx]={};weekOverrides[idx][from]=td||null;weekOverrides[idx][to]=fd;if(!dragHintShown){dragHintShown=true;sSet('dragHint',1);}sSet('overrides',weekOverrides);renderHome();}
-function onTouchStart(e){var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');var t=e.touches[0];dragState.ghost=createGhost(dragState.label,dist);moveGhost(t.clientX,t.clientY);slot.classList.add('dragging');document.addEventListener('touchmove',onTouchMove,{passive:false});document.addEventListener('touchend',onTouchEnd);}
-function onTouchMove(e){if(!dragState.active)return;e.preventDefault();var t=e.touches[0];moveGhost(t.clientX,t.clientY);clearDragOver();var target=getSlotAt(t.clientX,t.clientY);if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;}
-function onTouchEnd(e){if(!dragState.active)return;document.removeEventListener('touchmove',onTouchMove);document.removeEventListener('touchend',onTouchEnd);if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);dragState.active=false;dragState.fromDay=null;dragState.overDay=null;}
+var holdTimer=null,holdStart=null,holdSlot=null;
+function onTouchStart(e){
+  var slot=e.currentTarget,dist=slot.getAttribute('data-dist');
+  if(!dist)return;
+  // Do NOT preventDefault here — allow normal scrolling unless a long-press completes
+  var t=e.touches[0];
+  holdStart={x:t.clientX,y:t.clientY};
+  holdSlot=slot;
+  clearTimeout(holdTimer);
+  holdTimer=setTimeout(function(){
+    // Long-press completed: activate drag mode
+    if(!holdSlot)return;
+    dragState.active=true;
+    dragState.fromDay=holdSlot.getAttribute('data-day');
+    dragState.dist=holdSlot.getAttribute('data-dist');
+    dragState.label=holdSlot.getAttribute('data-label');
+    dragState.ghost=createGhost(dragState.label,dragState.dist);
+    moveGhost(holdStart.x,holdStart.y);
+    holdSlot.classList.add('dragging');
+    if(navigator.vibrate)navigator.vibrate(30);
+  },400);
+  document.addEventListener('touchmove',onTouchMove,{passive:false});
+  document.addEventListener('touchend',onTouchEnd);
+}
+function onTouchMove(e){
+  var t=e.touches[0];
+  if(!dragState.active){
+    // Drag not yet activated: if finger moved meaningfully, this is a scroll — cancel the hold
+    if(holdStart&&(Math.abs(t.clientX-holdStart.x)>10||Math.abs(t.clientY-holdStart.y)>10)){
+      clearTimeout(holdTimer);holdSlot=null;
+      document.removeEventListener('touchmove',onTouchMove);
+      document.removeEventListener('touchend',onTouchEnd);
+    }
+    return; // do not preventDefault — let the page scroll
+  }
+  e.preventDefault();
+  moveGhost(t.clientX,t.clientY);
+  clearDragOver();
+  var target=getSlotAt(t.clientX,t.clientY);
+  if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}
+  else dragState.overDay=null;
+}
+function onTouchEnd(e){
+  clearTimeout(holdTimer);holdSlot=null;
+  document.removeEventListener('touchmove',onTouchMove);
+  document.removeEventListener('touchend',onTouchEnd);
+  if(!dragState.active)return;
+  if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}
+  clearDragOver();
+  document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});
+  if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);
+  dragState.active=false;dragState.fromDay=null;dragState.overDay=null;
+}
 function onMouseDown(e){var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');dragState.ghost=createGhost(dragState.label,dist);moveGhost(e.clientX,e.clientY);slot.classList.add('dragging');document.addEventListener('mousemove',onMouseMove);document.addEventListener('mouseup',onMouseUp);}
 function onMouseMove(e){if(!dragState.active)return;moveGhost(e.clientX,e.clientY);clearDragOver();var target=getSlotAt(e.clientX,e.clientY);if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;}
 function onMouseUp(e){if(!dragState.active)return;document.removeEventListener('mousemove',onMouseMove);document.removeEventListener('mouseup',onMouseUp);if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);dragState.active=false;dragState.fromDay=null;dragState.overDay=null;}
@@ -901,10 +965,12 @@ function buildHistoryBody(idx,days,note){
   for(var i=0;i<DAYS.length;i++){
     var dk=DAYS[i],dist=days[dk];if(!dist)continue;
     var done=isCompleted(idx,dk);
-    var distStr=dist==='RACE'?'&#127937; Race':dist+' mi';
+    var isSki=isSkiVal(dist);
+    var distStr=isSki?('&#9975; '+skiText(dist)):(dist==='RACE'?'&#127937; Race':dist+' mi');
+    var col=isSki?'#93c5fd':(done?'var(--green-light)':'var(--cream)');
     html+='<div class="history-run-row">'+
       '<div class="history-day-tag">'+DAY_LABELS[i]+'</div>'+
-      '<div class="history-dist" style="color:'+(done?'var(--green-light)':'var(--cream)')+'">'+distStr+'</div>'+
+      '<div class="history-dist" style="color:'+col+'">'+distStr+'</div>'+
       '<div class="history-check '+(done?'done':'pending')+'">'+(done?'&#10003;':'')+'</div></div>';
   }
   if(note)html+='<div class="history-note">'+note+'</div>';
@@ -1084,34 +1150,10 @@ function renderForecast(){
 }
 
 // ── MEALS (guide) ─────────────────────────────────────────────────
-function getMealWeekIdx(){return getAutoWeekIdx()%4;}
-function renderMeals(){
-  var wk=MEAL_WEEKS[currentMealWeek];
-  var autoMeal=getMealWeekIdx();
-  document.getElementById('mealWeekNum').textContent='Week '+wk.n+' \u2014 '+wk.theme;
-  document.getElementById('mealWeekSub').textContent=(currentMealWeek+1)+' of 4'+(currentMealWeek===autoMeal?' \u00b7 This week':'');
-  document.getElementById('mealPrevBtn').className='nav-btn'+(currentMealWeek===0?' disabled':'');
-  document.getElementById('mealNextBtn').className='nav-btn'+(currentMealWeek===MEAL_WEEKS.length-1?' disabled':'');
-  var totalProtein=wk.meals.reduce(function(s,m){return s+m.protein_g*m.containers;},0);
-  var html='<div class="sunday-tip"><div style="font-size:10px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px;opacity:.8">Sunday evening</div>'+wk.tip+'</div>';
-  html+=wk.meals.map(function(m){
-    return'<div class="meal-card"><div class="meal-card-header" style="background:'+m.color+'">'+
-      '<div><div class="meal-name">'+m.name+'</div><div class="meal-containers">Makes '+m.containers+' container'+(m.containers>1?'s':'')+'</div></div>'+
-      '<span class="protein-badge" style="background:rgba(0,0,0,.2);color:'+m.accent+'">'+m.protein_g+'g protein</span></div>'+
-      '<div class="meal-card-body">'+
-      '<div class="meal-detail-row"><div class="meal-detail-label">Protein</div><div class="meal-detail-value">'+m.protein+'</div></div>'+
-      '<div class="meal-detail-row"><div class="meal-detail-label">Season</div><div class="meal-detail-value">'+m.seasoning+'</div></div>'+
-      '<div class="meal-detail-row"><div class="meal-detail-label">Sides</div><div class="meal-detail-value">'+m.sides+'</div></div>'+
-      '<div style="font-size:12px;color:var(--muted);font-style:italic;line-height:1.55;margin-top:8px;font-weight:300">'+m.note+'</div>'+
-      '</div></div>';
-  }).join('');
-  html+='<div style="text-align:center;padding:8px 0 4px;font-size:13px;color:var(--muted)">Weekly protein from lunches: <span style="color:var(--green-light);font-family:\'DM Mono\',monospace;font-weight:500">'+totalProtein+'g</span> across 4 containers</div>';
-  document.getElementById('mealContent').innerHTML=html;
-}
-function changeMealWeek(dir){var n=currentMealWeek+dir;if(n<0||n>=MEAL_WEEKS.length)return;currentMealWeek=n;renderMeals();}
+
 
 // ── GUIDE OVERLAY ─────────────────────────────────────────────────
-function openGuide(){document.getElementById('guideOverlay').classList.add('open');renderMeals();}
+function openGuide(){document.getElementById('guideOverlay').classList.add('open');}
 function closeGuide(){document.getElementById('guideOverlay').classList.remove('open');}
 
 // ── PAGE NAV ──────────────────────────────────────────────────────
@@ -1162,7 +1204,6 @@ function init(){
   if(lastSeen===null){sSet('lastSeenWeek',autoIdx);}
   else if(autoIdx>lastSeen){for(var i=lastSeen;i<autoIdx;i++){if(completedRuns[i])delete completedRuns[i];}sSet('completed',completedRuns);sSet('lastSeenWeek',autoIdx);}
   currentWeekIdx=getHomeWeekIdx();
-  currentMealWeek=getMealWeekIdx();
   document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
   renderHome();
   // Load Marblehead weather (drives home tab comfort badges)
