@@ -269,6 +269,19 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .ski-badge{margin-left:auto;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(96,165,250,.16);font-size:17px;flex-shrink:0}
 .week-ski-tag{display:inline-block;margin-left:6px;font-size:11px;color:#93c5fd;background:rgba(96,165,250,.12);padding:2px 8px;border-radius:6px;vertical-align:middle}
 .phase-tag-ski{display:inline-block;font-size:10px;color:#93c5fd;background:rgba(96,165,250,.1);padding:3px 9px;border-radius:6px;letter-spacing:.03em;margin-bottom:8px}
+
+/* 5-WINDOW FORECAST SLOTS + RIBBON */
+.forecast-slots5{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:12px 12px 4px}
+.forecast-slot5{background:var(--navy-light);border-radius:9px;padding:8px 3px;text-align:center}
+.forecast-slot5-time{font-size:8.5px;color:var(--pale);text-transform:uppercase;letter-spacing:.02em;margin-bottom:5px;white-space:nowrap}
+.forecast-slot5-score{font-family:'DM Serif Display',serif;font-size:21px;line-height:1;margin-bottom:3px}
+.forecast-slot5-temp{font-size:10px;color:var(--pale);font-family:'DM Mono',monospace}
+.ribbon{display:flex;align-items:flex-end;gap:2px;padding:8px 12px 0;height:34px}
+.rib-seg{flex:1;display:flex;align-items:flex-end;justify-content:center;background:rgba(255,255,255,.04);border-radius:2px;height:100%;position:relative}
+.rib-seg.rib-best{outline:2px solid rgba(255,255,255,.85);outline-offset:-1px;border-radius:3px;z-index:2}
+.rib-fill{width:100%;border-radius:2px;min-height:2px}
+.rib-axis{display:flex;gap:2px;padding:3px 12px 10px}
+.rib-ax{flex:1;text-align:center;font-size:8px;color:var(--muted);font-family:'DM Mono',monospace}
 </style>
 </head>
 <body>
@@ -311,19 +324,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
         <div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1.2">2027 &rarr; Dopey 2028</div>
         <div style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:300;line-height:1.7">The 2026 schedule (through Feb 2027) is built. This is the shape of what comes next: a base phase, a marathon in October 2027, and the Dopey Challenge in January 2028. Details to be designed closer to the time &mdash; this is the agreed framework.</div>
       </div>
-
       <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">Mar 1 &ndash; mid-Jun 2027</div><div class="phase-title">Base Phase</div></div><span class="badge badge-build">~25&ndash;30 mi/wk</span></div><div class="phase-body">You arrive March 1 carrying the fall base (preserved through the ski winter): ~22 mi/wk, long run 10. This phase is a gentle on-ramp &mdash; hold and lightly lift toward ~30 mi/wk with a long run around 12&ndash;13, re-establishing 5-day running. No heroics; the job is to be ready to absorb the marathon build, not to peak. Roughly 15 weeks.</div></div>
-
       <div class="phase-block" style="border:1px solid rgba(245,158,11,.4);background:linear-gradient(135deg,rgba(245,158,11,.10),rgba(245,158,11,.03))"><div class="phase-block-header"><div><div class="phase-dates" style="color:var(--amber-light)">April 1, 2027</div><div class="phase-title">Dopey go / no-go</div></div><span class="badge" style="background:var(--amber-pale);color:var(--amber)">Decision</span></div><div class="phase-body">By this point the entire offseason and all of March are done &mdash; a full month into the base phase. This is the go/no-go gate: based on where your training actually stands (base intact, long run progressing, body healthy), commit to the Dopey Challenge and register, or hold for another year. If it&rsquo;s a go, this is when you sign up.</div></div>
-
       <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">mid-Jun &ndash; mid-Oct 2027</div><div class="phase-title">Marathon Build (18 wk)</div></div><span class="badge badge-race">peak ~40&ndash;45</span></div><div class="phase-body">An 18-week build to the marathon (~mid-Oct 2027). Starts from the ~25&ndash;30 mi base and climbs to a peak of 40&ndash;45 mi/wk &mdash; a peak, not a floor &mdash; with long runs building to the classic 20&ndash;22. Gentle by design, in the spirit of the Higdon approach: durability and consistency over raw volume. 5 days/week with the Priority-5 drop day.</div></div>
-
       <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">mid-Oct 2027</div><div class="phase-title">Marathon</div></div><span class="badge badge-race">26.2</span></div><div class="phase-body">The goal race of 2027 and the first marathon of the comeback. Everything in the base and build phases points here. Recover deliberately afterward &mdash; the marathon fitness is the foundation for Dopey, which follows just ~12 weeks later.</div></div>
-
       <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">mid-Oct 2027 &ndash; early Jan 2028</div><div class="phase-title">Marathon &rarr; Dopey Bridge</div></div><span class="badge badge-post">~12 wk</span></div><div class="phase-body">Too short for a separate build &mdash; the marathon fitness carries. Recover (~2&ndash;3 weeks), then sharpen consecutive-day tolerance for ~8&ndash;9 weeks: the back-to-back weekend work rehearsed in fall 2026 scales up here. The marathon build IS Dopey&rsquo;s aerobic foundation; this phase just adds the four-days-in-a-row specificity.</div></div>
-
       <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">~Jan 6&ndash;9, 2028</div><div class="phase-title">Dopey Challenge</div></div><span class="badge badge-ski">48.6 mi / 4 days</span></div><div class="phase-body">5K (Thu) + 10K (Fri) + Half (Sat) + Full (Sun) over four consecutive days at Walt Disney World. Modeled on the Higdon Dopey plan: 18 weeks, opens at a 13-mile long run, peaks at only ~20 mi long / ~38 mi week &mdash; gentle mileage, but built entirely around the consecutive-day pattern.</div></div>
-
       <div class="phase-block" style="border-color:rgba(82,183,136,.25)">
         <div class="phase-block-header"><div><div class="phase-dates">When ready</div><div class="phase-title">Design the 2027 plan</div></div></div>
         <div class="phase-body">
@@ -1053,17 +1059,43 @@ function renderForecast(){
     var dateLabel=monthNames[d.getMonth()]+' '+d.getDate();
     var locIdx=dayLocIdx[dayIdx]!==undefined?dayLocIdx[dayIdx]:0;
     var dayData=forecastCache[locIdx]?forecastCache[locIdx][dayIdx]:null;
-    function slot(score,temp,label){
-      if(score===null||dayData===null){return'<div class="forecast-slot"><div class="forecast-slot-time">'+label+'</div><div class="forecast-slot-score" style="color:var(--muted);font-size:18px">—</div><div class="forecast-slot-label" style="color:var(--muted);font-size:10px">'+(dayData===null?'Loading':'N/A')+'</div><div class="forecast-slot-temp"></div></div>';}
-      var c=scoreColor(score),l=scoreLabel(score);
-      return'<div class="forecast-slot"><div class="forecast-slot-time">'+label+'</div><div class="forecast-slot-score" style="color:'+c+'">'+score.toFixed(1)+'</div><div class="forecast-slot-label" style="color:'+c+'">'+l+'</div><div class="forecast-slot-temp">'+(temp!==null?temp+'°F':'')+'</div></div>';
+    // Five windows (aligned with optimalWindow): Early 5-7, Mid-AM 8-10, Midday 11-1, Afternoon 2-4, Evening 5-7pm
+    function fslot(score,temp,name){
+      if(score===null||dayData===null){return'<div class="forecast-slot5"><div class="forecast-slot5-time">'+name+'</div><div class="forecast-slot5-score" style="color:var(--muted);font-size:15px">—</div><div class="forecast-slot5-temp"></div></div>';}
+      var c=scoreColor(score);
+      return'<div class="forecast-slot5"><div class="forecast-slot5-time">'+name+'</div><div class="forecast-slot5-score" style="color:'+c+'">'+score.toFixed(1)+'</div><div class="forecast-slot5-temp">'+(temp!==null?temp+'°':'')+'</div></div>';
     }
-    var mornScore=dayData?slotScore([6,7,8],dayData.hourly):null;
-    var noonScore=dayData?slotScore([11,12,13],dayData.hourly):null;
-    var eveScore=dayData?slotScore([17,18,19],dayData.hourly):null;
-    var mornTemp=dayData?slotTemp([6,7,8],dayData.hourly):null;
-    var noonTemp=dayData?slotTemp([11,12,13],dayData.hourly):null;
-    var eveTemp=dayData?slotTemp([17,18,19],dayData.hourly):null;
+    // Hourly comfort ribbon 5am-8pm
+    function buildRibbon(){
+      if(!dayData)return'';
+      var hrs=[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
+      var scored=hrs.map(function(h){var e=dayData.hourly.find(function(x){return x.hour===h;});return{h:h,s:e?e.score:null};});
+      var valid=scored.filter(function(x){return x.s!==null;});
+      if(!valid.length)return'';
+      var best=valid.reduce(function(a,b){return b.s>a.s?b:a;});
+      var seg=scored.map(function(o){
+        if(o.s===null)return'<div class="rib-seg"></div>';
+        var c=scoreColor(o.s),hpct=Math.max(6,Math.round(o.s/10*100));
+        var mark=(o.h===best.h)?' rib-best':'';
+        return'<div class="rib-seg'+mark+'"><div class="rib-fill" style="background:'+c+';height:'+hpct+'%"></div></div>';
+      }).join('');
+      var axis=scored.map(function(o){
+        var lab='';
+        if([5,8,11,14,17,20].indexOf(o.h)>=0){var hh=o.h<=12?o.h:o.h-12;lab=hh+(o.h<12?'a':'p');}
+        return'<div class="rib-ax">'+lab+'</div>';
+      }).join('');
+      return'<div class="ribbon">'+seg+'</div><div class="rib-axis">'+axis+'</div>';
+    }
+    var wEarly=dayData?slotScore([5,6,7],dayData.hourly):null;
+    var wMidAM=dayData?slotScore([8,9,10],dayData.hourly):null;
+    var wMidday=dayData?slotScore([11,12,13],dayData.hourly):null;
+    var wAft=dayData?slotScore([14,15,16],dayData.hourly):null;
+    var wEve=dayData?slotScore([17,18,19],dayData.hourly):null;
+    var tEarly=dayData?slotTemp([5,6,7],dayData.hourly):null;
+    var tMidAM=dayData?slotTemp([8,9,10],dayData.hourly):null;
+    var tMidday=dayData?slotTemp([11,12,13],dayData.hourly):null;
+    var tAft=dayData?slotTemp([14,15,16],dayData.hourly):null;
+    var tEve=dayData?slotTemp([17,18,19],dayData.hourly):null;
     var opt=dayData?optimalWindow(dayData.hourly):null;
     var condLabel=dayData?dayData.condLabel:baseDay.condLabel;
     var optHtml='';
@@ -1085,7 +1117,8 @@ function renderForecast(){
       '<div class="forecast-cond">'+condLabel+'</div>'+
       '<div class="day-loc-selector">'+renderForecastDayLocSelector(dayIdx)+'</div>'+
       '</div>'+
-      '<div class="forecast-slots">'+slot(mornScore,mornTemp,'Morning')+slot(noonScore,noonTemp,'Midday')+slot(eveScore,eveTemp,'Evening')+'</div>'+
+      '<div class="forecast-slots5">'+fslot(wEarly,tEarly,'Early')+fslot(wMidAM,tMidAM,'Mid-AM')+fslot(wMidday,tMidday,'Midday')+fslot(wAft,tAft,'Aftn')+fslot(wEve,tEve,'Eve')+'</div>'+
+      buildRibbon()+
       optHtml+'</div>';
   });
   document.getElementById('forecastContent').innerHTML=html;
