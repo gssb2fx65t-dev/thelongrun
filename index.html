@@ -282,6 +282,27 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .rib-fill{width:100%;border-radius:2px;min-height:2px}
 .rib-axis{display:flex;gap:2px;padding:3px 12px 10px}
 .rib-ax{flex:1;text-align:center;font-size:8px;color:var(--muted);font-family:'DM Mono',monospace}
+
+/* ── EDIT MODE ── */
+.week-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 6px}
+.week-head-title{font-family:'DM Serif Display',serif;font-size:15px}
+.edit-toggle{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--pale);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 10px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500;flex-shrink:0}
+.edit-toggle:active{background:rgba(255,255,255,.14)}
+.edit-toggle.on{background:rgba(245,158,11,.15);border-color:var(--amber-light);color:var(--amber-light)}
+.edit-banner{font-size:11px;color:var(--amber-light);background:rgba(245,158,11,.08);border-top:1px solid rgba(245,158,11,.2);border-bottom:1px solid rgba(245,158,11,.2);padding:7px 14px;text-align:center;font-style:italic}
+.day-slot.editing{border:1px dashed rgba(245,158,11,.4)}
+.day-slot.editing .day-run-dist{color:var(--amber-light)}
+.stepper{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
+.step-btn{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--cream);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1;user-select:none}
+.step-btn:active{background:rgba(255,255,255,.2)}
+.step-btn.minus{color:#fca5a5}
+.step-btn.plus{color:var(--green-light)}
+.del-btn{width:30px;height:30px;border-radius:8px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#fca5a5;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:5px;flex-shrink:0}
+.del-btn:active{background:rgba(239,68,68,.25)}
+.add-btn{margin-left:auto;font-size:11px;color:var(--green-light);background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.3);border-radius:8px;padding:6px 12px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500;flex-shrink:0}
+.add-btn:active{background:rgba(82,183,136,.25)}
+.edit-locked{margin-left:auto;font-size:10px;color:var(--muted);background:rgba(255,255,255,.05);border-radius:6px;padding:4px 9px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
+.cap-warn{display:inline-block;margin-left:8px;font-size:10px;color:var(--amber-light);background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:2px 8px;letter-spacing:.03em;text-transform:uppercase;vertical-align:middle;font-family:'DM Sans',sans-serif;font-weight:500}
 </style>
 </head>
 <body>
@@ -450,6 +471,7 @@ var weekOverrides={},completedRuns={},weekNotes={};
 var homeWeekOffset=0;
 var dragState={active:false,fromDay:null,dist:null,label:null,ghost:null,overDay:null};
 var dragHintShown=false;
+var editMode=false;
 // Comfort scores per day keyed by YYYY-MM-DD
 var dayComfortScores={};
 var weekComfortDots=[];
@@ -461,6 +483,48 @@ function getWeekDays(idx){var w=WEEKS[idx];var b={mon:w.days.mon,tue:w.days.tue,
 function isModified(idx){if(!weekOverrides[idx])return false;var w=WEEKS[idx],ov=weekOverrides[idx];for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}return false;}
 function resetWeek(idx){delete weekOverrides[idx];sSet('overrides',weekOverrides);renderHome();}
 function lockWeek(idx){var days=getWeekDays(idx);WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};delete weekOverrides[idx];sSet('overrides',weekOverrides);var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);renderHome();}
+// ── EDIT MODE ────────────────────────────────────────────────────
+var WEEK_CAP=30;  // soft cap — breach is shown, not blocked
+function toggleEditMode(){editMode=!editMode;renderHome();}
+function adjustDay(idx,dk,delta){
+  var days=getWeekDays(idx),cur=days[dk];
+  if(isSkiVal(cur)||cur==='RACE')return;            // ski/race days not editable
+  var v=(cur===null||cur===undefined)?0:parseFloat(cur);
+  v=Math.round((v+delta)*2)/2;                      // 0.5 increments
+  if(v<0.5){v=0.5;}                                 // floor; use delete to remove a day
+  if(!weekOverrides[idx])weekOverrides[idx]={};
+  weekOverrides[idx][dk]=v;
+  sSet('overrides',weekOverrides);
+  renderHome();
+}
+function addDay(idx,dk){
+  var days=getWeekDays(idx);
+  if(days[dk]!==null&&days[dk]!==undefined)return;
+  if(!weekOverrides[idx])weekOverrides[idx]={};
+  weekOverrides[idx][dk]=3;                          // sensible default
+  sSet('overrides',weekOverrides);
+  renderHome();
+}
+function deleteDay(idx,dk){
+  var days=getWeekDays(idx),cur=days[dk];
+  if(isSkiVal(cur)||cur==='RACE')return;
+  if(!weekOverrides[idx])weekOverrides[idx]={};
+  weekOverrides[idx][dk]=null;
+  sSet('overrides',weekOverrides);
+  renderHome();
+}
+function weekTotal(idx){
+  var days=getWeekDays(idx),t=0;
+  for(var i=0;i<DAYS.length;i++){
+    var v=days[DAYS[i]];
+    if(v===null||v===undefined)continue;
+    if(v==='RACE'){t+=13.1;continue;}
+    if(isSkiVal(v))continue;                          // ski days excluded from run miles
+    var x=parseFloat(v);if(!isNaN(x))t+=x;
+  }
+  return Math.round(t*10)/10;
+}
+
 function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'&&!isSkiVal(dist)){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};}
 function isCompleted(idx,dk){return !!(completedRuns[idx]&&completedRuns[idx][dk]);}
 function toggleCompleted(idx,dk){if(!completedRuns[idx])completedRuns[idx]={};if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;sSet('completed',completedRuns);renderHome();renderHistory();}
@@ -708,27 +772,53 @@ function buildSlots(idx,todayDayIdx){
       if(isOptVal(dist)){runLabel=(dk==='sat')?'Long — run or ski':'Run or ski';}else{runLabel=(dk==='sat')?'Long ski':'Cross-train';}
       runDist=skiText(dist);
     }else if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
-    // Build slot with comfort badge for all days
-    html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+((!isSki&&dist)||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
+    // In edit mode: suppress drag, show steppers / add / delete
+    var editable=editMode&&!isSki&&dist!=='RACE';
+    if(editMode){cls=cls.replace(' draggable','');cls+=' editing';}
+    // Build slot
+    html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+((!isSki&&!editMode&&dist)||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
     html+='<div class="day-name">'+label+'</div>';
     html+='<div class="day-divider"></div>';
-    if(isSki){
-      html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-      html+=buildSkiBadge();
-      html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
-    }else if(hasRun){
-      html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-      if(dist!=='RACE'){
-        html+=buildComfortBadge(idx,dk);
-        html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+    if(editMode){
+      // ── EDIT MODE RENDER ──
+      if(isSki){
+        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+        html+='<div class="edit-locked">ski</div>';
+      }else if(dist==='RACE'){
+        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+        html+='<div class="edit-locked">race</div>';
+      }else if(hasRun){
+        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+        html+='<div class="stepper">'+
+          '<div class="step-btn minus" onclick="event.stopPropagation();adjustDay('+idx+',\''+dk+'\',-0.5)">&minus;</div>'+
+          '<div class="step-btn plus" onclick="event.stopPropagation();adjustDay('+idx+',\''+dk+'\',0.5)">+</div>'+
+          '</div>';
+        html+='<div class="del-btn" onclick="event.stopPropagation();deleteDay('+idx+',\''+dk+'\')">&#10005;</div>';
+      }else{
+        html+='<div class="day-run-dist" style="flex:1">Rest</div>';
+        html+='<div class="add-btn" onclick="event.stopPropagation();addDay('+idx+',\''+dk+'\')">+ Add run</div>';
       }
+      html+='</div>';
     }else{
-      html+='<div class="day-run-dist" style="flex:1">'+runDist+'</div>';
-      html+=buildComfortBadge(idx,dk);
+      // ── NORMAL RENDER ──
+      if(isSki){
+        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+        html+=buildSkiBadge();
+        html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+      }else if(hasRun){
+        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
+        if(dist!=='RACE'){
+          html+=buildComfortBadge(idx,dk);
+          html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
+        }
+      }else{
+        html+='<div class="day-run-dist" style="flex:1">'+runDist+'</div>';
+        html+=buildComfortBadge(idx,dk);
+      }
+      html+='</div>';
+      // Comfort expand panel (skip ski days) — only in normal mode
+      if(!isSkiVal(dist))html+=buildComfortExpand(idx,dk);
     }
-    html+='</div>';
-    // Comfort expand panel for all days (skip ski days)
-    if(!isSkiVal(dist))html+=buildComfortExpand(idx,dk);
   }
   return html;
 }
@@ -743,6 +833,8 @@ function renderHome(){
   var idx=currentWeekIdx,w=WEEKS[idx];
   var today=new Date(),todayDayIdx=JS_TO_IDX[today.getDay()];
   var p=getProgress(idx);
+  var liveTotal=weekTotal(idx);
+  var capNote=(liveTotal>WEEK_CAP)?'<span class="cap-warn">over '+WEEK_CAP+' cap</span>':'';
   var milesSummary=p.doneRuns>0?'<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>':'';
   // Next run with comfort score
   var nextRunText='',nextRunSub='',nextRunComfort='';
@@ -789,18 +881,23 @@ function renderHome(){
   document.getElementById('homeContent').innerHTML=
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
     '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 52</div>'+
-    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:#1a2332">'+w.total+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+'</div>'+
+    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'#1a2332')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
     '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
     badgeHtml+'</div>'+
     '<div class="card" style="margin-top:14px"><div class="card-header"><span class="card-title">This week\'s goal</span></div>'+
     '<div class="card-body"><p class="narrative-text">'+w.narrative+'</p></div></div>'+
     '<div class="card">'+
-    (isModified(idx)?'<div class="week-modified-note">Schedule adjusted \u2014 drag to rearrange</div>':'')+
-    (!dragHintShown?'<div class="drag-hint">Press and hold a run, then drag to reschedule</div>':'')+
+    '<div class="week-head">'+
+      '<span class="week-head-title">Week '+w.n+' \u00b7 '+w.date+'</span>'+
+      '<div class="edit-toggle'+(editMode?' on':'')+'" onclick="toggleEditMode()">'+(editMode?'&#10003; Done':'&#9998; Edit')+'</div>'+
+    '</div>'+
+    (editMode?'<div class="edit-banner">Editing \u2014 adjust miles, add or remove days</div>':'')+
+    (!editMode&&isModified(idx)?'<div class="week-modified-note">Week edited \u2014 differs from plan</div>':'')+
+    (!editMode&&!dragHintShown?'<div class="drag-hint">Press and hold a run, then drag to reschedule</div>':'')+
     '<div id="home-slots" class="day-slots-wrap">'+buildSlots(idx,todayDayIdx)+'</div>'+
-    buildProgressBar(idx)+
-    buildWeekComfortDots(idx)+
-    (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
+    (editMode?'':buildProgressBar(idx))+
+    (editMode?'':buildWeekComfortDots(idx))+
+    (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset to plan</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
     noteHtml+
     '</div>'+
     '<div class="next-run-card"><div><div class="next-run-label">Next run</div>'+
@@ -809,7 +906,7 @@ function renderHome(){
     nextRunComfort+'</div>'+
     '<div class="run-arrow">&#8594;</div></div>'+
     nextWkBtn;
-  setupDragDrop(idx);
+  if(!editMode)setupDragDrop(idx);
 }
 // ── DRAG & DROP ───────────────────────────────────────────────────
 function createGhost(label,dist){var el=document.createElement('div');el.className='drag-ghost';el.textContent=(dist&&dist!=='RACE')?dist+' mi':label;document.body.appendChild(el);return el;}
