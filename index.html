@@ -303,6 +303,43 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .add-btn:active{background:rgba(82,183,136,.25)}
 .edit-locked{margin-left:auto;font-size:10px;color:var(--muted);background:rgba(255,255,255,.05);border-radius:6px;padding:4px 9px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
 .cap-warn{display:inline-block;margin-left:8px;font-size:10px;color:var(--amber-light);background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:2px 8px;letter-spacing:.03em;text-transform:uppercase;vertical-align:middle;font-family:'DM Sans',sans-serif;font-weight:500}
+
+/* ── LONG RUN EQUIVALENT TAB ── */
+.lr-intro{margin-bottom:16px}
+.lr-eyebrow{font-size:11px;font-family:'DM Mono',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:5px}
+.lr-title{font-family:'DM Serif Display',serif;font-size:23px;line-height:1.2}
+.lr-sub{font-size:12.5px;color:var(--muted);margin-top:7px;font-weight:300;line-height:1.65}
+.lr-base{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px 15px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.lr-base-l{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.lr-base-v{font-family:'DM Serif Display',serif;font-size:26px;line-height:1}
+.lr-base-note{font-size:11px;color:var(--muted);margin-top:3px}
+.lr-wk{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;text-align:right;flex-shrink:0;margin-left:10px}
+.lr-days{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.lr-day{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:13px 12px;text-align:center}
+.lr-day.best{border-color:var(--green-light);box-shadow:0 0 0 1px rgba(82,183,136,.25)}
+.lr-day-name{font-size:11px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:2px}
+.lr-day-date{font-size:10px;color:var(--muted);font-family:'DM Mono',monospace;margin-bottom:9px}
+.lr-dew-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.lr-dew{font-family:'DM Mono',monospace;font-size:19px;font-weight:500;margin-bottom:9px}
+.lr-run-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.lr-run{font-family:'DM Serif Display',serif;font-size:30px;line-height:1}
+.lr-run-mi{font-size:12px;color:var(--muted);margin-left:2px;font-family:'DM Sans',sans-serif}
+.lr-best-tag{display:inline-block;margin-top:8px;font-size:9px;background:rgba(82,183,136,.15);color:var(--green-light);border-radius:5px;padding:2px 8px;letter-spacing:.05em;text-transform:uppercase}
+.lr-6am{font-size:9px;color:var(--muted);margin-top:7px;font-family:'DM Mono',monospace}
+.lr-tbl-head{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;font-family:'DM Mono',monospace;margin:0 0 8px 2px}
+.lr-table{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;overflow:hidden}
+.lr-row{display:grid;grid-template-columns:34px 1fr 70px 88px;align-items:center;padding:10px 12px;border-bottom:1px solid rgba(255,255,255,.04)}
+.lr-row:last-child{border-bottom:none}
+.lr-row.active{background:rgba(82,183,136,.07);border-left:3px solid var(--green-light);padding-left:9px}
+.lr-tag{font-size:8.5px;color:var(--green-light);font-family:'DM Mono',monospace;letter-spacing:.03em;line-height:1.2}
+.lr-band{font-size:12.5px;color:var(--cream);font-family:'DM Mono',monospace}
+.lr-dist{font-family:'DM Serif Display',serif;font-size:19px;text-align:right}
+.lr-mi{font-size:10px;color:var(--muted);margin-left:2px;font-family:'DM Sans',sans-serif}
+.lr-regime{font-size:9.5px;text-align:right;letter-spacing:.02em}
+.lr-note{margin-top:12px;background:rgba(245,158,11,.07);border:1px solid rgba(245,158,11,.22);border-radius:12px;padding:11px 13px;font-size:11.5px;color:var(--amber-light);line-height:1.6}
+.lr-foot{font-size:11px;color:var(--muted);line-height:1.65;margin-top:12px;font-weight:300;margin-bottom:20px}
+/* 6 tabs now — tighten label size */
+.tab{font-size:9.5px;letter-spacing:.02em}
 </style>
 </head>
 <body>
@@ -320,6 +357,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
       <div class="tab" onclick="showPage('history')">Log</div>
       <div class="tab" onclick="showPage('comfort')">Now</div>
       <div class="tab" onclick="showPage('forecast')">7-Day</div>
+      <div class="tab" onclick="showPage('longrun')">Long Run</div>
       <div class="tab" onclick="showPage('bridge')">2027</div>
     </div>
   </div>
@@ -338,6 +376,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
     </div>
     <div class="page" id="page-forecast">
       <div id="forecastContent"><div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading 7-day forecast...</div></div></div>
+    </div>
+    <div class="page" id="page-longrun">
+      <div class="loc-selector" id="lrLocSelector"></div>
+      <div id="longrunContent"></div>
     </div>
     <div class="page" id="page-bridge">
       <div style="margin-bottom:16px">
@@ -429,13 +471,13 @@ var WEEKS=[
   {n:18,date:"Jun 29",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:9.5,sun:7},total:24.5,narrative:"Saturday reaches 9.5 miles, Sunday 7. A strong week of base-building on the long arc toward 2027. Note the heat is arriving: if conditions are hot, spread the mileage across an extra short day, run early, stick to shaded trails, and carry Tailwind. Run by effort, not by the clock."},
   {n:19,date:"Jul 6",type:"build",label:"BUILD",days:{mon:null,tue:5,wed:4,thu:2.5,fri:null,sat:11,sun:4.5},total:27,narrative:"Saturday steps up to 11 miles - a new long-run distance - with Sunday easing to 4.5 as recovery. Tuesday anchors at 5, and Thursday joins as a light 5th day. This reflects the higher baseline you have built: 27 miles, structural not a surge. Run the 11 by effort, early, and back off the distance if the heat is oppressive."},
   {n:20,date:"Jul 13",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:2,fri:null,sat:8,sun:4},total:20.5,narrative:"Recovery week - well-earned, and especially important because the heat block starts next week. About a 25% pullback to 20.5 miles, but the week keeps all five days: Thursday stays on as a token 2-miler to hold the rhythm rather than dropping out. Rest, recover, and arrive at the summer heat fresh rather than already depleted. The body adapts during rest, not work."},
-  {n:21,date:"Jul 20",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:8.5,sun:4},total:24.5,narrative:"Heat block begins - set modestly higher this year to match your stronger base. Saturday holds as the long run anchor at 8.5 miles; Thursday is a short 3-mile 5th day. The heat itself is the progression - hold mileage flat and let acclimatization build. Slow down 30-90 seconds per mile and go by effort. Run early, run shaded, carry Tailwind from mile 1. Start pre-hydrating the day before long runs."},
-  {n:22,date:"Jul 27",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:9,sun:4},total:25,narrative:"Saturday long run grows to 9 miles; Sunday stays short for easy recovery. Prioritize early-morning starts, especially Saturday. If conditions are extreme, shorten rather than skip - a shorter run in the heat still builds acclimatization. The heat is doing the work; don't add to it."},
-  {n:23,date:"Aug 3",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:9,sun:4},total:25.5,narrative:"Holding steady - Saturday at 9 miles, Wednesday grows slightly. Every summer long run builds heat acclimatization and mental resilience at once. Resist adding miles even on a cooler day: the flat mileage through the block is deliberate, and the hidden load of heat is already priced in. Remember the heat discount - 9 miles in this air is your good-conditions 10-11."},
-  {n:24,date:"Aug 10",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:2,fri:null,sat:6.5,sun:3},total:18,narrative:"Recovery week in the heat. Pull back to 18 miles - roughly 30% - while keeping all five days; Thursday shrinks to 2 rather than disappearing. This mid-block recovery clears the accumulated heat stress, which builds more insidiously than mileage stress through poor sleep and hydration debt. Run easy, stay hydrated."},
-  {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:8.5,sun:4},total:25,narrative:"Back to the heat routine. Saturday returns to 8.5 miles. Late August is typically the worst of the heat. If conditions are severe, start before sunrise or shorten Saturday rather than skipping it. Acclimatization compounds across the block - you're banking fitness that will surface when fall arrives."},
-  {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:9,sun:4},total:26,narrative:"Tuesday reaches 5.5 miles, the longest midweek anchor of the year. The heat block's end is one week away. Arrive at that transition healthy rather than pushing through warning signs - the post-heat re-entry in September is where the real fall build begins, and you want fresh legs for it."},
-  {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:9,sun:4},total:26,narrative:"Final heat-adjusted week - Saturday 9, Tuesday 5.5, Wednesday 4.5. You've held the long run anchor through seven weeks of summer heat and banked real acclimatization. Next comes the heat-block-exit checkpoint: assess honestly how the legs and mind feel, and revisit whether the fall schedule is scaled right for your actual fitness. Come out clean and the fall build to the half is green-lit - run it as a training checkpoint."},
+  {n:21,date:"Jul 20",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:11,sun:4},total:27,narrative:"Heat block begins. Saturday now shows the BASELINE long run - 11 miles, the distance you would run in good conditions (under 55 dew point). This is a ceiling, not a target: check the Long Run tab each week and run the dew-point-adjusted distance instead. On a typical July morning that lands around 9.5-10. Midweek is unchanged - short runs take almost no heat penalty. Slow 30-90 sec/mile, run by effort, Tailwind from mile 1."},
+  {n:22,date:"Jul 27",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:11,sun:4},total:27,narrative:"Baseline holds at 11. The point of the block is to hold the STIMULUS flat, not the distance - so the miles float with the dew point while time on feet stays roughly constant. Check the Long Run tab Friday night, pick Saturday or Sunday on conditions, and log what you actually ran with the Edit button."},
+  {n:23,date:"Aug 3",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:27.5,narrative:"Baseline 11. Wednesday grows slightly. Every summer long run builds heat acclimatization and structural durability at once. Resist running past the dew-point-adjusted number even on a good day - the adjusted distance IS the full stimulus once the heat is priced in."},
+  {n:24,date:"Aug 10",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:2,fri:null,sat:7.5,sun:3},total:19,narrative:"Recovery week in the heat. The baseline drops to 7.5 - and this pullback OVERRIDES the conditions. Even if the weekend is beautiful, run the reduced distance: recovery is about clearing accumulated fatigue, not about weather. A hot week that auto-adjusted down to 8 miles was not a recovery week; it was a hard week with fewer miles. Heat debt (poor sleep, hydration deficit, suppressed appetite) accumulates invisibly. Clear it here."},
+  {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:27.5,narrative:"Back to the baseline of 11. Late August is typically the worst of the heat, so expect the adjusted number to land low. That is the system working, not a setback. Acclimatization compounds across the block."},
+  {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:28,narrative:"Baseline 11. Tuesday reaches 5.5, the longest midweek anchor of the year. The heat block's end is one week away - arrive at that transition healthy rather than pushing through warning signs."},
+  {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:28,narrative:"Final heat-adjusted week. Baseline 11. You have held the long-run stimulus flat through seven weeks of summer heat by letting the distance float with the dew point. Next comes the heat-block-exit checkpoint: look at what you ACTUALLY ran across the block, and use it to decide whether the fall schedule is scaled correctly for your real fitness."},
   {n:28,date:"Sep 7",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:10,sun:4},total:26.5,narrative:"Post-heat re-entry. Heat-block checkpoint passed. The midweek holds at the level the heat block built (Tue 5, Wed 4.5, Thu 3) and the long run steps up to 10. Keep effort easy - your legs are re-adapting after a summer of heat. ~26.5 miles."},
   {n:29,date:"Sep 14",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:27.5,narrative:"Re-entry build continues. Long run 11. Easy effort throughout as the post-summer fitness comes back and the fall conditions start working in your favor. ~27.5 miles."},
   {n:30,date:"Sep 21",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:2.5,fri:null,sat:12,sun:4},total:28,narrative:"Build. Long run 12. Thursday trims slightly to keep the week under the 30-mile cap. ~28 miles."},
@@ -1051,6 +1093,7 @@ async function loadNow(locIdx){
     // If this is Marblehead, re-render home to update comfort badges
     if(locIdx===0){renderHome();renderHistory();}
     if(document.getElementById('page-forecast').classList.contains('active'))renderForecast();
+    if(document.getElementById('page-longrun').classList.contains('active'))renderLongRun();
   }catch(e){
     console.error(e);
     document.getElementById('csScoreCard').innerHTML='<div class="error-wrap"><div class="error-icon">&#9728;</div><div class="error-msg">Could not load conditions for '+LOCS[locIdx].name+'.<br>Check your connection and tap refresh.</div></div>';
@@ -1139,7 +1182,11 @@ function selectDayLoc(dayIdx,locIdx){
   else renderForecast();
 }
 async function loadForecastLoc(dayIdx,locIdx){
-  try{if(!forecastCache[locIdx]){var loc=LOCS[locIdx];var data=await fetchWeather(loc.lat,loc.lon);forecastCache[locIdx]=parseHourly(data);}renderForecast();}catch(e){console.error(e);}
+  try{
+    if(!forecastCache[locIdx]){var loc=LOCS[locIdx];var data=await fetchWeather(loc.lat,loc.lon);forecastCache[locIdx]=parseHourly(data);}
+    if(document.getElementById('page-longrun').classList.contains('active'))renderLongRun();
+    else renderForecast();
+  }catch(e){console.error(e);}
 }
 function renderForecast(){
   if(!Object.keys(forecastCache).length)return;
@@ -1220,1250 +1267,133 @@ function renderForecast(){
   });
   document.getElementById('forecastContent').innerHTML=html;
 }
-// ── MEALS (guide) ─────────────────────────────────────────────────
-// ── GUIDE OVERLAY ─────────────────────────────────────────────────
-function openGuide(){document.getElementById('guideOverlay').classList.add('open');}
-function closeGuide(){document.getElementById('guideOverlay').classList.remove('open');}
-// ── PAGE NAV ──────────────────────────────────────────────────────
-function showPage(id){
-  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
-  document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
-  document.getElementById('page-'+id).classList.add('active');
-  var tabMap={home:0,history:1,comfort:2,forecast:3,bridge:4};
-  document.querySelectorAll('.tab')[tabMap[id]].classList.add('active');
-  document.querySelector('.content').scrollTop=0;
-  if(id==='history')renderHistory();
-  if(id==='forecast'){
-    if(Object.keys(forecastCache).length>0)renderForecast();
-    else{document.getElementById('forecastContent').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading forecast...</div></div>';loadNow(0);}
-  }
-}
-// ── INIT ──────────────────────────────────────────────────────────
-function copyPrompt(){
-  var text="I'm ready to design my 2027-2028 training plan. Here is the agreed framework from our 2026 planning:\n\n1. Goal arc: a base phase (Mar-mid-Jun 2027), an 18-week marathon build to a marathon in mid-Oct 2027, then ~12 weeks to sharpen consecutive-day tolerance for the Dopey Challenge at WDW in early Jan 2028.\n\n2. Structure: 5 days/week with a Priority-5 drop day. Hierarchy: Sat long (P1), Tue anchor (P2), Wed/Thu medium (P3), Sun recovery (P4), Mon/Fri easy (P5 drop). Drop day never adjacent to the long run.\n\n3. Volume: base phase ~25-30 mi/wk; marathon build peaks at 40-45 mi/wk (a peak, not a floor). Gentle, Higdon-style - durability over raw volume.\n\n4. Dopey modeled on the Higdon Dopey plan: 18 weeks, opens at a 13-mile long run, peaks ~20 mi long / ~38 mi week, built around the four-consecutive-days pattern. The marathon build is Dopey's aerobic foundation.\n\n5. From 2026 data: Tue is most reliable (P2), Mon least used (ideal P5 drop). I arrive March 1 2027 at ~22 mi/wk, long run 10, having preserved base through a ski-hybrid winter. Dopey go/no-go decision is April 1, 2027.\n\nPlease reference all of this before we start building the schedule.";
-  if(navigator.clipboard){
-    navigator.clipboard.writeText(text).then(function(){
-      var btn=document.getElementById('copyBtn');
-      btn.textContent='✓ Copied!';
-      btn.style.background='rgba(82,183,136,.25)';
-      setTimeout(function(){btn.innerHTML='&#128203;&nbsp; Copy prompt';btn.style.background='rgba(82,183,136,.12)';},2000);
-    });
-  } else {
-    // Fallback for older browsers
-    var ta=document.createElement('textarea');
-    ta.value=text;ta.style.position='fixed';ta.style.opacity='0';
-    document.body.appendChild(ta);ta.select();
-    document.execCommand('copy');document.body.removeChild(ta);
-    var btn=document.getElementById('copyBtn');
-    btn.textContent='✓ Copied!';
-    setTimeout(function(){btn.innerHTML='&#128203;&nbsp; Copy prompt';},2000);
-  }
-}
-function init(){
-  var ov=sGet('overrides');if(ov)weekOverrides=ov;
-  var locked=sGet('locked');if(locked){for(var k in locked){var idx=parseInt(k);WEEKS[idx].days=locked[k];}}
-  var comp=sGet('completed');if(comp)completedRuns=comp;
-  var notes=sGet('notes');if(notes)weekNotes=notes;
-  var ro=sGet('rollOffset');if(ro!==null&&!isNaN(parseInt(ro)))homeWeekOffset=parseInt(ro);
-  dragHintShown=!!sGet('dragHint');
-  var autoIdx=getAutoWeekIdx(),lastSeen=sGet('lastSeenWeek');
-  if(lastSeen===null){sSet('lastSeenWeek',autoIdx);}
-  else if(autoIdx>lastSeen){for(var i=lastSeen;i<autoIdx;i++){if(completedRuns[i])delete completedRuns[i];}sSet('completed',completedRuns);sSet('lastSeenWeek',autoIdx);}
-  currentWeekIdx=getHomeWeekIdx();
-  document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
-  renderHome();
-  // Load Marblehead weather (drives home tab comfort badges)
-  loadNow(0);
-}
-init();
-</script>
-</body>
-</html>.content{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;padding:20px}
-.page{display:none}
-.page.active{display:block}
-.card{background:var(--navy-mid);border-radius:16px;border:1px solid rgba(255,255,255,.07);margin-bottom:14px;overflow:hidden}
-.card-header{padding:14px 16px 10px;border-bottom:1px solid rgba(255,255,255,.05);display:flex;align-items:center;justify-content:space-between}
-.card-title{font-family:'DM Serif Display',serif;font-size:16px}
-.card-body{padding:14px 16px}
-.badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase}
-.badge-ramp{background:var(--green-pale);color:var(--green)}
-.badge-build{background:var(--blue-pale);color:var(--blue)}
-.badge-recover{background:var(--amber-pale);color:var(--amber)}
-.badge-heat{background:var(--orange-pale);color:var(--orange)}
-.badge-taper{background:var(--purple-pale);color:var(--purple)}
-.badge-race{background:var(--red-pale);color:var(--red)}
-.badge-post{background:var(--green-pale);color:var(--green)}
-.badge-maintain{background:var(--blue-pale);color:var(--blue)}
-.badge-reset{background:rgba(255,255,255,.1);color:var(--pale)}
-.badge-restart{background:var(--green-pale);color:var(--green)}
-.badge-recovery{background:rgba(245,158,11,.15);color:#f59e0b}
-.badge-ski{background:rgba(96,165,250,.15);color:#93c5fd}
-.badge-bridge{background:var(--green-pale);color:var(--green)}
-/* DAY SLOTS */
-.day-slot{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;position:relative}
-.day-slot.run-anchor{background:var(--green)}
-.day-slot.run-other{background:var(--navy-light);border:1px solid rgba(255,255,255,.08)}
-.day-slot.rest{padding:5px 12px}
-.day-slot.rest .day-name,.day-slot.rest .day-divider,.day-slot.rest .day-run-dist{opacity:.35}
-.day-slot.rest .comfort-badge{opacity:.75}
-.day-slot.today-slot{box-shadow:0 0 0 2px var(--green-light)}
-.day-slot.completed.run-anchor{background:#1a4731;border:1px solid var(--green-light)}
-.day-slot.completed.run-other{background:var(--navy-light);border:1px solid var(--green-light)}
-.day-slot.completed .day-run-dist{text-decoration:line-through;opacity:.5}
-.day-name{font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;width:30px;flex-shrink:0}
-.day-slot.run-anchor .day-name{color:rgba(255,255,255,.7)}
-.day-slot.run-other .day-name{color:var(--pale)}
-.day-slot.rest .day-name{color:var(--muted);font-size:10px}
-.day-divider{width:1px;height:24px;background:rgba(255,255,255,.12);flex-shrink:0}
-.day-slot.rest .day-divider{background:rgba(255,255,255,.05)}
-.day-run-info{flex:1}
-.day-run-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
-.day-slot.run-anchor .day-run-label{color:rgba(255,255,255,.6)}
-.day-slot.run-other .day-run-label{color:var(--pale)}
-.day-run-dist{font-family:'DM Serif Display',serif;font-size:20px;line-height:1}
-.day-slot.run-anchor .day-run-dist{color:white}
-.day-slot.run-other .day-run-dist{color:var(--green-light)}
-.day-slot.rest .day-run-dist{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);font-weight:300}
-.day-slots-wrap{padding:6px 12px 6px;display:flex;flex-direction:column;gap:5px}
-.check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;color:transparent}
-.day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
-.day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
-/* COMFORT BADGE ON DAY SLOTS */
-.comfort-badge{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;flex-shrink:0;font-family:'DM Serif Display',serif;font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s;border:2px solid transparent}
-.comfort-badge:active{transform:scale(.92)}
-.comfort-badge.loading-badge{background:rgba(255,255,255,.07);color:var(--muted);font-size:10px;font-family:'DM Sans',sans-serif;font-weight:400}
-/* COMFORT EXPAND POPUP */
-.comfort-expand{display:none;padding:8px 12px 10px;border-top:1px solid rgba(255,255,255,.05);background:rgba(0,0,0,.15)}
-.comfort-expand.open{display:block}
-.comfort-expand-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;margin-bottom:4px}
-.comfort-expand-label{color:var(--pale)}
-.comfort-expand-val{color:var(--cream);font-family:'DM Mono',monospace}
-.comfort-expand-route{font-size:11px;color:var(--pale);line-height:1.5;margin-top:6px;font-style:italic}
-/* WEEKLY COMFORT DOTS */
-.week-comfort-row{display:flex;align-items:center;gap:6px;padding:8px 16px 10px;border-top:1px solid rgba(255,255,255,.05)}
-.comfort-dot-wrap{display:flex;flex-direction:column;align-items:center;gap:3px;flex:1}
-.comfort-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1)}
-.comfort-dot-label{font-size:9px;color:var(--muted);font-family:'DM Mono',monospace;text-transform:uppercase;letter-spacing:.03em}
-/* PROGRESS BAR */
-.week-progress{display:flex;align-items:center;gap:10px;padding:10px 16px;border-top:1px solid rgba(255,255,255,.05)}
-.week-progress-bar-wrap{flex:1;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden}
-.week-progress-bar{height:100%;background:var(--green-light);border-radius:2px;transition:width .3s ease}
-.week-progress-label{font-size:12px;color:var(--pale);font-family:'DM Mono',monospace;white-space:nowrap}
-.week-progress-miles{font-size:12px;color:var(--green-light);font-family:'DM Mono',monospace;white-space:nowrap}
-/* ACTION BUTTONS */
-.action-btns{display:flex;gap:8px;padding:0 12px 12px}
-.reset-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;color:var(--pale);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
-.lock-btn{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:9px;background:rgba(82,183,136,.15);border:1px solid var(--green-light);border-radius:12px;color:var(--green-light);font-size:12px;font-family:'DM Sans',sans-serif;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500}
-.week-modified-note{font-size:11px;color:var(--amber-light);text-align:center;padding:8px 12px 2px;font-style:italic}
-/* DRAG */
-.day-slot.draggable{cursor:grab}
-.day-slot.drag-over{outline:2px dashed var(--green-light);outline-offset:-2px;background:rgba(82,183,136,.15) !important}
-.day-slot.dragging{opacity:.3;transform:scale(.97);transition:opacity .1s,transform .1s}
-.drag-ghost{position:fixed;pointer-events:none;z-index:9999;background:var(--green);border-radius:12px;padding:9px 14px;font-family:'DM Sans',sans-serif;font-size:14px;color:white;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.5);white-space:nowrap;transform:translate(-50%,-50%)}
-.drag-hint{font-size:11px;color:var(--muted);text-align:center;padding:4px 12px 8px;font-style:italic}
-/* NOTES */
-.notes-wrap{padding:6px 14px 12px}
-.notes-toggle{font-size:12px;color:var(--pale);cursor:pointer;display:flex;align-items:center;gap:6px;padding:4px 0}
-.notes-field{width:100%;background:var(--navy-light);border:1px solid rgba(255,255,255,.1);border-radius:10px;color:var(--cream);font-family:'DM Sans',sans-serif;font-size:13px;padding:10px 12px;resize:none;margin-top:6px;line-height:1.6;min-height:70px}
-.notes-field:focus{outline:none;border-color:var(--green-light)}
-.notes-dot{width:6px;height:6px;border-radius:50%;background:var(--amber-light);flex-shrink:0}
-/* NEXT RUN BANNER */
-.next-run-card{background:linear-gradient(135deg,var(--green) 0%,#1a4731 100%);border-radius:14px;padding:14px 16px;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
-.next-run-label{font-size:10px;color:rgba(255,255,255,.6);letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
-.next-run-info{font-family:'DM Serif Display',serif;font-size:20px;color:white}
-.next-run-sub{font-size:12px;color:rgba(255,255,255,.65);margin-top:2px}
-.next-run-comfort{display:inline-flex;align-items:center;gap:5px;margin-top:5px;font-size:12px;color:rgba(255,255,255,.7)}
-.next-run-comfort-score{font-family:'DM Mono',monospace;font-weight:500}
-.run-arrow{width:36px;height:36px;background:rgba(255,255,255,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-/* ROLL FORWARD */
-.roll-btn{display:flex;align-items:center;justify-content:space-between;width:100%;padding:14px 16px;margin-bottom:12px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;color:var(--cream);cursor:pointer;font-family:'DM Sans',sans-serif;transition:background .15s}
-.roll-btn:active{background:var(--navy-light)}
-.roll-btn-left{display:flex;align-items:center;gap:12px}
-.roll-btn-icon{font-size:22px;flex-shrink:0}
-.roll-btn-title{font-weight:500;font-size:15px;text-align:left}
-.roll-btn-sub{font-size:12px;color:var(--pale);margin-top:2px;text-align:left}
-.roll-btn-chevron{color:var(--pale);font-size:14px;flex-shrink:0}
-.roll-active-banner{display:flex;align-items:center;justify-content:space-between;background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.25);border-radius:12px;padding:10px 14px;margin-bottom:12px}
-.roll-active-text{font-size:13px;color:var(--amber-light)}
-.roll-revert-btn{font-size:12px;color:var(--amber-light);background:rgba(245,158,11,.15);border:1px solid rgba(245,158,11,.3);border-radius:8px;padding:4px 10px;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:500;white-space:nowrap;flex-shrink:0;margin-left:10px}
-/* HISTORY */
-.history-week{background:var(--navy-mid);border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:10px;overflow:hidden}
-.history-week.current-week{border-color:var(--green-light)}
-.history-week-header{padding:12px 14px;display:flex;align-items:center;justify-content:space-between;cursor:pointer}
-.history-week-num{font-size:10px;font-family:'DM Mono',monospace;color:var(--pale);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
-.history-week-dates{font-size:14px;font-weight:500}
-.history-progress-ring{position:relative;width:36px;height:36px;flex-shrink:0}
-.history-week-body{padding:0 12px 12px;display:none}
-.history-week-body.open{display:block}
-.history-run-row{display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid rgba(255,255,255,.04)}
-.history-run-row:last-child{border-bottom:none}
-.history-day-tag{width:32px;font-size:11px;font-weight:500;color:var(--pale);letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
-.history-dist{font-family:'DM Mono',monospace;font-size:14px;flex:1}
-.history-check{width:20px;height:20px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px}
-.history-check.done{background:var(--green-light);color:white}
-.history-check.pending{background:rgba(255,255,255,.08);color:transparent}
-.history-note{font-size:12px;color:var(--muted);font-style:italic;padding:6px 0 0;line-height:1.5}
-/* NARRATIVE */
-.narrative-text{font-size:14px;color:var(--pale);line-height:1.75;font-weight:300}
-/* COMFORT (NOW) TAB */
-.loc-selector{display:flex;gap:6px;margin-bottom:14px}
-.loc-pill{flex:1;text-align:center;padding:8px 6px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:.04em;cursor:pointer;transition:background .15s,color .15s;background:var(--navy-mid);border:1px solid rgba(255,255,255,.08);color:var(--pale)}
-.loc-pill.active{background:var(--green);border-color:var(--green);color:white}
-.score-wrap{display:flex;flex-direction:column;align-items:center;padding:24px 16px 20px}
-.score-ring{position:relative;width:140px;height:140px;margin-bottom:16px}
-.score-ring svg{transform:rotate(-90deg)}
-.score-num{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.score-big{font-family:'DM Serif Display',serif;font-size:48px;line-height:1}
-.score-outof{font-size:12px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:2px}
-.score-label-cs{font-size:18px;font-weight:500;margin-bottom:6px}
-.score-desc-cs{font-size:13px;color:var(--muted);text-align:center;max-width:290px;line-height:1.65;font-weight:300}
-.score-route-cs{margin-top:10px;padding:8px 14px;background:rgba(255,255,255,.05);border-radius:10px;font-size:12px;color:var(--pale);line-height:1.55;text-align:center;max-width:290px}
-.cond-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:14px 14px 0}
-.cond-cell{background:var(--navy-light);border-radius:10px;padding:10px 12px}
-.cond-label{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
-.cond-value{font-family:'DM Mono',monospace;font-size:16px;font-weight:500}
-.cond-sub{font-size:11px;color:var(--muted);margin-top:1px}
-.factor-section{padding:8px 14px 14px}
-.factor-section-label{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px;margin-top:4px}
-.factor-row{display:flex;align-items:center;gap:10px;padding:5px 0}
-.factor-name{font-size:12px;color:var(--pale);width:90px;flex-shrink:0}
-.factor-bar-wrap{flex:1;height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
-.factor-bar{height:100%;border-radius:3px;transition:width .7s ease}
-.factor-score{font-family:'DM Mono',monospace;font-size:12px;color:var(--pale);width:30px;text-align:right;flex-shrink:0}
-.alert-cs{margin:0 0 14px;padding:12px 14px;border-radius:14px;font-size:13px;line-height:1.6;font-weight:300}
-.alert-danger{background:rgba(153,27,27,.15);border:1px solid rgba(239,68,68,.25);color:#fca5a5}
-.alert-warn{background:rgba(146,64,14,.12);border:1px solid rgba(245,158,11,.25);color:var(--amber-light)}
-.rec-section{padding:14px}
-.rec-title{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-family:'DM Mono',monospace}
-.rec-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px}
-.rec-item:last-child{margin-bottom:0}
-.rec-icon{font-size:18px;flex-shrink:0;width:24px;text-align:center;margin-top:1px}
-.rec-text{font-size:13px;color:var(--cream);font-weight:300;line-height:1.65}
-.rec-text strong{font-weight:500}
-.refresh-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:13px;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.25);border-radius:14px;color:var(--green-light);font-size:13px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;transition:background .15s;margin-bottom:10px}
-.refresh-btn:active{background:rgba(82,183,136,.22)}
-.last-updated-cs{text-align:center;font-size:11px;color:var(--muted);font-family:'DM Mono',monospace;letter-spacing:.04em;margin-bottom:16px}
-/* FORECAST TAB */
-.forecast-day{background:var(--navy-mid);border-radius:16px;border:1px solid rgba(255,255,255,.07);margin-bottom:12px;overflow:hidden}
-.forecast-day.today-day{border-color:var(--green-light)}
-.forecast-day-header{padding:12px 14px 8px;border-bottom:1px solid rgba(255,255,255,.05)}
-.forecast-day-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.forecast-day-name{font-size:14px;font-weight:500}
-.forecast-day-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace}
-.forecast-cond{font-size:12px;color:var(--muted);font-weight:300;margin-bottom:6px}
-.day-loc-selector{display:flex;gap:5px}
-.day-loc-pill{padding:4px 10px;border-radius:20px;font-size:10px;font-weight:500;cursor:pointer;transition:background .12s;background:var(--navy-light);border:1px solid rgba(255,255,255,.07);color:var(--pale)}
-.day-loc-pill.active{background:var(--green);border-color:var(--green);color:white}
-.forecast-slots{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:12px 12px 4px}
-.forecast-slot{background:var(--navy-light);border-radius:10px;padding:10px 8px;text-align:center}
-.forecast-slot-time{font-size:10px;color:var(--pale);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
-.forecast-slot-score{font-family:'DM Serif Display',serif;font-size:26px;line-height:1;margin-bottom:3px}
-.forecast-slot-label{font-size:10px;margin-bottom:4px}
-.forecast-slot-temp{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace}
-.forecast-optimal{margin:0 12px 12px;background:rgba(82,183,136,.08);border:1px solid rgba(82,183,136,.15);border-radius:10px;padding:9px 12px;font-size:12px;color:var(--green-light);line-height:1.55}
-.forecast-optimal-label{font-size:10px;text-transform:uppercase;letter-spacing:.06em;opacity:.7;margin-bottom:3px}
-/* GUIDE OVERLAY */
-.guide-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,16,25,.92);overflow-y:auto;padding:calc(env(safe-area-inset-top,20px) + 16px) 20px 40px}
-.guide-overlay.open{display:block}
-.guide-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
-.guide-title{font-family:'DM Serif Display',serif;font-size:20px}
-.guide-close{font-size:24px;cursor:pointer;color:var(--pale);padding:4px}
-.guide-section{margin-bottom:24px}
-.guide-section-title{font-family:'DM Serif Display',serif;font-size:17px;margin-bottom:12px;color:var(--cream)}
-.info-card{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:14px 16px;margin-bottom:12px}
-.info-card-title{font-weight:500;font-size:14px;color:var(--green-light);margin-bottom:8px;display:flex;align-items:center;gap:8px}
-.info-dot{width:6px;height:6px;border-radius:50%;background:var(--green-light);flex-shrink:0}
-.info-text{font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
-.meal-card{border-radius:14px;border:1px solid rgba(255,255,255,.07);margin-bottom:12px;overflow:hidden}
-.meal-card-header{padding:11px 14px;display:flex;justify-content:space-between;align-items:center}
-.meal-name{font-weight:500;font-size:14px;color:var(--cream)}
-.meal-containers{font-size:11px;opacity:.7;margin-top:1px;color:var(--cream)}
-.meal-card-body{padding:12px 14px;background:var(--navy-mid)}
-.meal-detail-row{display:flex;margin-bottom:7px;font-size:13px}
-.meal-detail-label{color:var(--pale);width:70px;flex-shrink:0;font-size:11px;letter-spacing:.04em;text-transform:uppercase;padding-top:1px}
-.meal-detail-value{color:var(--cream);font-weight:300;line-height:1.5}
-.protein-badge{display:inline-flex;align-items:center;border-radius:20px;padding:4px 10px;font-family:'DM Mono',monospace;font-size:12px}
-.sunday-tip{background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2);border-radius:12px;padding:12px 14px;margin-bottom:14px;font-size:13px;color:var(--amber-light);line-height:1.55}
-.meal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
-.nav-btn{width:36px;height:36px;background:var(--navy-mid);border:1px solid rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;flex-shrink:0}
-.nav-btn.disabled{opacity:.3;pointer-events:none}
-.nav-info{text-align:center;flex:1;padding:0 10px}
-.nav-title{font-family:'DM Serif Display',serif;font-size:16px}
-.nav-sub{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;margin-top:1px}
-/* 2027 / BRIDGE */
-.section-head{font-family:'DM Serif Display',serif;font-size:20px;margin-bottom:14px}
-.phase-block{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:14px;margin-bottom:12px;overflow:hidden}
-.phase-block-header{padding:12px 14px;display:flex;justify-content:space-between;align-items:flex-start}
-.phase-dates{font-family:'DM Mono',monospace;font-size:11px;color:var(--pale);margin-bottom:3px}
-.phase-title{font-weight:500;font-size:15px}
-.phase-body{padding:0 14px 14px;font-size:13px;color:var(--muted);line-height:1.75;font-weight:300}
-.marathon-callout{background:var(--green);border-radius:14px;padding:18px 20px;margin-bottom:14px;text-align:center}
-.marathon-callout-label{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
-.marathon-callout-date{font-family:'DM Serif Display',serif;font-size:22px;color:white}
-/* LOADING / SPINNER */
-.loading-wrap{display:flex;flex-direction:column;align-items:center;padding:40px 20px;gap:14px}
-.spinner{width:36px;height:36px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--green-light);border-radius:50%;animation:spin .8s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.loading-text{font-size:13px;color:var(--muted);text-align:center;line-height:1.6}
-.error-wrap{padding:24px 20px;text-align:center}
-.error-icon{font-size:36px;margin-bottom:12px}
-.error-msg{font-size:13px;color:var(--muted);line-height:1.7}
-.day-slot.ski-day{background:linear-gradient(135deg,rgba(96,165,250,.14),rgba(59,130,246,.07));border:1px solid rgba(96,165,250,.22)}
-.day-slot.ski-day .day-run-label{color:#93c5fd}
-.ski-badge{margin-left:auto;width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:rgba(96,165,250,.16);font-size:17px;flex-shrink:0}
-.week-ski-tag{display:inline-block;margin-left:6px;font-size:11px;color:#93c5fd;background:rgba(96,165,250,.12);padding:2px 8px;border-radius:6px;vertical-align:middle}
-.phase-tag-ski{display:inline-block;font-size:10px;color:#93c5fd;background:rgba(96,165,250,.1);padding:3px 9px;border-radius:6px;letter-spacing:.03em;margin-bottom:8px}
-
-/* 5-WINDOW FORECAST SLOTS + RIBBON */
-.forecast-slots5{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;padding:12px 12px 4px}
-.forecast-slot5{background:var(--navy-light);border-radius:9px;padding:8px 3px;text-align:center}
-.forecast-slot5-time{font-size:8.5px;color:var(--pale);text-transform:uppercase;letter-spacing:.02em;margin-bottom:5px;white-space:nowrap}
-.forecast-slot5-score{font-family:'DM Serif Display',serif;font-size:21px;line-height:1;margin-bottom:3px}
-.forecast-slot5-temp{font-size:10px;color:var(--pale);font-family:'DM Mono',monospace}
-.ribbon{display:flex;align-items:flex-end;gap:2px;padding:8px 12px 0;height:34px}
-.rib-seg{flex:1;display:flex;align-items:flex-end;justify-content:center;background:rgba(255,255,255,.04);border-radius:2px;height:100%;position:relative}
-.rib-seg.rib-best{outline:2px solid rgba(255,255,255,.85);outline-offset:-1px;border-radius:3px;z-index:2}
-.rib-fill{width:100%;border-radius:2px;min-height:2px}
-.rib-axis{display:flex;gap:2px;padding:3px 12px 10px}
-.rib-ax{flex:1;text-align:center;font-size:8px;color:var(--muted);font-family:'DM Mono',monospace}
-
-/* ── EDIT MODE ── */
-.week-head{display:flex;align-items:center;justify-content:space-between;padding:12px 14px 6px}
-.week-head-title{font-family:'DM Serif Display',serif;font-size:15px}
-.edit-toggle{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--pale);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12);border-radius:8px;padding:5px 10px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500;flex-shrink:0}
-.edit-toggle:active{background:rgba(255,255,255,.14)}
-.edit-toggle.on{background:rgba(245,158,11,.15);border-color:var(--amber-light);color:var(--amber-light)}
-.edit-banner{font-size:11px;color:var(--amber-light);background:rgba(245,158,11,.08);border-top:1px solid rgba(245,158,11,.2);border-bottom:1px solid rgba(245,158,11,.2);padding:7px 14px;text-align:center;font-style:italic}
-.day-slot.editing{border:1px dashed rgba(245,158,11,.4)}
-.day-slot.editing .day-run-dist{color:var(--amber-light)}
-.stepper{display:flex;align-items:center;gap:6px;margin-left:auto;flex-shrink:0}
-.step-btn{width:30px;height:30px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:var(--cream);font-size:17px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-family:'DM Sans',sans-serif;line-height:1;user-select:none}
-.step-btn:active{background:rgba(255,255,255,.2)}
-.step-btn.minus{color:#fca5a5}
-.step-btn.plus{color:var(--green-light)}
-.del-btn{width:30px;height:30px;border-radius:8px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.3);color:#fca5a5;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:5px;flex-shrink:0}
-.del-btn:active{background:rgba(239,68,68,.25)}
-.add-btn{margin-left:auto;font-size:11px;color:var(--green-light);background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.3);border-radius:8px;padding:6px 12px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500;flex-shrink:0}
-.add-btn:active{background:rgba(82,183,136,.25)}
-.edit-locked{margin-left:auto;font-size:10px;color:var(--muted);background:rgba(255,255,255,.05);border-radius:6px;padding:4px 9px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
-.cap-warn{display:inline-block;margin-left:8px;font-size:10px;color:var(--amber-light);background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:2px 8px;letter-spacing:.03em;text-transform:uppercase;vertical-align:middle;font-family:'DM Sans',sans-serif;font-weight:500}
-</style>
-</head>
-<body>
-<div id="app">
-  <div class="app-header">
-    <div class="header-top">
-      <span class="app-title">The Long Run</span>
-      <div class="header-right">
-        <span class="header-date" id="headerDate"></span>
-        <span class="guide-btn" onclick="openGuide()" title="Guide">&#9776;</span>
-      </div>
-    </div>
-    <div class="tab-bar">
-      <div class="tab active" onclick="showPage('home')">Home</div>
-      <div class="tab" onclick="showPage('history')">Log</div>
-      <div class="tab" onclick="showPage('comfort')">Now</div>
-      <div class="tab" onclick="showPage('forecast')">7-Day</div>
-      <div class="tab" onclick="showPage('bridge')">2027</div>
-    </div>
-  </div>
-  <div class="content">
-    <div class="page active" id="page-home"><div id="homeContent"></div></div>
-    <div class="page" id="page-history"><div id="historyContent"></div></div>
-    <div class="page" id="page-comfort">
-      <div class="loc-selector" id="nowLocSelector"></div>
-      <div class="card" id="csScoreCard"><div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fetching conditions...</div></div></div>
-      <div class="card" id="csCondCard" style="display:none"></div>
-      <div id="csWeekCard"></div>
-      <div id="csAlertBox"></div>
-      <div class="card" id="csRecCard" style="display:none"><div class="rec-section"><div class="rec-title">Recommendations</div><div id="csRecList"></div></div></div>
-      <button class="refresh-btn" onclick="loadNow(nowLocIdx)">&#8635;&nbsp; Refresh conditions</button>
-      <div class="last-updated-cs" id="csLastUpdated"></div>
-    </div>
-    <div class="page" id="page-forecast">
-      <div id="forecastContent"><div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading 7-day forecast...</div></div></div>
-    </div>
-    <div class="page" id="page-bridge">
-      <div style="margin-bottom:16px">
-        <div style="font-size:11px;font-family:'DM Mono',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">The road ahead</div>
-        <div style="font-family:'DM Serif Display',serif;font-size:24px;line-height:1.2">2027 &rarr; Dopey 2028</div>
-        <div style="font-size:13px;color:var(--muted);margin-top:8px;font-weight:300;line-height:1.7">The 2026 schedule (through Feb 2027) is built. This is the shape of what comes next: a base phase, a marathon in October 2027, and the Dopey Challenge in January 2028. Details to be designed closer to the time &mdash; this is the agreed framework.</div>
-      </div>
-      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">Mar 1 &ndash; mid-Jun 2027</div><div class="phase-title">Base Phase</div></div><span class="badge badge-build">~25&ndash;30 mi/wk</span></div><div class="phase-body">You arrive March 1 carrying the fall base (preserved through the ski winter): ~22 mi/wk, long run 10. This phase is a gentle on-ramp &mdash; hold and lightly lift toward ~30 mi/wk with a long run around 12&ndash;13, re-establishing 5-day running. No heroics; the job is to be ready to absorb the marathon build, not to peak. Roughly 15 weeks.</div></div>
-      <div class="phase-block" style="border:1px solid rgba(245,158,11,.4);background:linear-gradient(135deg,rgba(245,158,11,.10),rgba(245,158,11,.03))"><div class="phase-block-header"><div><div class="phase-dates" style="color:var(--amber-light)">April 1, 2027</div><div class="phase-title">Dopey go / no-go</div></div><span class="badge" style="background:var(--amber-pale);color:var(--amber)">Decision</span></div><div class="phase-body">By this point the entire offseason and all of March are done &mdash; a full month into the base phase. This is the go/no-go gate: based on where your training actually stands (base intact, long run progressing, body healthy), commit to the Dopey Challenge and register, or hold for another year. If it&rsquo;s a go, this is when you sign up.</div></div>
-      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">mid-Jun &ndash; mid-Oct 2027</div><div class="phase-title">Marathon Build (18 wk)</div></div><span class="badge badge-race">peak ~40&ndash;45</span></div><div class="phase-body">An 18-week build to the marathon (~mid-Oct 2027). Starts from the ~25&ndash;30 mi base and climbs to a peak of 40&ndash;45 mi/wk &mdash; a peak, not a floor &mdash; with long runs building to the classic 20&ndash;22. Gentle by design, in the spirit of the Higdon approach: durability and consistency over raw volume. 5 days/week with the Priority-5 drop day.</div></div>
-      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">mid-Oct 2027</div><div class="phase-title">Marathon</div></div><span class="badge badge-race">26.2</span></div><div class="phase-body">The goal race of 2027 and the first marathon of the comeback. Everything in the base and build phases points here. Recover deliberately afterward &mdash; the marathon fitness is the foundation for Dopey, which follows just ~12 weeks later.</div></div>
-      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">mid-Oct 2027 &ndash; early Jan 2028</div><div class="phase-title">Marathon &rarr; Dopey Bridge</div></div><span class="badge badge-post">~12 wk</span></div><div class="phase-body">Too short for a separate build &mdash; the marathon fitness carries. Recover (~2&ndash;3 weeks), then sharpen consecutive-day tolerance for ~8&ndash;9 weeks: the back-to-back weekend work rehearsed in fall 2026 scales up here. The marathon build IS Dopey&rsquo;s aerobic foundation; this phase just adds the four-days-in-a-row specificity.</div></div>
-      <div class="phase-block"><div class="phase-block-header"><div><div class="phase-dates">~Jan 6&ndash;9, 2028</div><div class="phase-title">Dopey Challenge</div></div><span class="badge badge-ski">48.6 mi / 4 days</span></div><div class="phase-body">5K (Thu) + 10K (Fri) + Half (Sat) + Full (Sun) over four consecutive days at Walt Disney World. Modeled on the Higdon Dopey plan: 18 weeks, opens at a 13-mile long run, peaks at only ~20 mi long / ~38 mi week &mdash; gentle mileage, but built entirely around the consecutive-day pattern.</div></div>
-      <div class="phase-block" style="border-color:rgba(82,183,136,.25)">
-        <div class="phase-block-header"><div><div class="phase-dates">When ready</div><div class="phase-title">Design the 2027 plan</div></div></div>
-        <div class="phase-body">
-          <p style="margin:0 0 4px">When it&rsquo;s time to build the detailed 2027 schedule, here is the agreed framework to start from.</p>
-          <div style="background:var(--navy-light);border-radius:10px;padding:12px 14px;margin-top:8px;font-size:12px;line-height:1.7;color:var(--muted)">
-            <strong style="color:var(--cream)">Structure:</strong> 5 days/week, Priority-5 drop day. Hierarchy: Sat long (P1), Tue anchor (P2), Wed/Thu medium (P3), Sun recovery (P4), Mon/Fri easy (P5 &mdash; drop). Drop day never adjacent to the long run.<br><br>
-            <strong style="color:var(--cream)">Volume:</strong> base phase ~25&ndash;30; marathon build peaks 40&ndash;45 (a peak, not a floor). Gentle, Higdon-style.<br><br>
-            <strong style="color:var(--cream)">Shape:</strong> base (Mar&ndash;Jun) &rarr; 18-wk marathon build &rarr; marathon (Oct) &rarr; recover + consecutive-day sharpening &rarr; Dopey (Jan).<br><br>
-            <strong style="color:var(--cream)">2026 data confirmed:</strong> Tue is the most reliable day (P2); Mon the least used (ideal P5 drop). Back-to-back weekend tolerance already being built in fall 2026.
-          </div>
-          <button onclick="copyPrompt()" style="display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:10px;background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.25);border-radius:12px;color:var(--green-light);font-size:12px;font-family:'DM Sans',sans-serif;font-weight:500;cursor:pointer;letter-spacing:.04em;text-transform:uppercase" id="copyBtn">&#128203;&nbsp; Copy prompt</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- GUIDE OVERLAY -->
-<div class="guide-overlay" id="guideOverlay">
-  <div class="guide-header">
-    <span class="guide-title">Guide</span>
-    <span class="guide-close" onclick="closeGuide()">&#10005;</span>
-  </div>
-  <div class="guide-section">
-    <div class="guide-section-title">Sleep</div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Sleep is the highest-leverage thing</div><div class="info-text">Your body does not get fitter during runs - it adapts during recovery, and that process is almost entirely sleep-dependent. During heavy training weeks (20+ miles) you likely need 30-60 min more than usual.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Two nights before matters most</div><div class="info-text">The night before Saturday long run matters less than Wednesday and Thursday nights. One bad Friday does not derail a long run nearly as much as poor mid-week sleep.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Alcohol and sleep quality</div><div class="info-text">Alcohol disrupts sleep depth even when it does not reduce hours. You get the hours but not the restorative depth. Particularly relevant the night before any hard effort.</div></div>
-  </div>
-  <div class="guide-section">
-    <div class="guide-section-title">Nutrition</div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Protein timing</div><div class="info-text">The 30-60 min window after Saturday long run is when muscles are most receptive to protein. Aim for 25-40g in that window. During heavier training weeks, target 100-130g protein per day total.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Do not run fasted on long runs</div><div class="info-text">As Saturday distances grow past 7-8 miles, running without breakfast compromises quality and recovery. A simple breakfast 60-90 minutes before is enough. Do not skip this.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Carbs are your fuel</div><div class="info-text">During weeks above 15 miles, carbohydrates are your primary fuel. Restricting them makes runs harder, slows recovery, and raises injury risk. The grain pouches in meal prep are doing important work.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Eat enough</div><div class="info-text">Appetite suppresses after long runs so under-fueling is common. On days with a long run you need meaningfully more food than rest days.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Dinner priority — normal weeks (Tue/Wed/Sat/Sun runs)</div><div class="info-text">Ranked 1 (critical) to 7 (cheat day):<br>1. <b>Friday</b> — night before the long run. White rice or pasta, lean protein, low fat/fiber, by 7pm. Zero flexibility.<br>2. <b>Thursday</b> — start of the 36-hour window. Same clean approach.<br>3. <b>Saturday</b> — recovery: carbs + protein for Sunday's run. Nourishing, not strict.<br>4. <b>Monday</b> — fuels Tuesday's anchor run. Sensible.<br>5. <b>Tuesday</b> — low stakes, Wednesday is short.<br>6. <b>Wednesday</b> — outer edge of the runway. Avoid a true blowout.<br>7. <b>Sunday</b> — the cheat day. Both runs done, longest runway. Once recovery boxes are checked, dinner is yours. Only rule: do not wreck sleep.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Dinner priority — swap weeks (Fri run, Sun long run)</div><div class="info-text">When the short run moves to Friday and the long run to Sunday:<br>1. <b>Saturday</b> — now the night before the long run. Full pre-run protocol.<br>2. <b>Friday</b> — dual role: post-run recovery + start of the window. Clean carbs and lean protein.<br>3. <b>Thursday</b> — fuels Friday's run, edge of the long runway. Sensible and clean.<br>4. <b>Sunday</b> — recovery-first, treat-second. No run until Tuesday.<br>5. <b>Monday</b> — fuels Tuesday. Sensible.<br>6. <b>Tuesday</b> — low stakes.<br>7. <b>Wednesday</b> — the cheat day on swap weeks. Longest clean runway.<br><br>Condensed: normal weeks — Thu/Fri sacred, Sun free. Swap weeks — Fri/Sat sacred, Wed free.</div></div>
-  </div>
-  <div class="guide-section">
-    <div class="guide-section-title">Hydration &amp; Fueling</div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>When to start</div><div class="info-text">Hydration awareness starts now. Mid-run fueling threshold: Week 14 (Saturday hits 8 miles) — start experimenting. Essential by Week 17 (Saturday at 9 miles, over 90 minutes). Heat block Week 21: shift to active pre-hydration starting Thursday evening.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Tailwind as an all-in-one</div><div class="info-text">Handles hydration and fueling simultaneously. Mix 2 scoops in 20oz water, drink every 15-20 minutes from mile 1. Gentler on the stomach than most gels. One bottle covers a 90-minute effort.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>The 36-hour protocol</div><div class="info-text">Thursday evening: familiar dinner, lean protein, white rice or pasta, low fat, low fiber. Friday: carbohydrate-forward meals, light electrolyte drink afternoon, dinner by 7pm. Saturday breakfast 60-75 min before: plain bagel with peanut butter and banana, or oatmeal. 16-20oz water with breakfast. Nothing new in the entire 36-hour window.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Long run countdown — dinner to start line</div><div class="info-text"><b>Night before:</b> Dinner by 7pm — white rice or pasta, lean protein, low fat, low fiber, no beans. 16-20oz water with dinner, 8oz before bed. Nothing new.<br><b>Wake-up (60-90 min out):</b> 12-16oz water immediately. Coffee now if you have it.<br><b>Breakfast (60-75 min out):</b> Plain bagel with thin peanut butter + banana, or oatmeal with honey. 8oz water. Keep fat thin, nothing new.<br><b>10-15 min out:</b> 4-6oz water only — no more. Bathroom stop.<br><b>On the run (7+ miles, or comfort score under 8, or dew point over 55°F):</b> Carry Tailwind — 2 scoops in 18-20oz. Sip from mile 1, every 15-20 minutes. Half the bottle gone by the halfway point.<br><b>Within 30 min of finishing:</b> 20-25g protein (Recovery Mix, Greek yogurt, eggs) + keep drinking water.</div></div>
-    <div class="info-card"><div class="info-card-title"><div class="info-dot"></div>Bottles that do not swish</div><div class="info-text">Nathan SpeedDraw Plus 18oz — strap holds bottle against palm, bite valve prevents sloshing. ~$30. Soft flasks collapse as you drink, eliminating sloshing entirely. Nathan Pinnacle belt or Ultimate Direction FK for high-heat long runs when you want hands free.</div></div>
-  </div>
-</div>
-<script>
-// ── LOCATIONS ─────────────────────────────────────────────────────
-var LOCS=[
-  {name:'Marblehead',short:'Mhd',lat:42.5002,lon:-70.8591},
-  {name:'Boston',short:'Bos',lat:42.3601,lon:-71.0512},
-  {name:'Plymouth NH',short:'Ply',lat:43.7573,lon:-71.6884},
+// ── LONG RUN EQUIVALENT TAB ──────────────────────────────────────
+// Hold the STIMULUS flat, let distance float with the dew point.
+// Below 70F dew: time on feet held constant (distance scales inversely with pace).
+// Above 70F dew: cooling fails (sweat drips, core temp climbs) -> TIME gets capped for safety.
+var lrLocIdx=0;
+var DEW_BANDS=[
+  {label:'Under 55', lo:-99, hi:55, ratio:1.00, regime:'Baseline',    color:'#52b788'},
+  {label:'55 \u2013 60',  lo:55,  hi:60, ratio:0.98, regime:'Compensable', color:'#52b788'},
+  {label:'60 \u2013 65',  lo:60,  hi:65, ratio:0.95, regime:'Compensable', color:'#74c69d'},
+  {label:'65 \u2013 70',  lo:65,  hi:70, ratio:0.89, regime:'Compensable', color:'#f59e0b'},
+  {label:'70 \u2013 73',  lo:70,  hi:73, ratio:0.72, regime:'Time capped', color:'#f97316'},
+  {label:'Over 73',  lo:73,  hi:999,ratio:0.44, regime:'Cut / move',  color:'#ef4444'}
 ];
-var nowLocIdx=0;
-var dayLocIdx={};
-var forecastCache={};
-// ── SCHEDULE DATA ─────────────────────────────────────────────────
-var WEEKS=[
-  {n:1,date:"Mar 2",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:null,thu:null,fri:null,sat:3,sun:2},total:7,narrative:"This is your first week back. The goal is simply to reestablish the habit of running - three easy efforts, nothing more. Tuesday is your midweek anchor at 2 miles, and Saturday carries the long run at 3 miles. Both should feel comfortable and conversational. Do not push the pace. Resist any urge to add mileage if you feel good."},
-  {n:2,date:"Mar 9",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2,wed:2,thu:null,fri:null,sat:3.5,sun:2},total:9.5,narrative:"A modest step up to 9.5 miles. Saturday grows to 3.5 miles. Tuesday stays at 2 miles. Wednesday joins for the first time. Sunday adds a short 2-mile easy effort. The goal this week is simply showing up consistently in whatever combination works."},
-  {n:3,date:"Mar 16",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2.5,wed:2,thu:null,fri:null,sat:3.5,sun:2},total:10,narrative:"A very slight increase - Tuesday nudges up to 2.5 miles. Saturday and Sunday hold steady. This week is about building consistency rather than mileage. Same structure, same days. If you feel strong, save it for next week."},
-  {n:4,date:"Mar 23",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:2.5,wed:2.5,thu:null,fri:null,sat:4,sun:2.5},total:11.5,narrative:"Saturday reaches 4 miles - the longest run so far. The Saturday-as-long-run hierarchy is becoming clear: it is meaningfully longer than anything else in the week. Tuesday holds at 2.5 miles. Wednesday and Sunday grow slightly."},
-  {n:5,date:"Mar 30",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:4,sun:3},total:12.5,narrative:"Tuesday reaches 3 miles for the first time - the midweek anchor distance you will hold through the ramp phase. Saturday stays at 4 miles and Sunday grows to 3. The week permanent shape is taking form. All easy effort throughout."},
-  {n:6,date:"Apr 6",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:3,thu:null,fri:null,sat:4.5,sun:3},total:13.5,narrative:"Saturday grows to 4.5 miles. Tuesday holds at 3 miles. Wednesday matches Tuesday at 3 miles. You are now at a volume where four solid running days makes a genuinely strong training week. The goal is demonstrating that 13+ miles feels manageable, not hard."},
-  {n:7,date:"Apr 13",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:3,thu:null,fri:null,sat:5,sun:3.5},total:14.5,narrative:"Saturday reaches 5 miles for the first time - a real long run. Sunday grows to 3.5 miles. Tuesday holds at 3 miles. You are one week away from the first mileage milestone. Stay patient; 14.5 miles this week should feel like solid, sustainable training - not a push."},
-  {n:8,date:"Apr 20",type:"ramp",label:"RAMP-UP",days:{mon:null,tue:3,wed:2,thu:null,fri:null,sat:5.5,sun:4.5},total:15,narrative:"First goal reached: 15 miles per week. Saturday at 5.5 miles is your longest run yet. Notice that Wednesday drops to 2 miles - intentional. With Saturday growing, keeping Wednesday light protects the Tuesday-to-Saturday recovery window. This logic carries through Phase 2."},
-  {n:9,date:"Apr 27",type:"build",label:"BUILD",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:6,sun:4},total:15.5,narrative:"Phase 2 begins. Saturday long run jumps to 6 miles. Tuesday stays at 3 miles. The watchword for Phase 2 is patience: every build week should feel sustainable, not heroic. Wednesday steps back to 2.5 miles to protect the Tuesday-to-Saturday recovery window."},
-  {n:10,date:"May 4",type:"build",label:"BUILD",days:{mon:null,tue:3,wed:3,thu:null,fri:null,sat:6.5,sun:4.5},total:17,narrative:"A solid step up to 17 miles. Saturday grows to 6.5 miles and Sunday to 4.5. You are now running meaningful distances. Do not let the good feeling tempt you to add more."},
-  {n:11,date:"May 11",type:"build",label:"BUILD",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7,sun:5},total:18.5,narrative:"Tuesday nudges up to 3.5 miles - your longest midweek run yet. Saturday at 7 miles is a genuine long run. Sunday at 5 miles rounds out the weekend. Run Saturday and Sunday with intention: aerobic pace, conversational effort, building base rather than burning matches."},
-  {n:12,date:"May 18",type:"recover",label:"RECOVERY",days:{mon:null,tue:2.5,wed:2,thu:null,fri:null,sat:5,sun:3.5},total:13,narrative:"First scheduled recovery week. Drop to 13 miles - a deliberate 30% pullback. This is not optional. Your history shows a clear burnout pattern and this week interrupts it. Let your body consolidate the fitness built. You will come back stronger next week."},
-  {n:13,date:"May 25",type:"build",label:"BUILD",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7.5,sun:5.5},total:19.5,narrative:"Back to building after recovery. Saturday reaches 7.5 miles and Sunday 5.5, both new highs. Tuesday at 3.5 miles holds its anchor distance. You are now approaching 20 miles per week. The recovery week last week was the key to arriving here fresh."},
-  {n:14,date:"Jun 1",type:"build",label:"BUILD",days:{mon:null,tue:3.5,wed:3.5,thu:null,fri:null,sat:8,sun:5.5},total:20.5,narrative:"The 20-mile barrier falls this week. Saturday reaches 8 miles - proper preparation required: do not skip breakfast, start hydrated, carry water. Keep the effort aerobic on all runs; this is base-building, not race simulation. Fueling note: this is the week to start experimenting with mid-run fuel on Saturday. Try one gel or a light Tailwind mix around the 45-minute mark - not because you need it yet, but to train your gut to accept calories while moving. Discovering a GI issue at 8 miles is far easier to troubleshoot than at 11."},
-  {n:15,date:"Jun 8",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8.5,sun:6},total:22,narrative:"Tuesday reaches 4 miles for the first time. Saturday at 8.5 miles and Sunday at 6 make this the hardest week so far at 22 total miles. Pay attention to how your body responds. Recovery week is coming next week."},
-  {n:16,date:"Jun 15",type:"recover",label:"RECOVERY",days:{mon:null,tue:3,wed:2.5,thu:null,fri:null,sat:5.5,sun:4},total:15,narrative:"Second recovery week. Pull back to 15 miles after three hard build weeks. Saturday falls to 5.5 miles, Tuesday to 3. This is the same mileage as your goal eight weeks ago - it should feel easy now, which is the point. The body adapts during rest, not work."},
-  {n:17,date:"Jun 22",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:9,sun:6.5},total:23,narrative:"A big week. Saturday at 9 miles and Sunday at 6.5 are the longest runs of the program so far. Tuesday anchors the midweek at 4 miles. Keep Saturday slow: at 9 miles, pace matters. A conversational effort builds far more fitness than a hard effort that leaves you wrecked for Tuesday. Fueling note: Saturday at 9 miles will likely exceed 90 minutes - the threshold where mid-run fueling stops being optional. Plan two fuel points: one around 45 minutes, one around 75-80 minutes. If using Tailwind, carry a 20oz bottle at standard mix and drink every 15-20 minutes from the first mile."},
-  {n:18,date:"Jun 29",type:"build",label:"BUILD",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:9.5,sun:7},total:24.5,narrative:"Saturday reaches 9.5 miles, Sunday 7. A strong week of base-building on the long arc toward 2027. Note the heat is arriving: if conditions are hot, spread the mileage across an extra short day, run early, stick to shaded trails, and carry Tailwind. Run by effort, not by the clock."},
-  {n:19,date:"Jul 6",type:"build",label:"BUILD",days:{mon:null,tue:5,wed:4,thu:2.5,fri:null,sat:11,sun:4.5},total:27,narrative:"Saturday steps up to 11 miles - a new long-run distance - with Sunday easing to 4.5 as recovery. Tuesday anchors at 5, and Thursday joins as a light 5th day. This reflects the higher baseline you have built: 27 miles, structural not a surge. Run the 11 by effort, early, and back off the distance if the heat is oppressive."},
-  {n:20,date:"Jul 13",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:2,fri:null,sat:8,sun:4},total:20.5,narrative:"Recovery week - well-earned, and especially important because the heat block starts next week. About a 25% pullback to 20.5 miles, but the week keeps all five days: Thursday stays on as a token 2-miler to hold the rhythm rather than dropping out. Rest, recover, and arrive at the summer heat fresh rather than already depleted. The body adapts during rest, not work."},
-  {n:21,date:"Jul 20",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:8.5,sun:4},total:24.5,narrative:"Heat block begins - set modestly higher this year to match your stronger base. Saturday holds as the long run anchor at 8.5 miles; Thursday is a short 3-mile 5th day. The heat itself is the progression - hold mileage flat and let acclimatization build. Slow down 30-90 seconds per mile and go by effort. Run early, run shaded, carry Tailwind from mile 1. Start pre-hydrating the day before long runs."},
-  {n:22,date:"Jul 27",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:9,sun:4},total:25,narrative:"Saturday long run grows to 9 miles; Sunday stays short for easy recovery. Prioritize early-morning starts, especially Saturday. If conditions are extreme, shorten rather than skip - a shorter run in the heat still builds acclimatization. The heat is doing the work; don't add to it."},
-  {n:23,date:"Aug 3",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:9,sun:4},total:25.5,narrative:"Holding steady - Saturday at 9 miles, Wednesday grows slightly. Every summer long run builds heat acclimatization and mental resilience at once. Resist adding miles even on a cooler day: the flat mileage through the block is deliberate, and the hidden load of heat is already priced in. Remember the heat discount - 9 miles in this air is your good-conditions 10-11."},
-  {n:24,date:"Aug 10",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:2,fri:null,sat:6.5,sun:3},total:18,narrative:"Recovery week in the heat. Pull back to 18 miles - roughly 30% - while keeping all five days; Thursday shrinks to 2 rather than disappearing. This mid-block recovery clears the accumulated heat stress, which builds more insidiously than mileage stress through poor sleep and hydration debt. Run easy, stay hydrated."},
-  {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:8.5,sun:4},total:25,narrative:"Back to the heat routine. Saturday returns to 8.5 miles. Late August is typically the worst of the heat. If conditions are severe, start before sunrise or shorten Saturday rather than skipping it. Acclimatization compounds across the block - you're banking fitness that will surface when fall arrives."},
-  {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:9,sun:4},total:26,narrative:"Tuesday reaches 5.5 miles, the longest midweek anchor of the year. The heat block's end is one week away. Arrive at that transition healthy rather than pushing through warning signs - the post-heat re-entry in September is where the real fall build begins, and you want fresh legs for it."},
-  {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:9,sun:4},total:26,narrative:"Final heat-adjusted week - Saturday 9, Tuesday 5.5, Wednesday 4.5. You've held the long run anchor through seven weeks of summer heat and banked real acclimatization. Next comes the heat-block-exit checkpoint: assess honestly how the legs and mind feel, and revisit whether the fall schedule is scaled right for your actual fitness. Come out clean and the fall build to the half is green-lit - run it as a training checkpoint."},
-  {n:28,date:"Sep 7",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:10,sun:4},total:26.5,narrative:"Post-heat re-entry. Heat-block checkpoint passed. The midweek holds at the level the heat block built (Tue 5, Wed 4.5, Thu 3) and the long run steps up to 10. Keep effort easy - your legs are re-adapting after a summer of heat. ~26.5 miles."},
-  {n:29,date:"Sep 14",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:27.5,narrative:"Re-entry build continues. Long run 11. Easy effort throughout as the post-summer fitness comes back and the fall conditions start working in your favor. ~27.5 miles."},
-  {n:30,date:"Sep 21",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:2.5,fri:null,sat:12,sun:4},total:28,narrative:"Build. Long run 12. Thursday trims slightly to keep the week under the 30-mile cap. ~28 miles."},
-  {n:31,date:"Sep 28",type:"recovery",label:"RECOVERY",days:{mon:null,tue:4,wed:3.5,thu:2,fri:null,sat:8,sun:3},total:20.5,narrative:"RECOVERY WEEK - do not skip. About a 30% pullback (long run 8, ~20.5 miles) to clear three weeks of building before the push to peak. All five days stay, with Thursday reduced to a token 2. Resist adding miles even when you feel good Thursday-Saturday - that supercompensation is meant to carry into the peak."},
-  {n:32,date:"Oct 5",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:2.5,fri:null,sat:13,sun:4},total:29,narrative:"Build resumes off the recovery week. Long run 13, and the week presses toward the cap. ~29 miles."},
-  {n:33,date:"Oct 12",type:"build",label:"PEAK",days:{mon:null,tue:5,wed:4.5,thu:null,fri:null,sat:15,sun:4},total:28.5,narrative:"PEAK long run of the block - 15 miles. Thursday drops so the long run fits under the 30-mile cap; this is the 5th day doing its job as the flex. You arrive here off a recovery week, so the legs are fresh for the biggest effort of the fall. ~28.5 miles."},
-  {n:34,date:"Oct 19",type:"race",label:"HALF",days:{mon:null,tue:5,wed:4.5,thu:2.5,fri:null,sat:2,sun:"RACE"},total:27.1,narrative:"Seacoast Half Marathon week. The half (Sunday Oct 25) is run as a TRAINING long run, not a tapered race - it is a checkpoint on the road to 2027, not a destination. No taper: a normal week with the 13.1 as the long run, Saturday a 2-mile shakeout. Run it strong and controlled. ~27 miles."},
-  {n:35,date:"Oct 26",type:"post",label:"PLATEAU",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:13,sun:4},total:29.5,narrative:"High-base plateau begins. The half is behind you and you keep building base, but no further climbing - the long run settles to 13 and holds. ~29.5 miles."},
-  {n:36,date:"Nov 2",type:"post",label:"BACK-TO-BACK",days:{mon:null,tue:5,wed:4.5,thu:null,fri:null,sat:12,sun:8.5},total:30,narrative:"BACK-TO-BACK week. An intentional 4-day week with a paired weekend - 12 Saturday, 8.5 Sunday - to build tolerance for running long on tired legs (the demand of Goofy down the road). Thursday drops. At the 30-mile cap. ~30 miles."},
-  {n:37,date:"Nov 9",type:"post",label:"PLATEAU",days:{mon:null,tue:5,wed:4,thu:2.5,fri:null,sat:14,sun:4},total:29.5,narrative:"High-base plateau - long run 14, the week before Thanksgiving. Holding steady near the cap. ~29 miles."},
-  {n:38,date:"Nov 16",type:"maintain",label:"EASE",days:{mon:null,tue:4.5,wed:4,thu:2,fri:null,sat:11,sun:4},total:25.5,narrative:"Easing toward the offseason begins. Long run steps down to 11 and the week pulls back, but all five days stay. The structured fall is winding down. ~25.5 miles."},
-  {n:39,date:"Nov 23",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:10,sun:4},total:22.5,narrative:"Wind-down, Thanksgiving week. Last near-normal running week. Long run 10. ~22.5 miles."},
-  {n:40,date:"Nov 30",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:9,sun:4},total:21,narrative:"Wind-down. Long run 9. Running stays primary; ski opportunistically if early snow arrives in Plymouth. ~21 miles."},
-  {n:41,date:"Dec 7",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3.5},total:19,narrative:"Wind-down. Long run 8. Snow likely arriving in NH - start phasing in skiing when conditions allow. ~19 miles."},
-  {n:42,date:"Dec 14",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:4,wed:3.5,thu:null,fri:null,sat:8,sun:3},total:18.5,narrative:"Wind-down. Long run 8. ~18.5 miles. Skiing phasing in as the snowpack builds."},
-  {n:43,date:"Dec 21",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:7,sun:3},total:16.5,narrative:"Holiday week. Long run 7. Keep it simple over the holidays - ski when you can. ~16.5 miles."},
-  {n:44,date:"Dec 28",type:"maintain",label:"WIND-DOWN",days:{mon:null,tue:3.5,wed:3,thu:null,fri:null,sat:6,sun:"ski:45"},total:12.5,narrative:"Final wind-down week. Long run 6, and the first scheduled ski session appears Sunday as the winter mode begins. ~12.5 running miles."},
-  {n:45,date:"Jan 4",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3,wed:3,thu:"opt:4-5/45",fri:null,sat:"opt:9/75",sun:"opt:5-6/45"},total:6,narrative:"Ski-primary preservation begins. Tue/Wed easy runs in MA; Thu/Sat/Sun skiing in NH (with a run option if snow is bad). Saturday is your long aerobic session - a 75-90 min ski, the winter equivalent of the long run. ~6 running miles + 3 ski sessions."},
-  {n:46,date:"Jan 11",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3,wed:3.5,thu:"opt:4-5/60",fri:null,sat:"opt:9/90",sun:"opt:5-6/45"},total:6.5,narrative:"Ski-primary. The big Saturday ski (90 min) is the keystone aerobic effort. Running held light to preserve the base while resting the running-specific tissues and the mind. ~6.5 running miles + 3 ski sessions."},
-  {n:47,date:"Jan 18",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3.5,wed:3.5,thu:"opt:4-5/60",fri:null,sat:"opt:9/90",sun:"opt:6/60"},total:7,narrative:"Ski-primary. Aerobic engine maintained by skiing, running kept to two easy MA days. This is the deep-preservation heart of the offseason. ~7 running miles + 3 ski sessions."},
-  {n:48,date:"Jan 25",type:"ski",label:"SKI-PRIMARY",days:{mon:null,tue:3.5,wed:4,thu:"opt:4-5/60",fri:null,sat:"opt:9/90",sun:"opt:6/60"},total:7.5,narrative:"Last pure-light week before February's running begins to rise. ~7.5 running miles + 3 ski sessions."},
-  {n:49,date:"Feb 1",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4,wed:4,thu:"opt:4-5/60",fri:null,sat:"opt:8/75",sun:"opt:5-6/45"},total:8,narrative:"February transition. Running starts rising (Tue/Wed lengthen); skiing still primary on the weekend. ~8 running miles + ski sessions."},
-  {n:50,date:"Feb 8",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4,wed:4,thu:null,fri:null,sat:8,sun:"opt:5-6/60"},total:16,narrative:"Running takes back over. Saturday becomes a RUN long run (8). One weekend ski option remains as the ski tapers. ~16 running miles + 1 ski option."},
-  {n:51,date:"Feb 15",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4.5,wed:4,thu:null,fri:null,sat:9,sun:"opt:5-6/45"},total:17.5,narrative:"Running primary now. Long run 9. Skiing down to one optional weekend session. ~17.5 running miles."},
-  {n:52,date:"Feb 22",type:"restart",label:"FEB BUILD",days:{mon:null,tue:4.5,wed:4.5,thu:3,fri:null,sat:10,sun:null},total:22,narrative:"February finish - a full running week. Long run 10, Thursday back as a run. You arrive at March 1 aerobically sharp from the skiing, running re-adapted, and mentally fresh. Ready for a demanding 2027. ~22 miles."}
-];
-var DAYS=["mon","tue","wed","thu","fri","sat","sun"];
-var DAY_LABELS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
-var DAY_NAMES_FULL=["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"];
-var JS_TO_IDX={1:0,2:1,3:2,4:3,5:4,6:5,0:6};
-var currentWeekIdx=0;
-var weekOverrides={},completedRuns={},weekNotes={};
-var homeWeekOffset=0;
-var dragState={active:false,fromDay:null,dist:null,label:null,ghost:null,overDay:null};
-var dragHintShown=false;
-var editMode=false;
-// Comfort scores per day keyed by YYYY-MM-DD
-var dayComfortScores={};
-var weekComfortDots=[];
-// ── STORAGE ───────────────────────────────────────────────────────
-function sGet(k){try{return JSON.parse(localStorage.getItem('r26_'+k));}catch(e){return null;}}
-function sSet(k,v){try{localStorage.setItem('r26_'+k,JSON.stringify(v));}catch(e){}}
-// ── WEEK HELPERS ──────────────────────────────────────────────────
-function getWeekDays(idx){var w=WEEKS[idx];var b={mon:w.days.mon,tue:w.days.tue,wed:w.days.wed,thu:w.days.thu,fri:w.days.fri,sat:w.days.sat,sun:w.days.sun};if(weekOverrides[idx]){var ov=weekOverrides[idx];for(var k in ov)b[k]=ov[k];}return b;}
-function isModified(idx){if(!weekOverrides[idx])return false;var w=WEEKS[idx],ov=weekOverrides[idx];for(var k in ov){if((ov[k]||null)!==(w.days[k]||null))return true;}return false;}
-function resetWeek(idx){delete weekOverrides[idx];sSet('overrides',weekOverrides);renderHome();}
-function lockWeek(idx){var days=getWeekDays(idx);WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};delete weekOverrides[idx];sSet('overrides',weekOverrides);var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);renderHome();}
-// ── EDIT MODE ────────────────────────────────────────────────────
-var WEEK_CAP=30;  // soft cap — breach is shown, not blocked
-function toggleEditMode(){editMode=!editMode;renderHome();}
-function adjustDay(idx,dk,delta){
-  var days=getWeekDays(idx),cur=days[dk];
-  if(isSkiVal(cur)||cur==='RACE')return;            // ski/race days not editable
-  var v=(cur===null||cur===undefined)?0:parseFloat(cur);
-  v=Math.round((v+delta)*2)/2;                      // 0.5 increments
-  if(v<0.5){v=0.5;}                                 // floor; use delete to remove a day
-  if(!weekOverrides[idx])weekOverrides[idx]={};
-  weekOverrides[idx][dk]=v;
-  sSet('overrides',weekOverrides);
-  renderHome();
+function lrBandFor(dew){
+  for(var i=0;i<DEW_BANDS.length;i++){if(dew>=DEW_BANDS[i].lo&&dew<DEW_BANDS[i].hi)return i;}
+  return DEW_BANDS.length-1;
 }
-function addDay(idx,dk){
-  var days=getWeekDays(idx);
-  if(days[dk]!==null&&days[dk]!==undefined)return;
-  if(!weekOverrides[idx])weekOverrides[idx]={};
-  weekOverrides[idx][dk]=3;                          // sensible default
-  sSet('overrides',weekOverrides);
-  renderHome();
-}
-function deleteDay(idx,dk){
-  var days=getWeekDays(idx),cur=days[dk];
-  if(isSkiVal(cur)||cur==='RACE')return;
-  if(!weekOverrides[idx])weekOverrides[idx]={};
-  weekOverrides[idx][dk]=null;
-  sSet('overrides',weekOverrides);
-  renderHome();
-}
-function weekTotal(idx){
-  var days=getWeekDays(idx),t=0;
-  for(var i=0;i<DAYS.length;i++){
-    var v=days[DAYS[i]];
-    if(v===null||v===undefined)continue;
-    if(v==='RACE'){t+=13.1;continue;}
-    if(isSkiVal(v))continue;                          // ski days excluded from run miles
-    var x=parseFloat(v);if(!isNaN(x))t+=x;
-  }
-  return Math.round(t*10)/10;
-}
-
-function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'&&!isSkiVal(dist)){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};}
-function isCompleted(idx,dk){return !!(completedRuns[idx]&&completedRuns[idx][dk]);}
-function toggleCompleted(idx,dk){if(!completedRuns[idx])completedRuns[idx]={};if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;sSet('completed',completedRuns);renderHome();renderHistory();}
-function getAutoWeekIdx(){var S=new Date('2026-03-02'),d=new Date();if(d.getDay()===0&&d.getHours()>=18)d=new Date(d.getTime()+86400000);return Math.max(0,Math.min(WEEKS.length-1,Math.floor((d-S)/604800000)));}
-function getHomeWeekIdx(){return Math.min(WEEKS.length-1,getAutoWeekIdx()+homeWeekOffset);}
-function rollToNext(){var auto=getAutoWeekIdx(),max=WEEKS.length-1-auto;if(homeWeekOffset<max){homeWeekOffset++;sSet('rollOffset',homeWeekOffset);currentWeekIdx=getHomeWeekIdx();renderHome();}}
-function revertRoll(){homeWeekOffset=0;sSet('rollOffset',0);currentWeekIdx=getHomeWeekIdx();renderHome();}
-function saveNote(idx){var el=document.getElementById('note-'+idx);if(el){weekNotes[idx]=el.value;sSet('notes',weekNotes);}}
-function toggleNote(idx){var body=document.getElementById('notebody-'+idx);if(body){body.style.display=body.style.display==='none'?'block':'none';}}
-// ── WMO / SCORING ─────────────────────────────────────────────────
-function precipFromCode(c){if(c===null||c===undefined)return'none';if([56,57,66,67].includes(c))return'freezingRain';if([71,73,75,77,85,86].includes(c))return'snow';if((c>=51&&c<=67)||(c>=80&&c<=82))return'rain';if(c>=95)return'thunder';return'none';}
-function overcastFromCode(c){return c!==null&&c!==undefined&&c>=2;}
-function forecastLabel(c){if(c===0)return'Clear sky';if(c===1)return'Mostly clear';if(c===2)return'Partly cloudy';if(c===3)return'Overcast';if(c>=51&&c<=55)return'Drizzle';if(c>=61&&c<=65)return'Rain';if(c===66||c===67)return'Freezing rain';if(c>=71&&c<=77)return'Snow';if(c>=80&&c<=82)return'Rain showers';if(c===85||c===86)return'Snow showers';if(c>=95)return'Thunderstorm';return'Mixed';}
-function heatIndex(T,R){if(T<80)return T;return -42.379+2.04901523*T+10.14333127*R-0.22475541*T*R-0.00683783*T*T-0.05481717*R*R+0.00122874*T*T*R+0.00085282*T*R*R-0.00000199*T*T*R*R;}
-function windChill(T,W){if(T>50||W<3)return T;return 35.74+0.6215*T-35.75*Math.pow(W,0.16)+0.4275*T*Math.pow(W,0.16);}
-function sTemp(T,wc,hi){var e=T>70?hi:(T<50?wc:T);if(e>93)return 1;if(e>87)return 2;if(e>80)return 3.5;if(e>75)return 5.5;if(e>70)return 7.5;if(e>65)return 9;if(e>=52)return 10;if(e>=48)return 9;if(e>=42)return 8;if(e>=36)return 6.5;if(e>=30)return 5;if(e>=22)return 3;if(e>=14)return 1.5;return 1;}
-function sDew(dp){if(dp<=54)return 10;if(dp<=58)return 7.5;if(dp<=62)return 5.5;if(dp<=66)return 3.5;if(dp<=70)return 2;return 1;}
-function sSun(hour,oc,month){var m=month||new Date().getMonth()+1;if(oc)return 8;if((m===12||m===1)&&hour<=7)return 6;if((m===11||m===2)&&hour<=7)return 7;if(hour<6||hour>=20)return 10;if(hour<7||hour>=19)return 9;if(hour<8||hour>=18)return 7.5;if(hour<9||hour>=17)return 6;if(hour<10||hour>=16)return 5;if(hour<11||hour>=15)return 4;return 3;}
-function sWind(W,T){if(T>70){if(W<2)return 5;if(W<8)return 8;if(W<15)return 9;return 7;}else{if(W<5)return 10;if(W<10)return 8;if(W<15)return 6;if(W<20)return 4;return 2;}}
-function sPrecip(p,T){
-  T=T||60;
-  if(!p||p==='none')return 7;  // neutral baseline — absence of rain is not a bonus
-  if(p==='thunder')return 2;
-  if(p==='freezingRain'||p==='ice')return 1;
-  if(p==='snow')return T<28?2:3;
-  if(p==='rain'){
-    if(T>65)return 7.5;   // warm rain — minor discomfort, actually cooling
-    if(T>55)return 5.5;   // cool rain — noticeable, light layer helps
-    if(T>45)return 3.5;   // cold rain — unpleasant, proper gear needed
-    return 2;             // cold wet — reconsider the run
-  }
-  return 6;
-}
-function sConditions(T,precip,month){var base=7;
-  if(precip==='freezingRain'||precip==='ice')base=1;
-  else if(precip==='thunder')base=2;
-  else if(precip==='snow')base=T<28?2:3;
-  else if(precip==='rain'){
-    if(T>65)base=7.5;       // warm rain — minor, actually cooling
-    else if(T>55)base=5.5;  // cool rain — noticeable
-    else if(T>45)base=3.5;  // cold rain — unpleasant
-    else base=2;            // cold wet — reconsider
-  }if(month===12||month===1||month===2){if(T<32)base=Math.min(base,4);else if(T<38)base=Math.min(base,6);}if((month===11||month===3)&&T<32)base=Math.min(base,5);if((month===12||month===1)&&T<35)base=Math.max(1,base-1);return base;}
-function miseryOverride(obs,wc){
-  var T=obs.tempF,dp=obs.dewF,p=obs.precip;
-  // Tier 1: floor at 1.0 — genuinely dangerous
-  if(p==='freezingRain'||p==='ice') return{floor:1.0,reason:'Freezing rain / ice — dangerous footing and hypothermia risk'};
-  if(p==='thunder') return{floor:1.0,reason:'Thunderstorm — do not run outside under any circumstances'};
-  // Tier 2: cap at 3.0 — seriously miserable
-  if(wc<=15) return{floor:3.0,reason:'Wind chill at or below 15°F — dangerous exposure and painful breathing'};
-  if(T<=45&&p==='rain') return{floor:3.0,reason:'Cold + rain — hypothermia risk, miserable regardless of other conditions'};
-  if(T<50&&p==='snow') return{floor:3.0,reason:'Cold + snow — miserable and unsafe footing'};
-  if(dp>=65&&T>=80) return{floor:3.0,reason:'High heat + high humidity — body cannot cool itself effectively'};
-  if(p==='rain'&&T<50) return{floor:3.0,reason:'Rain below 50°F — cold and wet is a miserable combination'};
-  return null;
-}
-function feltEffort(T, dp) {
-  // Scores the interaction between temperature and dew point
-  // This is the primary thermal signal — more meaningful than either alone
-  // Cold end: cold air is inherently dry, no meaningful interaction penalty
-  if(T < 45) return 10;
-  // Cool and dry: ideal running conditions
-  if(T < 55 && dp <= 50) return 10;
-  if(T < 55 && dp <= 55) return 9;
-  if(T < 55 && dp <= 60) return 8;
-  if(T < 55) return 7;
-  // Comfortable range: 55-65F
-  if(T <= 65 && dp <= 50) return 10;
-  if(T <= 65 && dp <= 54) return 9;
-  if(T <= 65 && dp <= 58) return 8;
-  if(T <= 65 && dp <= 62) return 7;
-  if(T <= 65) return 5.5;
-  // Warm: 65-72F — dew point starts mattering a lot
-  if(T <= 72 && dp <= 50) return 9;
-  if(T <= 72 && dp <= 54) return 8;
-  if(T <= 72 && dp <= 58) return 6.5;
-  if(T <= 72 && dp <= 62) return 5;
-  if(T <= 72 && dp <= 66) return 3;
-  if(T <= 72) return 2;
-  // Hot: 72-80F — the classic New England summer problem
-  if(T <= 80 && dp <= 50) return 8;
-  if(T <= 80 && dp <= 54) return 6.5;
-  if(T <= 80 && dp <= 58) return 5;
-  if(T <= 80 && dp <= 62) return 3.5;
-  if(T <= 80 && dp <= 66) return 2;
-  if(T <= 80) return 1;
-  // Very hot: above 80F
-  if(dp <= 54) return 5;
-  if(dp <= 60) return 3;
-  if(dp <= 65) return 2;
-  return 1;
-}
-function computeScore(obs){var T=obs.tempF,R=obs.rh,W=obs.windMph,dp=obs.dewF;var month=obs.month||new Date().getMonth()+1;var hi=heatIndex(T,R),wc=windChill(T,W);var fT=sTemp(T,wc,hi),fD=sDew(dp),fS=sSun(obs.hour,obs.overcast,month),fW=sWind(W,T),fC=sConditions(T,obs.precip,month),fE=feltEffort(T,dp);var score=Math.max(1,Math.min(10,fE*.25+fD*.15+fT*.15+fS*.15+fW*.10+fC*.20));var override=miseryOverride(obs,wc);if(override)score=Math.min(score,override.floor);return{score:Math.round(score*10)/10,factors:{feltEffort:fE,temp:fT,dew:fD,sun:fS,wind:fW,precip:fC},hi:Math.round(hi),wc:Math.round(wc),override:override};}
-// ── LABELS ────────────────────────────────────────────────────────
-function scoreColor(s){if(s>=8.5)return'#52b788';if(s>=7)return'#74c69d';if(s>=5.5)return'#f59e0b';if(s>=3.5)return'#f97316';return'#ef4444';}
-function scoreLabel(s){if(s>=8.5)return'Excellent';if(s>=7)return'Good';if(s>=5.5)return'Moderate';if(s>=3.5)return'Difficult';return'Dangerous';}
-function scoreDesc(s,obs){var T=obs.tempF;if(s>=8.5)return'Near-ideal running conditions. Get out there.';if(s>=7)return T>65?'Good conditions with some heat — stay hydrated.':T<40?'Good conditions — dress in layers.':'Solid conditions for any training effort.';if(s>=5.5)return T>70?'Manageable with adjustments. Slow down and carry water.':T<35?'Cold conditions — proper gear required.':'Adequate but requires modification.';if(s>=3.5)return T>75?'Tough heat. Significant pace adjustment needed.':'Challenging — shorten or modify the run.';return T>80?'Heat advisory. Move indoors or skip today.':'Dangerous cold. Treadmill or rest day.';}
-// ── ROUTE GUIDANCE ────────────────────────────────────────────────
-function routeRec(locIdx,T,dp){
-  if(locIdx===0){
-    if(T>80||dp>68)return'<strong>Willowdale</strong> or <strong>Bradley Palmer</strong> — avoid open roads entirely. Start before 8am.';
-    if(T>75||dp>65)return'<strong>Willowdale or Bradley Palmer</strong> preferred — shaded trails 5–10°F cooler. If roads, <strong>Marblehead Neck</strong> early for the ocean breeze.';
-    if(T>68)return'<strong>Marblehead Neck / waterfront</strong> — ocean breeze provides natural cooling. Willowdale also solid at this temperature.';
-    if(T>=55&&T<=68)return'<strong>Any route works</strong> — ideal conditions. Marblehead Neck for scenery, Willowdale for softer surface and variety.';
-    if(T>=40&&T<55)return'<strong>Roads preferred</strong> — good cool-weather running. Willowdale fine if footing is dry.';
-    if(T>=32&&T<40)return'<strong>Roads over trails</strong> — check Willowdale before heading out; shaded trails hold ice longer than sun-exposed roads.';
-    return'<strong>Roads only</strong> — avoid Willowdale and Bradley Palmer trails. Shaded forest trails significantly icier than open roads. Stick to plowed Marblehead streets.';
-  } else if(locIdx===1){
-    if(T>75||dp>65)return'<strong>Shade on the Greenway or under highway underpasses</strong> — avoid open Harborwalk sections midday.';
-    if(T>68)return'<strong>Harborwalk near the Aquarium</strong> — sea breeze off the harbor provides natural cooling.';
-    if(T<32)return'<strong>Stay on plowed paths</strong> — the Greenway and Harborwalk are typically cleared but watch for ice near the water.';
-    return'<strong>Harborwalk or the Greenway</strong> — great conditions for either route.';
-  } else {
-    if(T>75||dp>65)return'<strong>Shaded trails near Pemigewasset or wooded sections</strong> — open roads will be significantly hotter.';
-    if(T>68)return'<strong>Wooded trails</strong> preferred over open roads in these temperatures.';
-    if(T<32)return'<strong>Check trail conditions</strong> — Plymouth NH trails can be icy or snow-covered. Roads are safer in winter.';
-    return'<strong>Any Plymouth route works</strong> — trails or roads in current conditions.';
-  }
-}
-// ── FETCH WEATHER ─────────────────────────────────────────────────
-async function fetchWeather(lat,lon){
-  var url='https://api.open-meteo.com/v1/forecast'
-    +'?latitude='+lat+'&longitude='+lon
-    +'&current=temperature_2m,relative_humidity_2m,dew_point_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m'
-    +'&hourly=temperature_2m,relative_humidity_2m,dew_point_2m,wind_speed_10m,weather_code'
-    +'&temperature_unit=fahrenheit&wind_speed_unit=mph'
-    +'&precipitation_unit=inch&timezone=America%2FNew_York&forecast_days=7';
-  var resp=await fetch(url);
-  if(!resp.ok)throw new Error('HTTP '+resp.status);
-  return resp.json();
-}
-function parseHourly(data){
-  var hourly=data.hourly,times=hourly.time,dailyMap={};
-  for(var i=0;i<times.length;i++){
-    var t=new Date(times[i]),dateKey=times[i].substring(0,10);
-    if(!dailyMap[dateKey])dailyMap[dateKey]={date:dateKey,hourly:[],condLabel:forecastLabel(hourly.weather_code[i])};
-    var hObs={tempF:Math.round(hourly.temperature_2m[i]),dewF:Math.round(hourly.dew_point_2m[i]),rh:Math.round(hourly.relative_humidity_2m[i]),windMph:Math.round(hourly.wind_speed_10m[i]),hour:t.getHours(),month:t.getMonth()+1,overcast:overcastFromCode(hourly.weather_code[i]),precip:precipFromCode(hourly.weather_code[i])};
-    var hr=computeScore(hObs);
-    dailyMap[dateKey].hourly.push({hour:t.getHours(),score:hr.score,tempF:hObs.tempF,dewF:hObs.dewF});
-    if(t.getHours()===12)dailyMap[dateKey].condLabel=forecastLabel(hourly.weather_code[i]);
-  }
-  return Object.values(dailyMap).slice(0,7);
-}
-// optimal run window score for a given day's hourly data
-function optimalWindow(hourly){
-  var windows=[{label:'Early morning',hours:[5,6,7]},{label:'Mid-morning',hours:[8,9,10]},{label:'Midday',hours:[11,12,13]},{label:'Afternoon',hours:[14,15,16]},{label:'Evening',hours:[17,18,19,20]}];
-  var best=null,bestScore=-1;
-  windows.forEach(function(w){var s=w.hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.score:0;});var avg=s.reduce(function(a,b){return a+b;},0)/s.length;if(avg>bestScore){bestScore=avg;best=w;}});
-  var midHour=best.hours[Math.floor(best.hours.length/2)];
-  var midEntry=hourly.find(function(e){return e.hour===midHour;});
-  var dewVals=best.hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e&&e.dewF!==undefined?e.dewF:null;}).filter(function(x){return x!==null;});
-  var avgDew=dewVals.length?Math.round(dewVals.reduce(function(a,b){return a+b;},0)/dewVals.length):null;
-  return{label:best.label,score:Math.round(bestScore*10)/10,temp:midEntry?midEntry.tempF:null,dewF:avgDew};
-}
-// slot averages for forecast
-function slotScore(hours,hourly){var s=hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.score:null;}).filter(function(x){return x!==null;});if(!s.length)return null;return Math.round(s.reduce(function(a,b){return a+b;},0)/s.length*10)/10;}
-function slotTemp(hours,hourly){var t=hours.map(function(h){var e=hourly.find(function(x){return x.hour===h;});return e?e.tempF:null;}).filter(function(x){return x!==null;});if(!t.length)return null;return Math.round(t.reduce(function(a,b){return a+b;},0)/t.length);}
-// ── HOME TAB COMFORT BADGES ───────────────────────────────────────
-// Get best score for a specific date (using Marblehead data)
-function getDateComfortScore(dateStr){
-  if(!forecastCache[0])return null;
-  var day=forecastCache[0].find(function(d){return d.date===dateStr;});
-  if(!day)return null;
-  return optimalWindow(day.hourly);
-}
-function getWeekDateStr(weekIdx,dayKey){
-  // Calculate actual date for a given week and day
-  var START=new Date('2026-03-02');
-  var weekStart=new Date(START.getTime()+weekIdx*7*24*60*60*1000);
-  var dayOffset={mon:0,tue:1,wed:2,thu:3,fri:4,sat:5,sun:6};
-  var d=new Date(weekStart.getTime()+dayOffset[dayKey]*24*60*60*1000);
-  return d.toISOString().substring(0,10);
-}
-// ── SKI / OPTION DAY HELPERS ──
-// Day values: number = run; "ski:MIN" = pure ski; "opt:MILES/MIN" = run-or-ski option
-function isSkiVal(v){return typeof v==='string'&&(v.indexOf('ski:')===0||v.indexOf('opt:')===0);}
-function isOptVal(v){return typeof v==='string'&&v.indexOf('opt:')===0;}
-function skiMinutes(v){if(typeof v!=='string')return 0;var m=v.match(/(\d+)$/);return m?parseInt(m[1]):0;}
-function optMiles(v){if(typeof v!=='string'||v.indexOf('opt:')!==0)return 0;var m=v.match(/opt:([\d.\-]+)\//);return m?m[1]:0;}
-function skiText(v){
-  if(typeof v!=='string')return'';
-  if(v.indexOf('ski:')===0){return'Ski '+v.slice(4)+'min';}
-  if(v.indexOf('opt:')===0){var p=v.slice(4).split('/');return'Run '+p[0]+'mi / Ski '+p[1]+'min';}
-  return'';
-}
-function buildSkiBadge(){return'<div class="ski-badge">&#9975;</div>';}
-function buildComfortBadge(weekIdx,dayKey){
-  var dateStr=getWeekDateStr(weekIdx,dayKey);
-  var opt=getDateComfortScore(dateStr);
-  if(!opt)return'<div class="comfort-badge loading-badge" id="cbadge-'+dayKey+'">...</div>';
-  var c=scoreColor(opt.score);
-  return'<div class="comfort-badge" id="cbadge-'+dayKey+'" style="background:rgba(0,0,0,.2);color:'+c+';border-color:'+c+'40" onclick="event.stopPropagation();toggleComfortExpand(\''+dayKey+'\')">'+opt.score.toFixed(1)+'</div>';
-}
-function toggleComfortExpand(dayKey){
-  var el=document.getElementById('cexpand-'+dayKey);
+function lrDist(base,ratio){return Math.round(base*ratio*2)/2;}
+function renderLRLocSelector(){
+  var el=document.getElementById('lrLocSelector');
   if(!el)return;
-  el.classList.toggle('open');
-}
-function buildComfortExpand(weekIdx,dayKey){
-  var dateStr=getWeekDateStr(weekIdx,dayKey);
-  var opt=getDateComfortScore(dateStr);
-  if(!opt)return'';
-  var c=scoreColor(opt.score);
-  return'<div class="comfort-expand" id="cexpand-'+dayKey+'">'+
-    '<div class="comfort-expand-row"><span class="comfort-expand-label">Best window</span><span class="comfort-expand-val" style="color:'+c+'">'+opt.label+' &middot; '+opt.score.toFixed(1)+'</span></div>'+
-    (opt.temp!==null?'<div class="comfort-expand-row"><span class="comfort-expand-label">Temperature</span><span class="comfort-expand-val">~'+opt.temp+'°F</span></div>':'')+
-    '<div class="comfort-expand-route">'+routeRec(0,opt.temp||60,opt.dewF||50)+'</div>'+
-    '</div>';
-}
-function buildWeekComfortDots(weekIdx){
-  var days=getWeekDays(weekIdx);
-  var runDays=DAYS.filter(function(dk){return days[dk]&&days[dk]!=='RACE';});
-  if(!forecastCache[0]||runDays.length===0)return'';
-  var html='<div class="week-comfort-row">';
-  DAYS.forEach(function(dk,i){
-    var dist=days[dk];
-    if(!dist||dist==='RACE'){return;}
-    var dateStr=getWeekDateStr(weekIdx,dk);
-    var opt=getDateComfortScore(dateStr);
-    var dotColor=opt?scoreColor(opt.score):'rgba(255,255,255,.15)';
-    html+='<div class="comfort-dot-wrap">'+
-      '<div class="comfort-dot" style="background:'+dotColor+'"></div>'+
-      '<div class="comfort-dot-label">'+DAY_LABELS[i]+'</div>'+
-      '</div>';
-  });
-  html+='</div>';
-  return html;
-}
-// ── HOME RENDER ───────────────────────────────────────────────────
-function buildSlots(idx,todayDayIdx){
-  var days=getWeekDays(idx),w=WEEKS[idx],html='';
-  for(var i=0;i<7;i++){
-    var dk=DAYS[i],label=DAY_LABELS[i],dist=days[dk];
-    var isToday=(i===todayDayIdx),hasRun=dist!==null&&dist!==undefined;
-    var isOrigAnchor=(dk==='sat'||dk==='tue')&&w.days[dk];
-    var isAnchor=false;
-    if(dist){if(dist===w.days.sat)isAnchor=true;if(dist===w.days.tue)isAnchor=true;if(isOrigAnchor)isAnchor=true;}
-    var done=isCompleted(idx,dk)&&hasRun;
-    var isSki=isSkiVal(dist);
-    var cls='day-slot ';
-    if(isSki)cls+='ski-day';else if(hasRun&&isAnchor)cls+='run-anchor';else if(hasRun)cls+='run-other';else cls+='rest';
-    if(isToday)cls+=' today-slot';if(hasRun&&!isSki)cls+=' draggable';if(done)cls+=' completed';
-    var runLabel='',runDist='';
-    if(isSki){
-      if(isOptVal(dist)){runLabel=(dk==='sat')?'Long — run or ski':'Run or ski';}else{runLabel=(dk==='sat')?'Long ski':'Cross-train';}
-      runDist=skiText(dist);
-    }else if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
-    // In edit mode: suppress drag, show steppers / add / delete
-    var editable=editMode&&!isSki&&dist!=='RACE';
-    if(editMode){cls=cls.replace(' draggable','');cls+=' editing';}
-    // Build slot
-    html+='<div class="'+cls+'" data-day="'+dk+'" data-dist="'+((!isSki&&!editMode&&dist)||"")+'" data-label="'+runLabel+'" id="hslot-'+dk+'">';
-    html+='<div class="day-name">'+label+'</div>';
-    html+='<div class="day-divider"></div>';
-    if(editMode){
-      // ── EDIT MODE RENDER ──
-      if(isSki){
-        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-        html+='<div class="edit-locked">ski</div>';
-      }else if(dist==='RACE'){
-        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-        html+='<div class="edit-locked">race</div>';
-      }else if(hasRun){
-        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-        html+='<div class="stepper">'+
-          '<div class="step-btn minus" onclick="event.stopPropagation();adjustDay('+idx+',\''+dk+'\',-0.5)">&minus;</div>'+
-          '<div class="step-btn plus" onclick="event.stopPropagation();adjustDay('+idx+',\''+dk+'\',0.5)">+</div>'+
-          '</div>';
-        html+='<div class="del-btn" onclick="event.stopPropagation();deleteDay('+idx+',\''+dk+'\')">&#10005;</div>';
-      }else{
-        html+='<div class="day-run-dist" style="flex:1">Rest</div>';
-        html+='<div class="add-btn" onclick="event.stopPropagation();addDay('+idx+',\''+dk+'\')">+ Add run</div>';
-      }
-      html+='</div>';
-    }else{
-      // ── NORMAL RENDER ──
-      if(isSki){
-        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-        html+=buildSkiBadge();
-        html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
-      }else if(hasRun){
-        html+='<div class="day-run-info"><div class="day-run-label">'+runLabel+'</div><div class="day-run-dist">'+runDist+'</div></div>';
-        if(dist!=='RACE'){
-          html+=buildComfortBadge(idx,dk);
-          html+='<button class="check-btn" data-week="'+idx+'" data-checkday="'+dk+'">'+(done?'&#10003;':'')+'</button>';
-        }
-      }else{
-        html+='<div class="day-run-dist" style="flex:1">'+runDist+'</div>';
-        html+=buildComfortBadge(idx,dk);
-      }
-      html+='</div>';
-      // Comfort expand panel (skip ski days) — only in normal mode
-      if(!isSkiVal(dist))html+=buildComfortExpand(idx,dk);
-    }
-  }
-  return html;
-}
-function buildProgressBar(idx){
-  var p=getProgress(idx);if(p.totalRuns===0)return'';
-  var pct=Math.round(p.doneMiles/p.totalMiles*100)||0;
-  var label=p.doneRuns+' of '+p.totalRuns+' runs';
-  var miles=p.doneRuns>0?p.doneMiles.toFixed(1)+' / '+p.totalMiles.toFixed(1)+' mi':p.totalMiles.toFixed(1)+' mi planned';
-  return'<div class="week-progress"><div class="week-progress-label">'+label+'</div><div class="week-progress-bar-wrap"><div class="week-progress-bar" style="width:'+pct+'%"></div></div><div class="week-progress-miles">'+miles+'</div></div>';
-}
-function renderHome(){
-  var idx=currentWeekIdx,w=WEEKS[idx];
-  var today=new Date(),todayDayIdx=JS_TO_IDX[today.getDay()];
-  var p=getProgress(idx);
-  var liveTotal=weekTotal(idx);
-  var capNote=(liveTotal>WEEK_CAP)?'<span class="cap-warn">over '+WEEK_CAP+' cap</span>':'';
-  var milesSummary=p.doneRuns>0?'<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>':'';
-  // Next run with comfort score
-  var nextRunText='',nextRunSub='',nextRunComfort='';
-  var wkStartDate=new Date('2026-03-02');wkStartDate.setDate(wkStartDate.getDate()+idx*7);
-  for(var offset=0;offset<7;offset++){
-    var di=(todayDayIdx+offset)%7,dk=DAYS[di],dist=getWeekDays(idx)[dk];
-    if(dist!==null&&dist!==undefined){
-      var dayDate=new Date(wkStartDate);dayDate.setDate(dayDate.getDate()+di);
-      var mon=dayDate.toLocaleDateString('en-US',{month:'short'}),dayNum=dayDate.getDate();
-      var isSki=isSkiVal(dist);
-      var distStr=isSki?('&#9975; '+skiText(dist)):(dist==='RACE'?'Race Day':dist+' mi');
-      if(offset===0){nextRunText='Today \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
-      else if(offset===1){nextRunText='Tomorrow \u00b7 '+distStr;nextRunSub=DAY_NAMES_FULL[di]+' \u00b7 '+mon+' '+dayNum;}
-      else{nextRunText=DAY_NAMES_FULL[di]+' \u00b7 '+distStr;nextRunSub=mon+' '+dayNum;}
-      // Add comfort score for next run day (skip pure ski; show for opt days as a run/ski decision aid)
-      if(!isSki||isOptVal(dist)){
-        var dateStr=getWeekDateStr(idx,dk);
-        var opt=getDateComfortScore(dateStr);
-        if(opt){
-          var c=scoreColor(opt.score);
-          var lbl=isOptVal(dist)?'comfort &middot; run if good, ski if not':'comfort &middot; best: '+opt.label;
-          nextRunComfort='<div class="next-run-comfort"><span style="color:'+c+'">&#11044;</span> <span class="next-run-comfort-score" style="color:'+c+'">'+opt.score.toFixed(1)+'</span> <span>'+lbl+'</span></div>';
-        }
-      }
-      break;
-    }
-  }
-  var badgeHtml='<span class="badge badge-'+w.type+'">'+w.label+'</span>';
-  var noteVal=weekNotes[idx]||'';
-  var hasNote=noteVal.trim().length>0;
-  var noteHtml='<div class="notes-wrap">'+
-    '<div class="notes-toggle" onclick="toggleNote('+idx+')">'+
-    (hasNote?'<span class="notes-dot"></span>':'<span style="font-size:14px;opacity:.5">&#9998;</span>')+
-    '<span>'+(hasNote?'Week notes':'Add week notes')+'</span></div>'+
-    '<div id="notebody-'+idx+'" style="display:'+(hasNote?'block':'none')+'">'+
-    '<textarea class="notes-field" id="note-'+idx+'" placeholder="How did the week go?" oninput="saveNote('+idx+')">'+noteVal+'</textarea>'+
-    '</div></div>';
-  var nextWkBtn='';
-  if(idx<WEEKS.length-1){
-    var nw=WEEKS[idx+1];
-    nextWkBtn=(homeWeekOffset>0?'<div class="roll-active-banner"><div class="roll-active-text">Showing week '+(idx+1)+' (rolled forward)</div><button class="roll-revert-btn" onclick="revertRoll()">&#8635; Back to now</button></div>':'')+
-    '<div class="roll-btn" onclick="rollToNext()"><div class="roll-btn-left"><div class="roll-btn-icon">&#8614;</div><div><div class="roll-btn-title">Plan next week</div><div class="roll-btn-sub">Week '+(idx+2)+' \u00b7 '+nw.date+'</div></div></div><div class="roll-btn-chevron">&#8250;</div></div>';
-  }
-  document.getElementById('homeContent').innerHTML=
-    '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
-    '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 52</div>'+
-    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'#1a2332')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
-    '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
-    badgeHtml+'</div>'+
-    '<div class="card" style="margin-top:14px"><div class="card-header"><span class="card-title">This week\'s goal</span></div>'+
-    '<div class="card-body"><p class="narrative-text">'+w.narrative+'</p></div></div>'+
-    '<div class="card">'+
-    '<div class="week-head">'+
-      '<span class="week-head-title">Week '+w.n+' \u00b7 '+w.date+'</span>'+
-      '<div class="edit-toggle'+(editMode?' on':'')+'" onclick="toggleEditMode()">'+(editMode?'&#10003; Done':'&#9998; Edit')+'</div>'+
-    '</div>'+
-    (editMode?'<div class="edit-banner">Editing \u2014 adjust miles, add or remove days</div>':'')+
-    (!editMode&&isModified(idx)?'<div class="week-modified-note">Week edited \u2014 differs from plan</div>':'')+
-    (!editMode&&!dragHintShown?'<div class="drag-hint">Press and hold a run, then drag to reschedule</div>':'')+
-    '<div id="home-slots" class="day-slots-wrap">'+buildSlots(idx,todayDayIdx)+'</div>'+
-    (editMode?'':buildProgressBar(idx))+
-    (editMode?'':buildWeekComfortDots(idx))+
-    (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset to plan</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
-    noteHtml+
-    '</div>'+
-    '<div class="next-run-card"><div><div class="next-run-label">Next run</div>'+
-    '<div class="next-run-info">'+nextRunText+'</div>'+
-    '<div class="next-run-sub">'+nextRunSub+'</div>'+
-    nextRunComfort+'</div>'+
-    '<div class="run-arrow">&#8594;</div></div>'+
-    nextWkBtn;
-  if(!editMode)setupDragDrop(idx);
-}
-// ── DRAG & DROP ───────────────────────────────────────────────────
-function createGhost(label,dist){var el=document.createElement('div');el.className='drag-ghost';el.textContent=(dist&&dist!=='RACE')?dist+' mi':label;document.body.appendChild(el);return el;}
-function moveGhost(x,y){if(dragState.ghost){dragState.ghost.style.left=x+'px';dragState.ghost.style.top=y+'px';}}
-function getSlotAt(x,y){var els=document.querySelectorAll('#home-slots .day-slot');for(var i=0;i<els.length;i++){var r=els[i].getBoundingClientRect();if(x>=r.left&&x<=r.right&&y>=r.top&&y<=r.bottom)return els[i];}return null;}
-function clearDragOver(){document.querySelectorAll('.drag-over').forEach(function(el){el.classList.remove('drag-over');});}
-function finalizeDrop(from,to,idx){if(from===to)return;var days=getWeekDays(idx),fd=days[from],td=days[to];if(!weekOverrides[idx])weekOverrides[idx]={};weekOverrides[idx][from]=td||null;weekOverrides[idx][to]=fd;if(!dragHintShown){dragHintShown=true;sSet('dragHint',1);}sSet('overrides',weekOverrides);renderHome();}
-var holdTimer=null,holdStart=null,holdSlot=null;
-function onTouchStart(e){
-  var slot=e.currentTarget,dist=slot.getAttribute('data-dist');
-  if(!dist)return;
-  // Do NOT preventDefault here — allow normal scrolling unless a long-press completes
-  var t=e.touches[0];
-  holdStart={x:t.clientX,y:t.clientY};
-  holdSlot=slot;
-  clearTimeout(holdTimer);
-  holdTimer=setTimeout(function(){
-    // Long-press completed: activate drag mode
-    if(!holdSlot)return;
-    dragState.active=true;
-    dragState.fromDay=holdSlot.getAttribute('data-day');
-    dragState.dist=holdSlot.getAttribute('data-dist');
-    dragState.label=holdSlot.getAttribute('data-label');
-    dragState.ghost=createGhost(dragState.label,dragState.dist);
-    moveGhost(holdStart.x,holdStart.y);
-    holdSlot.classList.add('dragging');
-    if(navigator.vibrate)navigator.vibrate(30);
-  },400);
-  document.addEventListener('touchmove',onTouchMove,{passive:false});
-  document.addEventListener('touchend',onTouchEnd);
-}
-function onTouchMove(e){
-  var t=e.touches[0];
-  if(!dragState.active){
-    // Drag not yet activated: if finger moved meaningfully, this is a scroll — cancel the hold
-    if(holdStart&&(Math.abs(t.clientX-holdStart.x)>10||Math.abs(t.clientY-holdStart.y)>10)){
-      clearTimeout(holdTimer);holdSlot=null;
-      document.removeEventListener('touchmove',onTouchMove);
-      document.removeEventListener('touchend',onTouchEnd);
-    }
-    return; // do not preventDefault — let the page scroll
-  }
-  e.preventDefault();
-  moveGhost(t.clientX,t.clientY);
-  clearDragOver();
-  var target=getSlotAt(t.clientX,t.clientY);
-  if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}
-  else dragState.overDay=null;
-}
-function onTouchEnd(e){
-  clearTimeout(holdTimer);holdSlot=null;
-  document.removeEventListener('touchmove',onTouchMove);
-  document.removeEventListener('touchend',onTouchEnd);
-  if(!dragState.active)return;
-  if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}
-  clearDragOver();
-  document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});
-  if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);
-  dragState.active=false;dragState.fromDay=null;dragState.overDay=null;
-}
-function onMouseDown(e){var slot=e.currentTarget,dist=slot.getAttribute('data-dist');if(!dist)return;e.preventDefault();dragState.active=true;dragState.fromDay=slot.getAttribute('data-day');dragState.dist=dist;dragState.label=slot.getAttribute('data-label');dragState.ghost=createGhost(dragState.label,dist);moveGhost(e.clientX,e.clientY);slot.classList.add('dragging');document.addEventListener('mousemove',onMouseMove);document.addEventListener('mouseup',onMouseUp);}
-function onMouseMove(e){if(!dragState.active)return;moveGhost(e.clientX,e.clientY);clearDragOver();var target=getSlotAt(e.clientX,e.clientY);if(target&&target.getAttribute('data-day')!==dragState.fromDay){target.classList.add('drag-over');dragState.overDay=target.getAttribute('data-day');}else dragState.overDay=null;}
-function onMouseUp(e){if(!dragState.active)return;document.removeEventListener('mousemove',onMouseMove);document.removeEventListener('mouseup',onMouseUp);if(dragState.ghost){dragState.ghost.remove();dragState.ghost=null;}clearDragOver();document.querySelectorAll('.dragging').forEach(function(el){el.classList.remove('dragging');});if(dragState.overDay)finalizeDrop(dragState.fromDay,dragState.overDay,currentWeekIdx);dragState.active=false;dragState.fromDay=null;dragState.overDay=null;}
-function setupDragDrop(idx){
-  var slots=document.querySelectorAll('#home-slots .day-slot');
-  slots.forEach(function(slot){slot.addEventListener('touchstart',onTouchStart,{passive:false});slot.addEventListener('mousedown',onMouseDown);});
-  var checkBtns=document.querySelectorAll('#home-slots .check-btn');
-  checkBtns.forEach(function(btn){
-    var wi=parseInt(btn.getAttribute('data-week')),dk=btn.getAttribute('data-checkday');
-    btn.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:false});
-    btn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();toggleCompleted(wi,dk);});
-    btn.addEventListener('mousedown',function(e){e.stopPropagation();});
-    btn.addEventListener('click',function(e){e.stopPropagation();toggleCompleted(wi,dk);});
-  });
-}
-// ── HISTORY TAB ───────────────────────────────────────────────────
-function renderHistory(){
-  var autoIdx=getAutoWeekIdx(),html='';
-  for(var i=0;i<WEEKS.length;i++){
-    var w=WEEKS[i],days=getWeekDays(i),p=getProgress(i);
-    var isCurrent=(i===autoIdx),isPast=i<autoIdx;
-    var note=weekNotes[i]||'';
-    var pct=p.totalRuns>0?Math.round(p.doneRuns/p.totalRuns*100):0;
-    var r=14,circ=2*Math.PI*r,filled=circ*(pct/100);
-    var ringColor=isPast?(pct===100?'#52b788':'#f59e0b'):'#52b788';
-    var ringHtml='<svg width="36" height="36" style="transform:rotate(-90deg)">'+
-      '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="rgba(255,255,255,.1)" stroke-width="2.5"/>'+
-      '<circle cx="18" cy="18" r="'+r+'" fill="none" stroke="'+ringColor+'" stroke-width="2.5" stroke-dasharray="'+filled+' '+circ+'" stroke-linecap="round"/></svg>'+
-      '<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:10px;font-family:\'DM Mono\',monospace;color:var(--pale)">'+pct+'%</div>';
-    html+='<div class="history-week'+(isCurrent?' current-week':'')+'" id="hw-'+i+'">'+
-      '<div class="history-week-header" onclick="toggleHistoryWeek('+i+')">'+
-      '<div><div class="history-week-num">'+(isCurrent?'CURRENT WEEK \u2014 ':'')+'Week '+w.n+' \u00b7 '+w.label+'</div>'+
-      '<div class="history-week-dates">'+w.date+' \u00b7 '+w.total+' mi</div></div>'+
-      '<div style="display:flex;align-items:center;gap:8px">'+
-      (p.totalRuns>0?'<div class="history-progress-ring" style="position:relative">'+ringHtml+'</div>':'')+
-      '</div></div>'+
-      '<div class="history-week-body'+(isCurrent||isPast?' open':'')+'" id="hwb-'+i+'">'+
-      buildHistoryBody(i,days,note)+
-      '</div></div>';
-  }
-  document.getElementById('historyContent').innerHTML=html;
-  setTimeout(function(){var el=document.getElementById('hw-'+autoIdx);if(el)el.scrollIntoView({behavior:'smooth',block:'center'});},100);
-}
-function buildHistoryBody(idx,days,note){
-  var w=WEEKS[idx],html='<div style="padding:0 4px">';
-  for(var i=0;i<DAYS.length;i++){
-    var dk=DAYS[i],dist=days[dk];if(!dist)continue;
-    var done=isCompleted(idx,dk);
-    var isSki=isSkiVal(dist);
-    var distStr=isSki?('&#9975; '+skiText(dist)):(dist==='RACE'?'&#127937; Race':dist+' mi');
-    var col=isSki?'#93c5fd':(done?'var(--green-light)':'var(--cream)');
-    html+='<div class="history-run-row">'+
-      '<div class="history-day-tag">'+DAY_LABELS[i]+'</div>'+
-      '<div class="history-dist" style="color:'+col+'">'+distStr+'</div>'+
-      '<div class="history-check '+(done?'done':'pending')+'">'+(done?'&#10003;':'')+'</div></div>';
-  }
-  if(note)html+='<div class="history-note">'+note+'</div>';
-  html+='</div>';return html;
-}
-function toggleHistoryWeek(idx){var body=document.getElementById('hwb-'+idx);if(body)body.classList.toggle('open');}
-// ── NOW TAB ───────────────────────────────────────────────────────
-function renderNowLocSelector(){
-  document.getElementById('nowLocSelector').innerHTML=LOCS.map(function(l,i){
-    return'<div class="loc-pill'+(i===nowLocIdx?' active':'')+'" onclick="selectNowLoc('+i+')">'+l.name+'</div>';
+  el.innerHTML=LOCS.map(function(l,i){
+    return'<div class="loc-pill'+(i===lrLocIdx?' active':'')+'" onclick="selectLRLoc('+i+')">'+l.name+'</div>';
   }).join('');
 }
-function selectNowLoc(idx){nowLocIdx=idx;renderNowLocSelector();loadNow(idx);}
-async function loadNow(locIdx){
-  document.getElementById('csScoreCard').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Fetching conditions for '+LOCS[locIdx].name+'...</div></div>';
-  document.getElementById('csCondCard').style.display='none';
-  document.getElementById('csWeekCard').innerHTML='';
-  document.getElementById('csAlertBox').innerHTML='';
-  document.getElementById('csRecCard').style.display='none';
-  document.getElementById('csLastUpdated').textContent='';
-  try{
-    var loc=LOCS[locIdx];
-    var data=await fetchWeather(loc.lat,loc.lon);
-    var c=data.current,code=c.weather_code;
-    var obs={tempF:Math.round(c.temperature_2m),dewF:Math.round(c.dew_point_2m),rh:Math.round(c.relative_humidity_2m),windMph:Math.round(c.wind_speed_10m),hour:new Date().getHours(),month:new Date().getMonth()+1,overcast:overcastFromCode(code),precip:precipFromCode(code),condLabel:forecastLabel(code)};
-    renderNow(obs,locIdx);
-    if(!forecastCache[locIdx])forecastCache[locIdx]=parseHourly(data);
-    // If this is Marblehead, re-render home to update comfort badges
-    if(locIdx===0){renderHome();renderHistory();}
-    if(document.getElementById('page-forecast').classList.contains('active'))renderForecast();
-  }catch(e){
-    console.error(e);
-    document.getElementById('csScoreCard').innerHTML='<div class="error-wrap"><div class="error-icon">&#9728;</div><div class="error-msg">Could not load conditions for '+LOCS[locIdx].name+'.<br>Check your connection and tap refresh.</div></div>';
-    document.getElementById('csLastUpdated').textContent='Failed at '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
-  }
+function selectLRLoc(i){
+  lrLocIdx=i;renderLRLocSelector();
+  if(!forecastCache[i])loadForecastLoc(0,i);
+  else renderLongRun();
 }
-function buildRecs(result,obs,week,locIdx){
-  var s=result.score,T=obs.tempF,dp=obs.dewF,hour=obs.hour,recs=[];
-  if(s<5.5&&T>70){recs.push({i:'⏰',t:hour>=9?'<strong>Reschedule to early morning</strong> — before 7am is significantly cooler.':'<strong>You are in the best window</strong> for a hot day. Start now.'});}
-  else if(hour>=11&&hour<=15&&T>65){recs.push({i:'⏰',t:'<strong>Midday heat</strong> — if possible, wait for evening or run tomorrow morning.'});}
-  else if(s>=7){recs.push({i:'⏰',t:'<strong>Good time to run</strong> — conditions are favorable right now.'});}
-  if(T>80||dp>68){recs.push({i:'🐢',t:'<strong>Slow 60–90 sec/mile</strong> from easy pace. Run by effort — ignore GPS pace.'});}
-  else if(T>73||dp>62){recs.push({i:'🐢',t:'<strong>Slow 30–45 sec/mile.</strong> Go by feel.'});}
-  else if(T<25){recs.push({i:'🐢',t:'<strong>Start slow</strong> — first mile easy regardless of plan.'});}
-  else{recs.push({i:'✅',t:'<strong>Normal pace</strong> is fine in current conditions.'});}
-  if(T>72||dp>60){recs.push({i:'💧',t:'<strong>Carry Tailwind</strong> — start drinking from mile 1, every 15–20 min. Pre-hydrate 16oz before heading out.'+(dp>65?' Sweat losses can reach 24–32oz/hour.':'')});}
-  else if(T>60){recs.push({i:'💧',t:'<strong>Hydrate before the run.</strong> Carry water on efforts over 7 miles.'});}
-  else{recs.push({i:'💧',t:'<strong>Standard hydration.</strong> Carrying water optional under 8 miles.'});}
-  if(T<20||result.wc<15){recs.push({i:'🧤',t:'<strong>Full cold-weather kit</strong> — balaclava, insulated gloves, base layer, wind shell. Cover all exposed skin.'});}
-  else if(T<32){recs.push({i:'🧤',t:'<strong>Gloves, hat, wind layer</strong> — moisture-wicking base under a shell. Watch for ice.'});}
-  else if(T<45){recs.push({i:'🧤',t:'<strong>Light gloves and hat advisable.</strong>'});}
-  if(obs.precip==='freezingRain'||obs.precip==='ice'){recs.push({i:'🚫',t:'<strong>Do not run outdoors</strong> — freezing rain. Treadmill only.'});}
-  else if(obs.precip==='snow'){recs.push({i:'⚠️',t:'<strong>Snow</strong> — trail shoes, slow down, watch for ice.'});}
-  else if(obs.precip==='rain'){recs.push({i:'🌧',t:'<strong>Rain</strong> — waterproof layer if cold. Warm rain helps cooling.'});}
-  else if(obs.precip==='thunder'){recs.push({i:'⛈',t:'<strong>Thunderstorm</strong> — do not run outdoors.'});}
-  if(week){
-    if(s<4&&week.sat>=8){recs.push({i:'📋',t:'<strong>Week '+week.n+':</strong> Saturday is '+week.sat+' miles. Consider treadmill or a shorter shaded trail effort.'});}
-    else if(s<6&&week.sat>=7){recs.push({i:'📋',t:'<strong>Week '+week.n+':</strong> Saturday is '+week.sat+' miles. Early start + shaded route recommended.'});}
-    else if(s>=7&&week.type==='heat'){recs.push({i:'📋',t:'<strong>Heat block week '+week.n+':</strong> Better than typical. Good day to hit the full '+week.sat+'-mile target.'});}
-  }
-  if(s<=2){recs.push({i:'🚫',t:'<strong>Consider skipping today.</strong> One missed run does not affect fitness. Treadmill or rest day.'});}
-  return recs;
+// 6am dew point for a given forecast day
+function lrDewAt6(day){
+  if(!day||!day.hourly)return null;
+  var e=day.hourly.find(function(x){return x.hour===6;});
+  return(e&&e.dewF!==undefined&&e.dewF!==null)?e.dewF:null;
 }
-function renderNow(obs,locIdx){
-  var result=computeScore(obs),s=result.score,color=scoreColor(s);
-  var circ=2*Math.PI*54,filled=circ*(s/10);
-  document.getElementById('csScoreCard').innerHTML=
-    '<div class="score-wrap">'+
-    '<div class="score-ring"><svg width="140" height="140" viewBox="0 0 140 140">'+
-    '<circle cx="70" cy="70" r="54" fill="none" stroke="rgba(255,255,255,.07)" stroke-width="10"/>'+
-    '<circle cx="70" cy="70" r="54" fill="none" stroke="'+color+'" stroke-width="10" stroke-dasharray="'+filled.toFixed(1)+' '+circ.toFixed(1)+'" stroke-linecap="round"/></svg>'+
-    '<div class="score-num"><div class="score-big" style="color:'+color+'">'+s.toFixed(1)+'</div><div class="score-outof">out of 10</div></div></div>'+
-    '<div class="score-label-cs" style="color:'+color+'">'+scoreLabel(s)+'</div>'+
-    '<div class="score-desc-cs">'+scoreDesc(s,obs)+'</div>'+
-    (result.override?'<div style="margin-top:8px;padding:8px 14px;background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.25);border-radius:10px;font-size:12px;color:#fca5a5;line-height:1.55;text-align:center;max-width:290px">&#9888; '+result.override.reason+'</div>':'')+
-    '<div class="score-route-cs">'+routeRec(locIdx,obs.tempF,obs.dewF)+'</div>'+
-    '</div>';
-  var feelsLike=obs.tempF>70?result.hi:(obs.tempF<50?result.wc:obs.tempF);
-  var feelsLabel=obs.tempF>70?'Heat index':(obs.tempF<50?'Wind chill':'Feels like');
-  document.getElementById('csCondCard').innerHTML=
-    '<div class="cond-grid">'+
-    '<div class="cond-cell"><div class="cond-label">Temperature</div><div class="cond-value">'+obs.tempF+'°F</div><div class="cond-sub">'+feelsLabel+' '+feelsLike+'°F</div></div>'+
-    '<div class="cond-cell"><div class="cond-label">Dew Point</div><div class="cond-value">'+obs.dewF+'°F</div><div class="cond-sub">Humidity '+obs.rh+'%</div></div>'+
-    '<div class="cond-cell"><div class="cond-label">Wind</div><div class="cond-value">'+obs.windMph+' mph</div><div class="cond-sub">'+(obs.windMph<5?'Calm':obs.windMph<12?'Light breeze':obs.windMph<20?'Moderate':'Strong')+'</div></div>'+
-    '<div class="cond-cell"><div class="cond-label">Conditions</div><div class="cond-value" style="font-family:\'DM Sans\',sans-serif;font-size:13px;font-weight:500;padding-top:2px">'+obs.condLabel+'</div><div class="cond-sub">'+LOCS[locIdx].name+'</div></div>'+
+// find upcoming Sat & Sun in the forecast
+function lrWeekendDays(){
+  var days=forecastCache[lrLocIdx];
+  if(!days)return{sat:null,sun:null};
+  var sat=null,sun=null;
+  for(var i=0;i<days.length;i++){
+    var d=new Date(days[i].date+'T12:00:00'),dow=d.getDay();
+    if(dow===6&&!sat)sat={day:days[i],date:d};
+    if(dow===0&&!sun)sun={day:days[i],date:d};
+  }
+  return{sat:sat,sun:sun};
+}
+function renderLongRun(){
+  var el=document.getElementById('longrunContent');
+  if(!el)return;
+  var idx=currentWeekIdx,w=WEEKS[idx];
+  var satVal=getWeekDays(idx).sat;
+  // baseline = the schedule's Saturday (now the unadjusted baseline)
+  var base=(typeof satVal==='number')?satVal:null;
+  if(base===null){
+    el.innerHTML='<div class="lr-intro"><div class="lr-eyebrow">Dew-point adjusted</div>'+
+      '<div class="lr-title">Long Run Equivalent</div></div>'+
+      '<div class="error-wrap"><div class="error-msg">No numeric long run scheduled this week'+
+      (isSkiVal(satVal)?' (ski day)':(satVal==='RACE'?' (race week)':''))+
+      '.<br>This tab is only meaningful when Saturday holds a mileage baseline.</div></div>';
+    return;
+  }
+  var wd=lrWeekendDays();
+  var satDew=wd.sat?lrDewAt6(wd.sat.day):null;
+  var sunDew=wd.sun?lrDewAt6(wd.sun.day):null;
+  var satBand=(satDew!==null)?lrBandFor(satDew):null;
+  var sunBand=(sunDew!==null)?lrBandFor(sunDew):null;
+  var better=null;
+  if(satDew!==null&&sunDew!==null)better=(satDew<=sunDew)?'sat':'sun';
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+  function dayCard(name,info,dew,bi,isBetter){
+    if(!info||dew===null){
+      return'<div class="lr-day"><div class="lr-day-name">'+name+'</div>'+
+        '<div class="lr-day-date">\u2014</div>'+
+        '<div class="lr-dew-l">Dew point</div><div class="lr-dew" style="color:var(--muted)">\u2014</div>'+
+        '<div class="lr-run-l">Run</div><div class="lr-run" style="color:var(--muted);font-size:20px">n/a</div>'+
+        '<div class="lr-6am">out of forecast range</div></div>';
+    }
+    var b=DEW_BANDS[bi],d=lrDist(base,b.ratio);
+    return'<div class="lr-day'+(isBetter?' best':'')+'">'+
+      '<div class="lr-day-name">'+name+'</div>'+
+      '<div class="lr-day-date">'+MON[info.date.getMonth()]+' '+info.date.getDate()+'</div>'+
+      '<div class="lr-dew-l">Dew point</div>'+
+      '<div class="lr-dew" style="color:'+b.color+'">'+dew+'\u00b0F</div>'+
+      '<div class="lr-run-l">Run</div>'+
+      '<div class="lr-run" style="color:'+b.color+'">'+d+'<span class="lr-run-mi">mi</span></div>'+
+      (isBetter?'<div class="lr-best-tag">Better day</div>':'')+
+      '<div class="lr-6am"'+(isBetter?'':' style="margin-top:24px"')+'>at 6:00am</div>'+
+      '</div>';
+  }
+  var rows='';
+  for(var i=0;i<DEW_BANDS.length;i++){
+    var b=DEW_BANDS[i],d=lrDist(base,b.ratio);
+    var tags=[];
+    if(satBand===i)tags.push('SAT');
+    if(sunBand===i)tags.push('SUN');
+    var on=tags.length>0;
+    rows+='<div class="lr-row'+(on?' active':'')+'">'+
+      '<div class="lr-tag">'+tags.join('<br>')+'</div>'+
+      '<div class="lr-band">'+b.label+'</div>'+
+      '<div class="lr-dist" style="color:'+b.color+'">'+d+'<span class="lr-mi">mi</span></div>'+
+      '<div class="lr-regime" style="color:'+b.color+'">'+b.regime+'</div>'+
+      '</div>';
+  }
+  el.innerHTML=
+    '<div class="lr-intro">'+
+      '<div class="lr-eyebrow">Dew-point adjusted</div>'+
+      '<div class="lr-title">Long Run Equivalent</div>'+
+      '<div class="lr-sub">Hold the <i>stimulus</i> flat, let the distance float. Below 70\u00b0 dew, time on feet stays constant \u2014 you just cover fewer miles. Above 70\u00b0, cooling fails and time gets capped for safety.</div>'+
     '</div>'+
-    '<div class="factor-section"><div class="factor-section-label">Factor breakdown</div>'+
-    [['Felt Effort',result.factors.feltEffort],['Temperature',result.factors.temp],['Dew Point',result.factors.dew],['Sun / Time',result.factors.sun],['Wind',result.factors.wind],['Precipitation',result.factors.precip]].map(function(f){
-      return'<div class="factor-row"><div class="factor-name">'+f[0]+'</div><div class="factor-bar-wrap"><div class="factor-bar" style="width:'+(f[1]*10)+'%;background:'+scoreColor(f[1])+'"></div></div><div class="factor-score">'+f[1].toFixed(1)+'</div></div>';
-    }).join('')+'</div>';
-  document.getElementById('csCondCard').style.display='block';
-  var week=WEEKS[getAutoWeekIdx()];
-  document.getElementById('csWeekCard').innerHTML=
-    '<div class="card"><div class="week-banner">'+
-    '<div><div class="week-label-sm">Current training week</div>'+
-    '<div class="week-name">Week '+week.n+' of 52 &nbsp;&middot;&nbsp; '+week.date+'</div>'+
-    '<div class="week-detail">Sat long run: '+week.sat+' mi &nbsp;&middot;&nbsp; Total: '+week.total+' mi</div></div>'+
-    '<span class="badge badge-'+week.type+'">'+week.label+'</span></div></div>';
-  var alertHtml='';
-  if(s<=2)alertHtml='<div class="alert-cs alert-danger">&#9888; Dangerous conditions — strongly recommended to move indoors or take a rest day.</div>';
-  else if(s<=3.5)alertHtml='<div class="alert-cs alert-warn">&#9888; Difficult conditions — significant modifications required.</div>';
-  document.getElementById('csAlertBox').innerHTML=alertHtml;
-  var recs=buildRecs(result,obs,week,locIdx);
-  document.getElementById('csRecList').innerHTML=recs.map(function(r){return'<div class="rec-item"><div class="rec-icon">'+r.i+'</div><div class="rec-text">'+r.t+'</div></div>';}).join('');
-  document.getElementById('csRecCard').style.display='block';
-  document.getElementById('csLastUpdated').textContent='Updated '+new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'})+' \u00b7 '+LOCS[locIdx].name;
+    '<div class="lr-base"><div>'+
+      '<div class="lr-base-l">This week\'s baseline</div>'+
+      '<div class="lr-base-v">'+base+' <span style="font-size:13px;color:var(--muted);font-family:\'DM Sans\',sans-serif">mi</span></div>'+
+      '<div class="lr-base-note">The under-55\u00b0 long run \u2014 a ceiling, not a target</div>'+
+      '</div><div class="lr-wk">WEEK '+w.n+'<br>'+w.date+'</div></div>'+
+    '<div class="lr-days">'+
+      dayCard('Saturday',wd.sat,satDew,satBand,better==='sat')+
+      dayCard('Sunday',wd.sun,sunDew,sunBand,better==='sun')+
+    '</div>'+
+    '<div class="lr-tbl-head">Equivalence table &nbsp;&middot;&nbsp; baseline '+base+' mi</div>'+
+    '<div class="lr-table">'+rows+'</div>'+
+    '<div class="lr-note"><b>The 70\u00b0 threshold.</b> Below it, sweat evaporates and core temperature plateaus \u2014 you can hold the duration. Above it, sweat drips instead of evaporating and core temp climbs steadily. Duration itself becomes the hazard, so the run gets shortened in <i>time</i>, not just distance.</div>'+
+    '<div class="lr-foot">Dew point is an air-mass property \u2014 it barely moves across a morning, so the 6am reading holds through an early start. Adjust the Home tab with <b>Edit</b> to log what you actually run.</div>';
 }
-// ── FORECAST TAB ──────────────────────────────────────────────────
-function renderForecastDayLocSelector(dayIdx){
-  var locIdx=dayLocIdx[dayIdx]!==undefined?dayLocIdx[dayIdx]:0;
-  return LOCS.map(function(l,i){return'<div class="day-loc-pill'+(i===locIdx?' active':'')+'" onclick="selectDayLoc('+dayIdx+','+i+')">'+l.short+'</div>';}).join('');
-}
-function selectDayLoc(dayIdx,locIdx){
-  dayLocIdx[dayIdx]=locIdx;
-  if(!forecastCache[locIdx])loadForecastLoc(dayIdx,locIdx);
-  else renderForecast();
-}
-async function loadForecastLoc(dayIdx,locIdx){
-  try{if(!forecastCache[locIdx]){var loc=LOCS[locIdx];var data=await fetchWeather(loc.lat,loc.lon);forecastCache[locIdx]=parseHourly(data);}renderForecast();}catch(e){console.error(e);}
-}
-function renderForecast(){
-  if(!Object.keys(forecastCache).length)return;
-  var today=new Date(),todayStr=today.toDateString();
-  var dayNames=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  var monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  var baseLoc=Object.keys(forecastCache)[0];
-  var baseDays=forecastCache[baseLoc];
-  var html='';
-  baseDays.forEach(function(baseDay,dayIdx){
-    var d=new Date(baseDay.date+'T12:00:00');
-    var isToday=d.toDateString()===todayStr;
-    var dayLabel=isToday?'Today':dayNames[d.getDay()];
-    var dateLabel=monthNames[d.getMonth()]+' '+d.getDate();
-    var locIdx=dayLocIdx[dayIdx]!==undefined?dayLocIdx[dayIdx]:0;
-    var dayData=forecastCache[locIdx]?forecastCache[locIdx][dayIdx]:null;
-    // Five windows (aligned with optimalWindow): Early 5-7, Mid-AM 8-10, Midday 11-1, Afternoon 2-4, Evening 5-7pm
-    function fslot(score,temp,name){
-      if(score===null||dayData===null){return'<div class="forecast-slot5"><div class="forecast-slot5-time">'+name+'</div><div class="forecast-slot5-score" style="color:var(--muted);font-size:15px">—</div><div class="forecast-slot5-temp"></div></div>';}
-      var c=scoreColor(score);
-      return'<div class="forecast-slot5"><div class="forecast-slot5-time">'+name+'</div><div class="forecast-slot5-score" style="color:'+c+'">'+score.toFixed(1)+'</div><div class="forecast-slot5-temp">'+(temp!==null?temp+'°':'')+'</div></div>';
-    }
-    // Hourly comfort ribbon 5am-8pm
-    function buildRibbon(){
-      if(!dayData)return'';
-      var hrs=[5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20];
-      var scored=hrs.map(function(h){var e=dayData.hourly.find(function(x){return x.hour===h;});return{h:h,s:e?e.score:null};});
-      var valid=scored.filter(function(x){return x.s!==null;});
-      if(!valid.length)return'';
-      var best=valid.reduce(function(a,b){return b.s>a.s?b:a;});
-      var seg=scored.map(function(o){
-        if(o.s===null)return'<div class="rib-seg"></div>';
-        var c=scoreColor(o.s),hpct=Math.max(6,Math.round(o.s/10*100));
-        var mark=(o.h===best.h)?' rib-best':'';
-        return'<div class="rib-seg'+mark+'"><div class="rib-fill" style="background:'+c+';height:'+hpct+'%"></div></div>';
-      }).join('');
-      var axis=scored.map(function(o){
-        var lab='';
-        if([5,8,11,14,17,20].indexOf(o.h)>=0){var hh=o.h<=12?o.h:o.h-12;lab=hh+(o.h<12?'a':'p');}
-        return'<div class="rib-ax">'+lab+'</div>';
-      }).join('');
-      return'<div class="ribbon">'+seg+'</div><div class="rib-axis">'+axis+'</div>';
-    }
-    var wEarly=dayData?slotScore([5,6,7],dayData.hourly):null;
-    var wMidAM=dayData?slotScore([8,9,10],dayData.hourly):null;
-    var wMidday=dayData?slotScore([11,12,13],dayData.hourly):null;
-    var wAft=dayData?slotScore([14,15,16],dayData.hourly):null;
-    var wEve=dayData?slotScore([17,18,19],dayData.hourly):null;
-    var tEarly=dayData?slotTemp([5,6,7],dayData.hourly):null;
-    var tMidAM=dayData?slotTemp([8,9,10],dayData.hourly):null;
-    var tMidday=dayData?slotTemp([11,12,13],dayData.hourly):null;
-    var tAft=dayData?slotTemp([14,15,16],dayData.hourly):null;
-    var tEve=dayData?slotTemp([17,18,19],dayData.hourly):null;
-    var opt=dayData?optimalWindow(dayData.hourly):null;
-    var condLabel=dayData?dayData.condLabel:baseDay.condLabel;
-    var optHtml='';
-    if(opt){
-      var oc=scoreColor(opt.score);
-      var routeText=opt.temp!==null?routeRec(locIdx,opt.temp,opt.dewF!==null?opt.dewF:55):'';
-      optHtml='<div class="forecast-optimal">'+
-        '<div class="forecast-optimal-label">Optimal run window &nbsp;&middot;&nbsp; '+LOCS[locIdx].name+'</div>'+
-        '<strong>'+opt.label+'</strong>'+(opt.temp!==null?' &nbsp;&middot;&nbsp; ~'+opt.temp+'°F':'')+
-        ' &nbsp;&middot;&nbsp; <span style="color:'+oc+'">'+opt.score.toFixed(1)+'</span>'+
-        (routeText?'<div style="margin-top:6px;font-size:11px;color:var(--green-light);opacity:.85;line-height:1.5">'+routeText+'</div>':'')+
-        '</div>';
-    }else{
-      optHtml='<div class="forecast-optimal"><div class="forecast-optimal-label">Optimal run window</div>Loading '+LOCS[locIdx].name+' data...</div>';
-    }
-    html+='<div class="forecast-day'+(isToday?' today-day':'')+'" id="fday-'+dayIdx+'">'+
-      '<div class="forecast-day-header">'+
-      '<div class="forecast-day-top"><span class="forecast-day-name">'+dayLabel+'</span><span class="forecast-day-date">'+dateLabel+'</span></div>'+
-      '<div class="forecast-cond">'+condLabel+'</div>'+
-      '<div class="day-loc-selector">'+renderForecastDayLocSelector(dayIdx)+'</div>'+
-      '</div>'+
-      '<div class="forecast-slots5">'+fslot(wEarly,tEarly,'Early')+fslot(wMidAM,tMidAM,'Mid-AM')+fslot(wMidday,tMidday,'Midday')+fslot(wAft,tAft,'Aftn')+fslot(wEve,tEve,'Eve')+'</div>'+
-      buildRibbon()+
-      optHtml+'</div>';
-  });
-  document.getElementById('forecastContent').innerHTML=html;
-}
+
 // ── MEALS (guide) ─────────────────────────────────────────────────
 // ── GUIDE OVERLAY ─────────────────────────────────────────────────
 function openGuide(){document.getElementById('guideOverlay').classList.add('open');}
@@ -2473,10 +1403,15 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.getElementById('page-'+id).classList.add('active');
-  var tabMap={home:0,history:1,comfort:2,forecast:3,bridge:4};
+  var tabMap={home:0,history:1,comfort:2,forecast:3,longrun:4,bridge:5};
   document.querySelectorAll('.tab')[tabMap[id]].classList.add('active');
   document.querySelector('.content').scrollTop=0;
   if(id==='history')renderHistory();
+  if(id==='longrun'){
+    renderLRLocSelector();
+    if(Object.keys(forecastCache).length>0)renderLongRun();
+    else{document.getElementById('longrunContent').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading conditions...</div></div>';loadNow(0);}
+  }
   if(id==='forecast'){
     if(Object.keys(forecastCache).length>0)renderForecast();
     else{document.getElementById('forecastContent').innerHTML='<div class="loading-wrap"><div class="spinner"></div><div class="loading-text">Loading forecast...</div></div>';loadNow(0);}
