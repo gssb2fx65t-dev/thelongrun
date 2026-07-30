@@ -340,6 +340,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .lr-foot{font-size:11px;color:var(--muted);line-height:1.65;margin-top:12px;font-weight:300;margin-bottom:20px}
 /* 6 tabs now — tighten label size */
 .tab{font-size:9.5px;letter-spacing:.02em}
+
+/* ── PILOT ANNOTATION ── */
+.pilot-inline{font-family:'DM Mono',monospace;font-size:12px;color:#7cb3f0;margin-left:8px;vertical-align:baseline}
+.wk-total-pilot{font-size:12px;color:#7cb3f0;margin-left:6px;font-family:'DM Mono',monospace}
+.pilot-note{font-size:11px;color:#7cb3f0;background:rgba(124,179,240,.08);border:1px solid rgba(124,179,240,.22);border-radius:10px;padding:9px 12px;margin:10px 14px 0;line-height:1.5}
 </style>
 </head>
 <body>
@@ -475,9 +480,9 @@ var WEEKS=[
   {n:22,date:"Jul 27",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:11,sun:4},total:27,narrative:"Baseline holds at 11. The point of the block is to hold the STIMULUS flat, not the distance - so the miles float with the dew point while time on feet stays roughly constant. Check the Long Run tab Friday night, pick Saturday or Sunday on conditions, and log what you actually ran with the Edit button."},
   {n:23,date:"Aug 3",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:28,narrative:"Baseline 11, and the weekly volume begins a gentle incline - the midweek grows while the long-run ceiling holds at 11. The point of the block is still to hold the long-run STIMULUS flat and let the dew point set the actual distance; the extra mileage comes from the short runs, which take almost no heat penalty. Resist running past the dew-point-adjusted long run even on a good day."},
   {n:24,date:"Aug 10",type:"recover",label:"RECOVERY",days:{mon:null,tue:3.5,wed:3,thu:2,fri:null,sat:7.5,sun:3},total:19,narrative:"Recovery week in the heat. The baseline drops to 7.5 - and this pullback OVERRIDES the conditions. Even if the weekend is beautiful, run the reduced distance: recovery is about clearing accumulated fatigue, not about weather. A hot week that auto-adjusted down to 8 miles was not a recovery week; it was a hard week with fewer miles. Heat debt (poor sleep, hydration deficit, suppressed appetite) accumulates invisibly. Clear it here."},
-  {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:5,thu:3,fri:null,sat:11,sun:4},total:28.5,narrative:"Back to the baseline of 11, with the midweek continuing its slow climb (~28.5). Late August is typically the worst of the heat, so expect the adjusted long run to land low - that is the system working. The incline is a rising ceiling, not an obligation: on a brutal week the dew point still pulls the actual mileage down."},
-  {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:6,wed:5,thu:3.5,fri:null,sat:11,sun:4},total:29.5,narrative:"Baseline 11, week climbs toward ~29.5. Tuesday reaches 6, the longest midweek anchor of the year. The heat block's end is one week away - arrive at that transition healthy rather than forcing the incline on a hot morning."},
-  {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:6,wed:5,thu:4,fri:null,sat:11,sun:4},total:30,narrative:"Final heat-adjusted week - the incline tops out at the 30-mile cap, all of it from the midweek while the long-run baseline held at 11 all block. You've held the long-run stimulus flat through seven weeks of summer heat by letting the distance float with the dew point. Next comes the heat-block-exit checkpoint: look at what you ACTUALLY ran, and decide whether the fall (and the cap) should scale up for your real fitness."},
+  {n:25,date:"Aug 17",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:5.5,wed:5,thu:3,fri:null,sat:11,sun:4},pilot:{tue:6,wed:4.5,thu:3.5},total:28.5,narrative:"Back to the baseline of 11, with the midweek continuing its slow climb (~28.5). Late August is typically the worst of the heat, so expect the adjusted long run to land low - that is the system working. The incline is a rising ceiling, not an obligation: on a brutal week the dew point still pulls the actual mileage down."},
+  {n:26,date:"Aug 24",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:6,wed:5,thu:3.5,fri:null,sat:11,sun:4},pilot:{tue:7,wed:4.5,thu:3.5},total:29.5,narrative:"Baseline 11, week climbs toward ~29.5. Tuesday reaches 6, the longest midweek anchor of the year. The heat block's end is one week away - arrive at that transition healthy rather than forcing the incline on a hot morning."},
+  {n:27,date:"Aug 31",type:"heat",label:"HEAT-ADJUSTED",days:{mon:null,tue:6,wed:5,thu:4,fri:null,sat:11,sun:4},pilot:{tue:8,wed:4.5,thu:3.5},total:30,narrative:"Final heat-adjusted week - the incline tops out at the 30-mile cap, all of it from the midweek while the long-run baseline held at 11 all block. You've held the long-run stimulus flat through seven weeks of summer heat by letting the distance float with the dew point. Next comes the heat-block-exit checkpoint: look at what you ACTUALLY ran, and decide whether the fall (and the cap) should scale up for your real fitness."},
   {n:28,date:"Sep 7",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:10,sun:4},total:26.5,narrative:"Post-heat re-entry. Heat-block checkpoint passed. The midweek holds at the level the heat block built (Tue 5, Wed 4.5, Thu 3) and the long run steps up to 10. Keep effort easy - your legs are re-adapting after a summer of heat. ~26.5 miles."},
   {n:29,date:"Sep 14",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:3,fri:null,sat:11,sun:4},total:27.5,narrative:"Re-entry build continues. Long run 11. Easy effort throughout as the post-summer fitness comes back and the fall conditions start working in your favor. ~27.5 miles."},
   {n:30,date:"Sep 21",type:"build",label:"HM BUILD",days:{mon:null,tue:5,wed:4.5,thu:2.5,fri:null,sat:12,sun:4},total:28,narrative:"Build. Long run 12. Thursday trims slightly to keep the week under the 30-mile cap. ~28 miles."},
@@ -796,6 +801,31 @@ function buildWeekComfortDots(weekIdx){
   return html;
 }
 // ── HOME RENDER ───────────────────────────────────────────────────
+function weekPilotTotal(idx){
+  var w=WEEKS[idx];
+  if(!w||!w.pilot)return null;
+  var days=getWeekDays(idx),t=0;
+  for(var i=0;i<DAYS.length;i++){
+    var dk=DAYS[i],v=days[dk];
+    if(w.pilot[dk]!==undefined&&w.pilot[dk]!==null){t+=w.pilot[dk];continue;}
+    if(v===null||v===undefined)continue;
+    if(v==='RACE'){t+=13.1;continue;}
+    if(isSkiVal(v))continue;
+    var x=parseFloat(v);if(!isNaN(x))t+=x;
+  }
+  return Math.round(t*10)/10;
+}
+function pilotFor(idx,dk){
+  var w=WEEKS[idx];
+  if(!w||!w.pilot)return null;
+  var p=w.pilot[dk];
+  return(p===undefined||p===null)?null:p;
+}
+function pilotTag(idx,dk){
+  var p=pilotFor(idx,dk);
+  if(p===null)return '';
+  return '<span class="pilot-inline">(pilot '+p+' mi)</span>';
+}
 function buildSlots(idx,todayDayIdx){
   var days=getWeekDays(idx),w=WEEKS[idx],html='';
   for(var i=0;i<7;i++){
@@ -813,7 +843,7 @@ function buildSlots(idx,todayDayIdx){
     if(isSki){
       if(isOptVal(dist)){runLabel=(dk==='sat')?'Long — run or ski':'Run or ski';}else{runLabel=(dk==='sat')?'Long ski':'Cross-train';}
       runDist=skiText(dist);
-    }else if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
+    }else if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi'+pilotTag(idx,dk);}else{runDist='Rest';}
     // In edit mode: suppress drag, show steppers / add / delete
     var editable=editMode&&!isSki&&dist!=='RACE';
     if(editMode){cls=cls.replace(' draggable','');cls+=' editing';}
@@ -877,6 +907,8 @@ function renderHome(){
   var p=getProgress(idx);
   var liveTotal=weekTotal(idx);
   var capNote=(liveTotal>WEEK_CAP)?'<span class="cap-warn">over '+WEEK_CAP+' cap</span>':'';
+  var pilotTot=weekPilotTotal(idx);
+  var pilotNote=(pilotTot!==null)?'<span class="wk-total-pilot">(pilot '+pilotTot+' mi)</span>':'';
   var milesSummary=p.doneRuns>0?'<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>':'';
   // Next run with comfort score
   var nextRunText='',nextRunSub='',nextRunComfort='';
@@ -923,7 +955,7 @@ function renderHome(){
   document.getElementById('homeContent').innerHTML=
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
     '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 52</div>'+
-    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'#1a2332')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
+    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'#1a2332')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+pilotNote+'</div>'+
     '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
     badgeHtml+'</div>'+
     '<div class="card" style="margin-top:14px"><div class="card-header"><span class="card-title">This week\'s goal</span></div>'+
@@ -937,6 +969,7 @@ function renderHome(){
     (!editMode&&isModified(idx)?'<div class="week-modified-note">Week edited \u2014 differs from plan</div>':'')+
     (!editMode&&!dragHintShown?'<div class="drag-hint">Press and hold a run, then drag to reschedule</div>':'')+
     '<div id="home-slots" class="day-slots-wrap">'+buildSlots(idx,todayDayIdx)+'</div>'+
+    (WEEKS[idx].pilot&&!editMode?'<div class="pilot-note">&#9998; Pilot active \u2014 the Tuesday anchor runs a mid-long experiment (6\u21927\u21928 across weeks 25\u201327), Wed/Thu adjust to compensate. Blue = pilot target. Log what you actually run with Edit.</div>':'')+
     (editMode?'':buildProgressBar(idx))+
     (editMode?'':buildWeekComfortDots(idx))+
     (isModified(idx)?'<div class="action-btns"><button class="reset-btn" onclick="resetWeek('+idx+')">&#8635; Reset to plan</button><button class="lock-btn" onclick="lockWeek('+idx+')">&#128274; Lock in</button></div>':'')+
@@ -1058,7 +1091,7 @@ function buildHistoryBody(idx,days,note){
     var dk=DAYS[i],dist=days[dk];if(!dist)continue;
     var done=isCompleted(idx,dk);
     var isSki=isSkiVal(dist);
-    var distStr=isSki?('&#9975; '+skiText(dist)):(dist==='RACE'?'&#127937; Race':dist+' mi');
+    var distStr=isSki?('&#9975; '+skiText(dist)):(dist==='RACE'?'&#127937; Race':dist+' mi'+pilotTag(idx,dk));
     var col=isSki?'#93c5fd':(done?'var(--green-light)':'var(--cream)');
     html+='<div class="history-run-row">'+
       '<div class="history-day-tag">'+DAY_LABELS[i]+'</div>'+
