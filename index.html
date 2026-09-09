@@ -84,6 +84,28 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;color:transparent}
 .day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
 .day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
+/* ── STRENGTH ROWS ── */
+.str-slot{display:flex;align-items:center;gap:9px;background:rgba(147,112,219,.10);border-radius:9px;padding:8px 10px;margin-left:18px;border-left:2px solid rgba(167,139,250,.45)}
+.str-slot.completed .str-name{text-decoration:line-through;opacity:.5}
+.str-info{flex:1;min-width:0;padding-left:2px}
+.str-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#c4b5fd;margin-bottom:1px}
+.str-name{font-size:14px;font-weight:500;color:#e9e4ff}
+.str-meta{font-size:10px;color:var(--muted);margin-top:1px}
+.str-badge{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;flex-shrink:0;font-size:15px;border:2px solid rgba(167,139,250,.4);background:rgba(167,139,250,.16);cursor:pointer;transition:transform .15s;padding:0;color:inherit}
+.str-badge:active{transform:scale(.92)}
+.str-badge.open{background:rgba(167,139,250,.42);border-color:#a78bfa}
+.str-slot.completed .check-btn{background:#a78bfa;border-color:#a78bfa;color:#fff}
+.str-expand{display:none;margin-left:18px;background:rgba(0,0,0,.22);border-radius:0 0 9px 9px;border-left:2px solid rgba(167,139,250,.45);padding:4px 10px 10px}
+.str-expand.open{display:block}
+.str-exp-head{display:flex;justify-content:space-between;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:5px 2px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
+.str-ex-row{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid rgba(255,255,255,.05)}
+.str-ex-row:last-child{border-bottom:none}
+.str-ex-name{flex:1;font-size:12.5px;color:var(--cream);min-width:0}
+.str-ex-sets{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);width:52px;text-align:right;flex-shrink:0}
+.str-ex-wt{width:58px;flex-shrink:0;display:flex;align-items:center;gap:3px;justify-content:flex-end}
+.str-ex-input{width:40px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:var(--cream);font-family:'DM Mono',monospace;font-size:12px;padding:3px 4px;text-align:center;-webkit-user-select:text;user-select:text}
+.str-ex-unit{font-size:9px;color:var(--muted)}
+.str-ex-last{font-size:9px;color:var(--muted);width:32px;text-align:right;flex-shrink:0}
 /* COMFORT BADGE ON DAY SLOTS */
 .comfort-badge{display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;flex-shrink:0;font-family:'DM Serif Display',serif;font-size:13px;font-weight:600;cursor:pointer;transition:transform .15s;border:2px solid transparent}
 .comfort-badge:active{transform:scale(.92)}
@@ -572,7 +594,145 @@ function weekTotal(idx){
   return Math.round(t*10)/10;
 }
 
-function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'&&!isSkiVal(dist)){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm};}
+// ── STRENGTH PROGRAM ──────────────────────────────────────────────
+var STRENGTH_START=28; // 0-based idx => week 29
+var STRENGTH_PHASES=[
+ {from:28,to:29,name:'Foundation',
+  tue:{title:'Lower',mins:11,ex:[
+    {id:'goblet',n:'Goblet squat',s:'2 \u00d7 10'},
+    {id:'rdl',n:'Romanian deadlift',s:'2 \u00d7 8'},
+    {id:'calfseat',n:'Seated calf raise',s:'2 \u00d7 15'}]},
+  thu:{title:'Upper + core',mins:15,ex:[
+    {id:'bench',n:'Bench press',s:'2 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'2 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'2 \u00d7 8'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'}]}},
+ {from:30,to:31,name:'Volume',
+  tue:{title:'Lower',mins:22,ex:[
+    {id:'goblet',n:'Goblet squat',s:'3 \u00d7 10'},
+    {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
+    {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'},
+    {id:'calfstand',n:'Standing calf raise',s:'2 \u00d7 12'}]},
+  thu:{title:'Upper + core',mins:28,ex:[
+    {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'3 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
+    {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 10'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
+    {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'}]}},
+ {from:32,to:32,name:'Deload (running recovery wk)',
+  tue:{title:'Lower',mins:11,ex:[
+    {id:'goblet',n:'Goblet squat',s:'2 \u00d7 10'},
+    {id:'rdl',n:'Romanian deadlift',s:'2 \u00d7 8'},
+    {id:'calfseat',n:'Seated calf raise',s:'2 \u00d7 15'}]},
+  thu:{title:'Upper + core',mins:15,ex:[
+    {id:'bench',n:'Bench press',s:'2 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'2 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'2 \u00d7 8'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'}]}},
+ {from:33,to:33,name:'Hold (half week)',
+  tue:{title:'Lower',mins:22,ex:[
+    {id:'goblet',n:'Goblet squat',s:'3 \u00d7 10'},
+    {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
+    {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'},
+    {id:'calfstand',n:'Standing calf raise',s:'2 \u00d7 12'}]},
+  thu:{title:'Upper + core',mins:28,ex:[
+    {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'3 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
+    {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 10'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
+    {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'}]}},
+ {from:34,to:36,name:'Single-leg',
+  tue:{title:'Lower',mins:33,ex:[
+    {id:'squat',n:'Back or goblet squat',s:'3 \u00d7 8'},
+    {id:'bulgarian',n:'Bulgarian split squat',s:'2 \u00d7 8/leg'},
+    {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
+    {id:'slrdl',n:'Single-leg RDL',s:'2 \u00d7 8/leg'},
+    {id:'calfstand',n:'Standing calf raise',s:'3 \u00d7 12'},
+    {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'}]},
+  thu:{title:'Upper + core',mins:40,ex:[
+    {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'3 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
+    {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 10'},
+    {id:'incline',n:'Incline DB press',s:'2 \u00d7 10'},
+    {id:'curl',n:'DB curl',s:'2 \u00d7 10'},
+    {id:'tri',n:'Triceps pushdown',s:'2 \u00d7 12'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
+    {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'},
+    {id:'deadbug',n:'Dead bug / side plank',s:'2 sets'}]}},
+ {from:37,to:37,name:'Deload (running recovery wk)',
+  tue:{title:'Lower',mins:22,ex:[
+    {id:'goblet',n:'Goblet squat',s:'3 \u00d7 10'},
+    {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
+    {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'},
+    {id:'calfstand',n:'Standing calf raise',s:'2 \u00d7 12'}]},
+  thu:{title:'Upper + core',mins:28,ex:[
+    {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'3 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
+    {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 10'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
+    {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'}]}},
+ {from:38,to:51,name:'Full',
+  tue:{title:'Lower',mins:38,ex:[
+    {id:'squat',n:'Back or goblet squat',s:'3 \u00d7 8'},
+    {id:'bulgarian',n:'Bulgarian split squat',s:'3 \u00d7 8/leg'},
+    {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
+    {id:'slrdl',n:'Single-leg RDL',s:'2 \u00d7 8/leg'},
+    {id:'calfstand',n:'Standing calf raise',s:'3 \u00d7 12'},
+    {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'},
+    {id:'abduct',n:'Cable hip abduction',s:'2 \u00d7 15'}]},
+  thu:{title:'Upper + core',mins:43,ex:[
+    {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
+    {id:'row',n:'Cable row',s:'3 \u00d7 10'},
+    {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
+    {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 10'},
+    {id:'incline',n:'Incline DB press',s:'2 \u00d7 10'},
+    {id:'curl',n:'DB curl',s:'2 \u00d7 10'},
+    {id:'tri',n:'Triceps pushdown',s:'2 \u00d7 12'},
+    {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
+    {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'},
+    {id:'deadbug',n:'Dead bug / side plank',s:'2 sets'}]}}
+];
+var strDone={},strWeights={};
+function strPhase(idx){for(var i=0;i<STRENGTH_PHASES.length;i++){var p=STRENGTH_PHASES[i];if(idx>=p.from&&idx<=p.to)return p;}return null;}
+function strSession(idx,dk){if(idx<STRENGTH_START)return null;if(dk!=='tue'&&dk!=='thu')return null;var p=strPhase(idx);return p?p[dk]:null;}
+function strIsDone(idx,dk){return !!(strDone[idx]&&strDone[idx][dk]);}
+function toggleStrDone(idx,dk){if(!strDone[idx])strDone[idx]={};if(strDone[idx][dk])delete strDone[idx][dk];else strDone[idx][dk]=true;sSet('strDone',strDone);renderHome();}
+function toggleStrExpand(idx,dk){var el=document.getElementById('sexpand-'+dk);if(!el)return;el.classList.toggle('open');var b=document.getElementById('sbadge-'+dk);if(b)b.classList.toggle('open');}
+function strLastWeight(exId,idx){var best=null,bestWk=-1;var m=strWeights[exId];if(!m)return null;for(var k in m){var wk=parseInt(k);if(wk<idx&&wk>bestWk&&m[k]!==''&&m[k]!==null){bestWk=wk;best=m[k];}}return best;}
+function strGetWeight(exId,idx){var m=strWeights[exId];if(m&&m[idx]!==undefined&&m[idx]!==null)return m[idx];return '';}
+function setStrWeight(exId,idx,val){if(!strWeights[exId])strWeights[exId]={};var v=(''+val).trim();if(v===''){delete strWeights[exId][idx];}else{strWeights[exId][idx]=v;}sSet('strWeights',strWeights);}
+function buildStrengthSlot(idx,dk){
+  var s=strSession(idx,dk);if(!s)return '';
+  var done=strIsDone(idx,dk);
+  var html='<div class="str-slot'+(done?' completed':'')+'">'+
+    '<div class="str-info">'+
+      '<div class="str-label">Strength</div>'+
+      '<div class="str-name">'+s.title+'</div>'+
+      '<div class="str-meta">'+s.ex.length+' movements \u00b7 ~'+s.mins+' min</div>'+
+    '</div>'+
+    '<button class="str-badge" id="sbadge-'+dk+'" onclick="event.stopPropagation();toggleStrExpand('+idx+',\''+dk+'\')">\ud83c\udfcb</button>'+
+    '<button class="check-btn" onclick="event.stopPropagation();toggleStrDone('+idx+',\''+dk+'\')">'+(done?'&#10003;':'')+'</button>'+
+    '</div>';
+  html+='<div class="str-expand" id="sexpand-'+dk+'">';
+  html+='<div class="str-exp-head"><span>Movement</span><span>Sets \u00d7 reps &nbsp; Weight &nbsp; Last</span></div>';
+  for(var i=0;i<s.ex.length;i++){
+    var e=s.ex[i],last=strLastWeight(e.id,idx),cur=strGetWeight(e.id,idx);
+    html+='<div class="str-ex-row">'+
+      '<div class="str-ex-name">'+e.n+'</div>'+
+      '<div class="str-ex-sets">'+e.s+'</div>'+
+      '<div class="str-ex-wt"><input class="str-ex-input" type="text" inputmode="decimal" value="'+cur+'" '+
+        'onclick="event.stopPropagation()" onchange="setStrWeight(\''+e.id+'\','+idx+',this.value)"><span class="str-ex-unit">lb</span></div>'+
+      '<div class="str-ex-last">'+(last!==null?last:'\u2014')+'</div>'+
+      '</div>';
+  }
+  html+='</div>';
+  return html;
+}
+function getProgress(idx){var days=getWeekDays(idx),tr=0,dr=0,tm=0,dm=0;for(var i=0;i<DAYS.length;i++){var dk=DAYS[i],dist=days[dk];if(dist&&dist!=='RACE'&&!isSkiVal(dist)){var m=parseFloat(dist);tr++;tm+=m;if(isCompleted(idx,dk)){dr++;dm+=m;}}}var ts=0,ds=0;for(var j=0;j<DAYS.length;j++){var dk2=DAYS[j];if(strSession(idx,dk2)){ts++;if(strIsDone(idx,dk2))ds++;}}return{totalRuns:tr,doneRuns:dr,totalMiles:tm,doneMiles:dm,totalStr:ts,doneStr:ds,totalItems:tr+ts,doneItems:dr+ds};}
 function isCompleted(idx,dk){return !!(completedRuns[idx]&&completedRuns[idx][dk]);}
 function toggleCompleted(idx,dk){if(!completedRuns[idx])completedRuns[idx]={};if(completedRuns[idx][dk])delete completedRuns[idx][dk];else completedRuns[idx][dk]=true;sSet('completed',completedRuns);renderHome();renderHistory();}
 function getAutoWeekIdx(){var S=new Date('2026-03-02'),d=new Date();if(d.getDay()===0&&d.getHours()>=18)d=new Date(d.getTime()+86400000);return Math.max(0,Math.min(WEEKS.length-1,Math.floor((d-S)/604800000)));}
@@ -890,6 +1050,7 @@ function buildSlots(idx,todayDayIdx){
       html+='</div>';
       // Comfort expand panel (skip ski days) — only in normal mode
       if(!isSkiVal(dist))html+=buildComfortExpand(idx,dk);
+      html+=buildStrengthSlot(idx,dk);
     }
   }
   return html;
@@ -897,7 +1058,7 @@ function buildSlots(idx,todayDayIdx){
 function buildProgressBar(idx){
   var p=getProgress(idx);if(p.totalRuns===0)return'';
   var pct=Math.round(p.doneMiles/p.totalMiles*100)||0;
-  var label=p.doneRuns+' of '+p.totalRuns+' runs';
+  var label=p.totalStr>0?(p.doneItems+' of '+p.totalItems+' \u00b7 '+p.doneRuns+'/'+p.totalRuns+' runs, '+p.doneStr+'/'+p.totalStr+' lifts'):(p.doneRuns+' of '+p.totalRuns+' runs');
   var miles=p.doneRuns>0?p.doneMiles.toFixed(1)+' / '+p.totalMiles.toFixed(1)+' mi':p.totalMiles.toFixed(1)+' mi planned';
   return'<div class="week-progress"><div class="week-progress-label">'+label+'</div><div class="week-progress-bar-wrap"><div class="week-progress-bar" style="width:'+pct+'%"></div></div><div class="week-progress-miles">'+miles+'</div></div>';
 }
@@ -1475,12 +1636,14 @@ function init(){
   var ov=sGet('overrides');if(ov)weekOverrides=ov;
   var locked=sGet('locked');if(locked){for(var k in locked){var idx=parseInt(k);WEEKS[idx].days=locked[k];}}
   var comp=sGet('completed');if(comp)completedRuns=comp;
+  var sd=sGet('strDone');if(sd)strDone=sd;
+  var sw=sGet('strWeights');if(sw)strWeights=sw;
   var notes=sGet('notes');if(notes)weekNotes=notes;
   var ro=sGet('rollOffset');if(ro!==null&&!isNaN(parseInt(ro)))homeWeekOffset=parseInt(ro);
   dragHintShown=!!sGet('dragHint');
   var autoIdx=getAutoWeekIdx(),lastSeen=sGet('lastSeenWeek');
   if(lastSeen===null){sSet('lastSeenWeek',autoIdx);}
-  else if(autoIdx>lastSeen){for(var i=lastSeen;i<autoIdx;i++){if(completedRuns[i])delete completedRuns[i];}sSet('completed',completedRuns);sSet('lastSeenWeek',autoIdx);}
+  else if(autoIdx>lastSeen){sSet('lastSeenWeek',autoIdx);}
   currentWeekIdx=getHomeWeekIdx();
   document.getElementById('headerDate').textContent=new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'}).toUpperCase();
   renderHome();
