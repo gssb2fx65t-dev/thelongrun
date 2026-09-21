@@ -85,7 +85,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
 .day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
 /* ── STRENGTH ROWS ── */
-.str-slot{display:flex;align-items:center;gap:9px;background:rgba(147,112,219,.10);border-radius:9px;padding:8px 10px;margin-left:18px;border-left:2px solid rgba(167,139,250,.45)}
+.str-slot{display:flex;align-items:center;gap:9px;background:rgba(147,112,219,.12);border-radius:9px;padding:8px 10px}
+.str-slot .day-name{color:#c4b5fd}
+.str-slot .day-divider{background:rgba(167,139,250,.35)}
 .str-slot.completed .str-name{text-decoration:line-through;opacity:.5}
 .str-info{flex:1;min-width:0;padding-left:2px}
 .str-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;color:#c4b5fd;margin-bottom:1px}
@@ -95,7 +97,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .str-badge:active{transform:scale(.92)}
 .str-badge.open{background:rgba(167,139,250,.42);border-color:#a78bfa}
 .str-slot.completed .check-btn{background:#a78bfa;border-color:#a78bfa;color:#fff}
-.str-expand{display:none;margin-left:18px;background:rgba(0,0,0,.22);border-radius:0 0 9px 9px;border-left:2px solid rgba(167,139,250,.45);padding:4px 10px 10px}
+.str-expand{display:none;background:rgba(0,0,0,.22);border-radius:0 0 9px 9px;padding:4px 10px 10px 49px}
 .str-expand.open{display:block}
 .str-exp-head{display:flex;justify-content:space-between;font-size:9px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);padding:5px 2px 4px;border-bottom:1px solid rgba(255,255,255,.08)}
 .str-ex-row{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid rgba(255,255,255,.05)}
@@ -596,10 +598,10 @@ function weekTotal(idx){
 
 // ── STRENGTH PROGRAM ──────────────────────────────────────────────
 // Tuesday (lower) is PHASED — lower body is where running interference lives.
-// Thursday (upper+core) is CONSTANT — no running interference — ramped by LOAD only,
-// except it deloads on the two running recovery weeks (33, 38).
+// Sunday (upper+core) is CONSTANT — no running interference — ramped by LOAD only,
+// except it deloads on the running recovery weeks (31, 35, 39).
 var STRENGTH_START=27; // 0-based idx => week 28
-var THU_FULL={title:'Upper + core',mins:43,ex:[
+var UPPER_FULL={title:'Upper + core',mins:43,ex:[
   {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
   {id:'row',n:'Cable row',s:'3 \u00d7 10'},
   {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
@@ -610,7 +612,7 @@ var THU_FULL={title:'Upper + core',mins:43,ex:[
   {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
   {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'},
   {id:'deadbug',n:'Dead bug / side plank',s:'2 sets'}]};
-var THU_DELOAD={title:'Upper + core',mins:36,ex:[
+var UPPER_DELOAD={title:'Upper + core',mins:36,ex:[
   {id:'bench',n:'Bench press',s:'2 \u00d7 8'},
   {id:'row',n:'Cable row',s:'2 \u00d7 10'},
   {id:'ohp',n:'Overhead press',s:'2 \u00d7 8'},
@@ -647,15 +649,17 @@ var TUE_FULL={title:'Lower',mins:38,ex:[
   {id:'abduct',n:'Cable hip abduction',s:'2 \u00d7 15'}]};
 var STRENGTH_PHASES=[
  {from:27,to:28,name:'Foundation',tue:TUE_FOUNDATION,deload:false},
- {from:29,to:32,name:'Volume',tue:TUE_VOLUME,deload:false},
- {from:33,to:33,name:'Deload',tue:TUE_FOUNDATION,deload:true},
- {from:34,to:36,name:'Single-leg',tue:TUE_SINGLELEG,deload:false},
- {from:37,to:37,name:'Deload',tue:TUE_VOLUME,deload:true},
- {from:38,to:51,name:'Full',tue:TUE_FULL,deload:false}
+ {from:29,to:29,name:'Volume',tue:TUE_VOLUME,deload:false},
+ {from:30,to:30,name:'Deload',tue:TUE_FOUNDATION,deload:true},
+ {from:31,to:33,name:'Volume',tue:TUE_VOLUME,deload:false},
+ {from:34,to:34,name:'Deload',tue:TUE_FOUNDATION,deload:true},
+ {from:35,to:37,name:'Single-leg',tue:TUE_SINGLELEG,deload:false},
+ {from:38,to:38,name:'Deload',tue:TUE_VOLUME,deload:true},
+ {from:39,to:51,name:'Full',tue:TUE_FULL,deload:false}
 ];
 var strDone={},strWeights={};
 function strPhase(idx){for(var i=0;i<STRENGTH_PHASES.length;i++){var p=STRENGTH_PHASES[i];if(idx>=p.from&&idx<=p.to)return p;}return null;}
-function strSession(idx,dk){if(idx<STRENGTH_START)return null;if(dk!=='tue'&&dk!=='thu')return null;var p=strPhase(idx);if(!p)return null;if(dk==='tue')return p.tue;return p.deload?THU_DELOAD:THU_FULL;}
+function strSession(idx,dk){if(idx<STRENGTH_START)return null;if(dk!=='tue'&&dk!=='sun')return null;var p=strPhase(idx);if(!p)return null;if(dk==='tue')return p.tue;return p.deload?UPPER_DELOAD:UPPER_FULL;}
 function strIsDone(idx,dk){return !!(strDone[idx]&&strDone[idx][dk]);}
 function toggleStrDone(idx,dk){if(!strDone[idx])strDone[idx]={};if(strDone[idx][dk])delete strDone[idx][dk];else strDone[idx][dk]=true;sSet('strDone',strDone);renderHome();}
 function toggleStrExpand(idx,dk){var el=document.getElementById('sexpand-'+dk);if(!el)return;el.classList.toggle('open');var b=document.getElementById('sbadge-'+dk);if(b)b.classList.toggle('open');}
@@ -666,6 +670,8 @@ function buildStrengthSlot(idx,dk){
   var s=strSession(idx,dk);if(!s)return '';
   var done=strIsDone(idx,dk);
   var html='<div class="str-slot'+(done?' completed':'')+'">'+
+    '<div class="day-name">'+DAY_LABELS[DAYS.indexOf(dk)]+'</div>'+
+    '<div class="day-divider"></div>'+
     '<div class="str-info">'+
       '<div class="str-label">Strength</div>'+
       '<div class="str-name">'+s.title+'</div>'+
@@ -1593,7 +1599,7 @@ function init(){
   var ov=sGet('overrides');if(ov)weekOverrides=ov;
   var locked=sGet('locked');if(locked){for(var k in locked){var idx=parseInt(k);WEEKS[idx].days=locked[k];}}
   var comp=sGet('completed');if(comp)completedRuns=comp;
-  var sd=sGet('strDone');if(sd)strDone=sd;
+  var sd=sGet('strDone');if(sd){strDone=sd;var mig=false;for(var k in strDone){if(strDone[k]&&strDone[k].thu){if(!strDone[k].sun)strDone[k].sun=true;delete strDone[k].thu;mig=true;}}if(mig)sSet('strDone',strDone);}
   var sw=sGet('strWeights');if(sw)strWeights=sw;
   var notes=sGet('notes');if(notes)weekNotes=notes;
   var ro=sGet('rollOffset');if(ro!==null&&!isNaN(parseInt(ro)))homeWeekOffset=parseInt(ro);
