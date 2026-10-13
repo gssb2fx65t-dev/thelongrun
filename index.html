@@ -1050,7 +1050,7 @@ function renderHome(){
   document.getElementById('homeContent').innerHTML=
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
     '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 52</div>'+
-    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'#1a2332')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
+    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'var(--blue-pale)')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
     '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
     badgeHtml+'</div>'+
         '<div class="card">'+
