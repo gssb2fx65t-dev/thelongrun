@@ -507,7 +507,7 @@ var WEEKS=[
   {n:31,date:"Sep 28",type:"recover",label:"RECOVERY",days:{mon:null,tue:4,wed:3,thu:4,fri:null,sat:10,sun:4},total:25},
   {n:32,date:"Oct 5",type:"build",label:"FALL BUILD",days:{mon:null,tue:8,wed:3.5,thu:5,fri:null,sat:15,sun:4},total:35.5},
   {n:33,date:"Oct 12",type:"build",label:"FALL BUILD",days:{mon:null,tue:8,wed:3.5,thu:5,fri:null,sat:16,sun:4},total:36.5},
-  {n:34,date:"Oct 19",type:"build",label:"FALL BUILD",days:{mon:null,tue:8,wed:3.5,thu:5,fri:null,sat:8,sun:"RACE"},total:37.6},
+  {n:34,date:"Oct 19",type:"build",label:"FALL BUILD",days:{mon:null,tue:8,wed:3.5,thu:5,fri:null,sat:10,sun:4},total:30.5},
   {n:35,date:"Oct 26",type:"recover",label:"RECOVERY",days:{mon:null,tue:5,wed:3.5,thu:5,fri:null,sat:10,sun:4},total:27.5},
   {n:36,date:"Nov 2",type:"build",label:"FALL BUILD",days:{mon:null,tue:9,wed:3.5,thu:5,fri:null,sat:16,sun:5},total:38.5},
   {n:37,date:"Nov 9",type:"build",label:"FALL BUILD",days:{mon:null,tue:8,wed:3.5,thu:4,fri:null,sat:15,sun:8},total:38.5},
@@ -939,7 +939,7 @@ function buildSlots(idx,todayDayIdx){
     if(isSki){
       if(isOptVal(dist)){runLabel=(dk==='sat')?'Long — run or ski':'Run or ski';}else{runLabel=(dk==='sat')?'Long ski':'Cross-train';}
       runDist=skiText(dist);
-    }else if(hasRun){if(dist===w.days.sat)runLabel='Long run';else if(dist===w.days.tue)runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
+    }else if(hasRun){if(dk==='sat')runLabel='Long run';else if(dk==='tue')runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
     // In edit mode: suppress drag, show steppers / add / delete
     var editable=editMode&&!isSki&&dist!=='RACE';
     if(editMode){cls=cls.replace(' draggable','');cls+=' editing';}
