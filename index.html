@@ -81,7 +81,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .day-slot.run-other .day-run-dist{color:var(--green-light)}
 .day-slot.rest .day-run-dist{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);font-weight:300}
 .day-slots-wrap{padding:6px 12px 6px;display:flex;flex-direction:column;gap:5px}
-.check-btn{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:13px;color:transparent}
+.check-btn{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:14px;color:transparent;position:relative;margin-left:5px}.check-btn::before{content:'';position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%);border-radius:50%}
 .day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
 .day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
 /* ── STRENGTH ROWS ── */
@@ -103,7 +103,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .str-ex-row{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid rgba(255,255,255,.05)}
 .str-ex-row:last-child{border-bottom:none}
 .str-ex-name{flex:1;font-size:12.5px;color:var(--cream);min-width:0}
-.str-ex-sets{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);width:52px;text-align:right;flex-shrink:0}
+.str-ex-sets{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);width:62px;text-align:right;flex-shrink:0;line-height:1.35}.str-ex-sub{display:block;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);margin-top:3px;line-height:1.5}.str-ex-bw{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--muted);letter-spacing:.04em}
 .str-ex-wt{width:58px;flex-shrink:0;display:flex;align-items:center;gap:3px;justify-content:flex-end}
 .str-ex-input{width:40px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:5px;color:var(--cream);font-family:'DM Mono',monospace;font-size:12px;padding:3px 4px;text-align:center;-webkit-user-select:text;user-select:text}
 .str-ex-unit{font-size:9px;color:var(--muted)}
@@ -596,68 +596,75 @@ function weekTotal(idx){
 // except it deloads on the running recovery weeks (31, 35, 39).
 var STRENGTH_START=27; // 0-based idx => week 28
 var UPPER_FULL={title:'Upper + core',mins:43,ex:[
-  {id:'bench',n:'Bench press',s:'3 \u00d7 8'},
-  {id:'row',n:'Cable row',s:'3 \u00d7 10'},
-  {id:'ohp',n:'Overhead press',s:'3 \u00d7 8'},
-  {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 10'},
-  {id:'incline',n:'Incline DB press',s:'2 \u00d7 10'},
-  {id:'curl',n:'DB curl',s:'2 \u00d7 10'},
-  {id:'tri',n:'Triceps pushdown',s:'2 \u00d7 12'},
-  {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
-  {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'},
-  {id:'deadbug',n:'Dead bug / side plank',s:'2 sets'}]};
-var UPPER_DELOAD={title:'Upper + core',mins:36,ex:[
-  {id:'bench',n:'Bench press',s:'2 \u00d7 8'},
-  {id:'row',n:'Cable row',s:'2 \u00d7 10'},
-  {id:'ohp',n:'Overhead press',s:'2 \u00d7 8'},
-  {id:'pulldown',n:'Lat pulldown',s:'2 \u00d7 10'},
-  {id:'incline',n:'Incline DB press',s:'2 \u00d7 10'},
-  {id:'curl',n:'DB curl',s:'2 \u00d7 10'},
-  {id:'tri',n:'Triceps pushdown',s:'2 \u00d7 12'},
-  {id:'pallof',n:'Pallof press',s:'2 \u00d7 12/s'},
-  {id:'carry',n:'Suitcase carry',s:'2 \u00d7 30s/s'},
-  {id:'deadbug',n:'Dead bug / side plank',s:'2 sets'}]};
-var TUE_FOUNDATION={title:'Lower',mins:16,ex:[
-  {id:'box',n:'Box jump (step down)',s:'2 × 5'},
+  {id:'pulldown',n:'Lat pulldown',s:'3 \u00d7 8\u201310'},
+  {id:'ohp',n:'Overhead press',s:'3 \u00d7 6\u20138'},
+  {id:'row',n:'Cable row',s:'3 \u00d7 8\u201310'},
+  {id:'dbbench',n:'DB bench press',s:'3 \u00d7 6\u20138'},
+  {id:'curl',n:'DB curl',s:'2 \u00d7 10\u201312'},
+  {id:'triov',n:'Overhead triceps extension',s:'2 \u00d7 12\u201315'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var UPPER_DELOAD={title:'Upper + core',mins:37,ex:[
+  {id:'pulldown',n:'Lat pulldown',s:'2 \u00d7 8\u201310'},
+  {id:'ohp',n:'Overhead press',s:'2 \u00d7 6\u20138'},
+  {id:'row',n:'Cable row',s:'2 \u00d7 8\u201310'},
+  {id:'dbbench',n:'DB bench press',s:'2 \u00d7 6\u20138'},
+  {id:'curl',n:'DB curl',s:'2 \u00d7 10\u201312'},
+  {id:'triov',n:'Overhead triceps extension',s:'2 \u00d7 12\u201315'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var TUE_FOUNDATION={title:'Lower',mins:27,ex:[
+  {id:'box',n:'Box jump (step down)',s:'2 \u00d7 5',bw:1},
   {id:'goblet',n:'Goblet squat',s:'2 \u00d7 10'},
   {id:'rdl',n:'Romanian deadlift',s:'2 \u00d7 8'},
-  {id:'calfseat',n:'Seated calf raise',s:'2 \u00d7 15'}]};
-var TUE_VOLUME={title:'Lower',mins:26,ex:[
-  {id:'box',n:'Box jump (step down)',s:'2 × 5'},
+  {id:'calfseat',n:'Seated calf raise (DBs on knees)',s:'2 \u00d7 15'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var TUE_VOLUME={title:'Lower',mins:37,ex:[
+  {id:'box',n:'Box jump (step down)',s:'2 \u00d7 5',bw:1},
   {id:'goblet',n:'Goblet squat',s:'3 \u00d7 10'},
   {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
-  {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'},
-  {id:'calfstand',n:'Standing calf raise',s:'2 \u00d7 12'}]};
-var TUE_SINGLELEG={title:'Lower',mins:37,ex:[
-  {id:'box',n:'Box jump (step down)',s:'2 × 5'},
-  {id:'squat',n:'Back or goblet squat',s:'3 \u00d7 8'},
+  {id:'calfseat',n:'Seated calf raise (DBs on knees)',s:'3 \u00d7 15'},
+  {id:'calfstand',n:'Standing calf raise',s:'2 \u00d7 12'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var TUE_SINGLELEG_A={title:'Lower',mins:44,ex:[
+  {id:'box',n:'Box jump (step down)',s:'2 \u00d7 5',bw:1},
+  {id:'goblet',n:'Goblet squat',s:'3 \u00d7 8'},
+  {id:'bulgarian',n:'Bulgarian split squat',s:'2 \u00d7 8/leg'},
+  {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
+  {id:'calfstand',n:'Standing calf raise',s:'3 \u00d7 12'},
+  {id:'calfseat',n:'Seated calf raise (DBs on knees)',s:'3 \u00d7 15'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var TUE_SINGLELEG={title:'Lower',mins:48,ex:[
+  {id:'box',n:'Box jump (step down)',s:'2 \u00d7 5',bw:1},
+  {id:'goblet',n:'Goblet squat',s:'3 \u00d7 8'},
   {id:'bulgarian',n:'Bulgarian split squat',s:'2 \u00d7 8/leg'},
   {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
   {id:'slrdl',n:'Single-leg RDL',s:'2 \u00d7 8/leg'},
   {id:'calfstand',n:'Standing calf raise',s:'3 \u00d7 12'},
-  {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'}]};
-var TUE_FULL={title:'Lower',mins:43,ex:[
-  {id:'box',n:'Box jump (step down)',s:'2 × 5'},
-  {id:'squat',n:'Back or goblet squat',s:'3 \u00d7 8'},
+  {id:'calfseat',n:'Seated calf raise (DBs on knees)',s:'3 \u00d7 15'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var TUE_FULL={title:'Lower',mins:54,ex:[
+  {id:'box',n:'Box jump (step down)',s:'2 \u00d7 5',bw:1},
+  {id:'goblet',n:'Goblet squat',s:'3 \u00d7 8'},
   {id:'bulgarian',n:'Bulgarian split squat',s:'3 \u00d7 8/leg'},
   {id:'rdl',n:'Romanian deadlift',s:'3 \u00d7 8'},
   {id:'slrdl',n:'Single-leg RDL',s:'2 \u00d7 8/leg'},
   {id:'calfstand',n:'Standing calf raise',s:'3 \u00d7 12'},
-  {id:'calfseat',n:'Seated calf raise',s:'3 \u00d7 15'},
-  {id:'abduct',n:'Cable hip abduction',s:'2 \u00d7 15'}]};
+  {id:'calfseat',n:'Seated calf raise (DBs on knees)',s:'3 \u00d7 15'},
+  {id:'sidelying',n:'Side-lying leg raise',s:'2 \u00d7 15/leg',bw:1},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
 var STRENGTH_PHASES=[
  {from:27,to:28,name:'Foundation',tue:TUE_FOUNDATION,deload:false},
  {from:29,to:29,name:'Volume',tue:TUE_VOLUME,deload:false},
  {from:30,to:30,name:'Deload',tue:TUE_FOUNDATION,deload:true},
  {from:31,to:33,name:'Volume',tue:TUE_VOLUME,deload:false},
  {from:34,to:34,name:'Deload',tue:TUE_FOUNDATION,deload:true},
- {from:35,to:37,name:'Single-leg',tue:TUE_SINGLELEG,deload:false},
+ {from:35,to:35,name:'Single-leg',tue:TUE_SINGLELEG_A,deload:false},
+ {from:36,to:37,name:'Single-leg',tue:TUE_SINGLELEG,deload:false},
  {from:38,to:38,name:'Deload',tue:TUE_VOLUME,deload:true},
  {from:39,to:51,name:'Full',tue:TUE_FULL,deload:false}
 ];
 var strDone={},strWeights={};
 function strPhase(idx){for(var i=0;i<STRENGTH_PHASES.length;i++){var p=STRENGTH_PHASES[i];if(idx>=p.from&&idx<=p.to)return p;}return null;}
-function strSession(idx,dk){if(idx<STRENGTH_START)return null;if(dk!=='tue'&&dk!=='sun')return null;var p=strPhase(idx);if(!p)return null;if(dk==='tue')return p.tue;return p.deload?UPPER_DELOAD:UPPER_FULL;}
+function strSession(idx,dk){if(idx<STRENGTH_START)return null;if(dk!=='tue'&&dk!=='fri')return null;var p=strPhase(idx);if(!p)return null;if(dk==='tue')return p.tue;return p.deload?UPPER_DELOAD:UPPER_FULL;}
 function strIsDone(idx,dk){return !!(strDone[idx]&&strDone[idx][dk]);}
 function toggleStrDone(idx,dk){if(!strDone[idx])strDone[idx]={};if(strDone[idx][dk])delete strDone[idx][dk];else strDone[idx][dk]=true;sSet('strDone',strDone);renderHome();}
 function toggleStrExpand(idx,dk){var el=document.getElementById('sexpand-'+dk);if(!el)return;el.classList.toggle('open');var b=document.getElementById('sbadge-'+dk);if(b)b.classList.toggle('open');}
@@ -683,11 +690,11 @@ function buildStrengthSlot(idx,dk){
   for(var i=0;i<s.ex.length;i++){
     var e=s.ex[i],last=strLastWeight(e.id,idx),cur=strGetWeight(e.id,idx);
     html+='<div class="str-ex-row">'+
-      '<div class="str-ex-name">'+e.n+'</div>'+
+      '<div class="str-ex-name">'+e.n+(e.sub?'<span class="str-ex-sub">'+e.sub+'</span>':'')+'</div>'+
       '<div class="str-ex-sets">'+e.s+'</div>'+
-      '<div class="str-ex-wt"><input class="str-ex-input" type="text" inputmode="decimal" value="'+cur+'" '+
-        'onclick="event.stopPropagation()" onchange="setStrWeight(\''+e.id+'\','+idx+',this.value)"><span class="str-ex-unit">lb</span></div>'+
-      '<div class="str-ex-last">'+(last!==null?last:'\u2014')+'</div>'+
+      '<div class="str-ex-wt">'+(e.bw?'<span class="str-ex-bw">bw</span>':'<input class="str-ex-input" type="text" inputmode="decimal" value="'+cur+'" '+
+        'onclick="event.stopPropagation()" onchange="setStrWeight(\''+e.id+'\','+idx+',this.value)"><span class="str-ex-unit">lb</span>')+'</div>'+
+      '<div class="str-ex-last">'+(e.bw?'':last!==null?last:'\u2014')+'</div>'+
       '</div>';
   }
   html+='</div>';
