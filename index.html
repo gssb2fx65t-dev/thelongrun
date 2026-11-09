@@ -928,6 +928,11 @@ function buildWeekComfortDots(weekIdx){
   html+='</div>';
   return html;
 }
+// ── STRIDES (change #13, Nov 9 2026) ── display-only modifier on the Wed/Thu run card.
+// ⚠️ idx is the 0-BASED array index: week number = idx + 1. Same convention as STRENGTH_PHASES.
+var STRIDE_START=36,STRIDE_END=50; // weeks 37 .. 51
+function strideN(idx,dk){if(idx<STRIDE_START||idx>STRIDE_END)return 0;if(dk!=='wed'&&dk!=='thu')return 0;return idx<=37?4:6;} // wks 37-38: 4, then 6
+function strideTag(idx,dk){var n=strideN(idx,dk);return n?' + '+n+' strides':'';}
 // ── HOME RENDER ───────────────────────────────────────────────────
 function buildSlots(idx,todayDayIdx){
   var days=getWeekDays(idx),w=WEEKS[idx],html='';
@@ -946,7 +951,7 @@ function buildSlots(idx,todayDayIdx){
     if(isSki){
       if(isOptVal(dist)){runLabel=(dk==='sat')?'Long — run or ski':'Run or ski';}else{runLabel=(dk==='sat')?'Long ski':'Cross-train';}
       runDist=skiText(dist);
-    }else if(hasRun){if(dk==='sat')runLabel='Long run';else if(dk==='tue')runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi';}else{runDist='Rest';}
+    }else if(hasRun){if(dk==='sat')runLabel='Long run';else if(dk==='tue')runLabel='Midweek anchor';else runLabel='Scheduled run';if(dist==='RACE'){runLabel='Half Marathon';runDist='&#127937; Race Day';}else runDist=dist+' mi'+strideTag(idx,dk);}else{runDist='Rest';}
     // In edit mode: suppress drag, show steppers / add / delete
     var editable=editMode&&!isSki&&dist!=='RACE';
     if(editMode){cls=cls.replace(' draggable','');cls+=' editing';}
