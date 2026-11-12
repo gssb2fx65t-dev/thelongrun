@@ -324,7 +324,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .add-btn{margin-left:auto;font-size:11px;color:var(--green-light);background:rgba(82,183,136,.12);border:1px solid rgba(82,183,136,.3);border-radius:8px;padding:6px 12px;cursor:pointer;letter-spacing:.04em;text-transform:uppercase;font-weight:500;flex-shrink:0}
 .add-btn:active{background:rgba(82,183,136,.25)}
 .edit-locked{margin-left:auto;font-size:10px;color:var(--muted);background:rgba(255,255,255,.05);border-radius:6px;padding:4px 9px;letter-spacing:.04em;text-transform:uppercase;flex-shrink:0}
-.cap-warn{display:inline-block;margin-left:8px;font-size:10px;color:var(--amber-light);background:rgba(245,158,11,.14);border:1px solid rgba(245,158,11,.3);border-radius:6px;padding:2px 8px;letter-spacing:.03em;text-transform:uppercase;vertical-align:middle;font-family:'DM Sans',sans-serif;font-weight:500}
 
 /* ── LONG RUN EQUIVALENT TAB ── */
 .lr-intro{margin-bottom:16px}
@@ -549,7 +548,11 @@ function isModified(idx){if(!weekOverrides[idx])return false;var w=WEEKS[idx],ov
 function resetWeek(idx){delete weekOverrides[idx];sSet('overrides',weekOverrides);renderHome();}
 function lockWeek(idx){var days=getWeekDays(idx);WEEKS[idx].days={mon:days.mon,tue:days.tue,wed:days.wed,thu:days.thu,fri:days.fri,sat:days.sat,sun:days.sun};delete weekOverrides[idx];sSet('overrides',weekOverrides);var locked=sGet('locked')||{};locked[idx]=WEEKS[idx].days;sSet('locked',locked);renderHome();}
 // ── EDIT MODE ────────────────────────────────────────────────────
-var WEEK_CAP=40;  // soft cap — breach is shown, not blocked
+// WEEK_CAP REMOVED (change #15, Nov 12 2026). The 40-mile soft cap was retired as a
+// planning decision; the constant outlived it and kept flagging weeks as "over cap".
+// 2027 peaks at 46 and the Dec/Jan weeks cross 40 regularly, so the warning was a
+// pure false positive. Do not reintroduce it: there is no weekly ceiling in this plan.
+// The binding constraints are the long run and the number of running days, not the total.
 function toggleEditMode(){editMode=!editMode;renderHome();}
 function adjustDay(idx,dk,delta){
   var days=getWeekDays(idx),cur=days[dk];
@@ -1025,7 +1028,7 @@ function renderHome(){
   var today=new Date(),todayDayIdx=JS_TO_IDX[today.getDay()];
   var p=getProgress(idx);
   var liveTotal=weekTotal(idx);
-  var capNote=(liveTotal>WEEK_CAP)?'<span class="cap-warn">over '+WEEK_CAP+' cap</span>':'';
+  var capNote='';  // change #15: WEEK_CAP removed. Kept as a no-op so the template below is untouched.
   var milesSummary=p.doneRuns>0?'<span style="font-size:16px;color:var(--green-light);margin-left:8px;font-family:\'DM Mono\',monospace;font-weight:500">'+p.doneMiles.toFixed(1)+'/'+p.totalMiles.toFixed(1)+'</span>':'';
   // Next run with comfort score
   var nextRunText='',nextRunSub='',nextRunComfort='';
@@ -1072,7 +1075,7 @@ function renderHome(){
   document.getElementById('homeContent').innerHTML=
     '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:4px">'+
     '<div><div style="font-size:11px;font-family:\'DM Mono\',monospace;color:var(--pale);letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px">Week '+w.n+' of 52</div>'+
-    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:'+(liveTotal>WEEK_CAP?'var(--amber-light)':'var(--blue-pale)')+'">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
+    '<div style="display:flex;align-items:baseline;gap:0"><span style="font-family:\'DM Serif Display\',serif;font-size:42px;line-height:1;color:var(--blue-pale)">'+liveTotal+'</span><span style="font-size:15px;color:var(--muted);font-weight:300;margin-left:3px">mi</span>'+milesSummary+capNote+'</div>'+
     '<div style="font-size:12px;color:var(--muted);margin-top:3px">Week of '+w.date+'</div></div>'+
     badgeHtml+'</div>'+
         '<div class="card">'+
