@@ -928,10 +928,20 @@ function buildWeekComfortDots(weekIdx){
   html+='</div>';
   return html;
 }
-// ── STRIDES (change #13, Nov 9 2026) ── display-only modifier on the Wed/Thu run card.
+// ── STRIDES (change #13, Nov 9 2026 · AMENDED change #14, Nov 11 2026) ──
+// Display-only modifier on the Wed/Thu run card.
 // ⚠️ idx is the 0-BASED array index: week number = idx + 1. Same convention as STRENGTH_PHASES.
+// AMENDMENT (#14): the original ramp stepped 4 -> 6 at idx 38, which is week 39 -- the Nov 23
+// RECOVERY week. Mileage and strength both deload there, so strides stepping UP was wrong.
+// Now: recovery weeks are suppressed via strPhase().deload, and the step moves to idx 40 (wk 41),
+// preserving the original intent of two exposures at 4 before going to 6.
 var STRIDE_START=36,STRIDE_END=50; // weeks 37 .. 51
-function strideN(idx,dk){if(idx<STRIDE_START||idx>STRIDE_END)return 0;if(dk!=='wed'&&dk!=='thu')return 0;return idx<=37?4:6;} // wks 37-38: 4, then 6
+function strideN(idx,dk){
+  if(idx<STRIDE_START||idx>STRIDE_END)return 0;
+  if(dk!=='wed'&&dk!=='thu')return 0;
+  var p=strPhase(idx); if(p&&p.deload)return 0;   // recovery weeks get NO strides
+  return idx<=39?4:6;                             // wks 38 & 40: 4 · wk 41 onward: 6
+}
 function strideTag(idx,dk){var n=strideN(idx,dk);return n?' + '+n+' strides':'';}
 // ── HOME RENDER ───────────────────────────────────────────────────
 function buildSlots(idx,todayDayIdx){
