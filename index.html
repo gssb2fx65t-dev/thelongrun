@@ -1224,9 +1224,18 @@ function onMouseUp(e){if(!dragState.active)return;document.removeEventListener('
 function setupDragDrop(idx){
   var slots=document.querySelectorAll('#home-slots .day-slot');
   slots.forEach(function(slot){slot.addEventListener('touchstart',onTouchStart,{passive:false});slot.addEventListener('mousedown',onMouseDown);});
-  var checkBtns=document.querySelectorAll('#home-slots .check-btn');
+  // ⛔ change #19, Nov 13 2026 — the [data-checkday] filter is LOAD-BEARING. Do not widen it.
+  // '#home-slots .check-btn' also matched the STRENGTH check buttons, which carry no
+  // data-week / data-checkday. Each got a run-day click listener bolted on beside its own
+  // inline onclick, so ONE tap ran toggleStrDone -> renderHome(), then
+  // toggleCompleted(NaN, null) -> renderHome() + renderHistory(): two full re-renders racing
+  // on a single tap, plus {"NaN":{"null":true}} written into completedRuns every time.
+  // The inline handler's stopPropagation could not stop it — both listeners sit on the SAME
+  // element, and stopPropagation only blocks ancestors, never co-listeners on that node.
+  var checkBtns=document.querySelectorAll('#home-slots .check-btn[data-checkday]');
   checkBtns.forEach(function(btn){
     var wi=parseInt(btn.getAttribute('data-week')),dk=btn.getAttribute('data-checkday');
+    if(!dk||isNaN(wi))return;   // belt and braces if the selector is ever loosened
     // ⛔ change #18, Nov 13 2026 — DO NOT re-add a touchend handler here.
     // It fired toggleCompleted, which calls renderHome() and destroys this very button.
     // The browser then delivered the synthesized click to the REPLACEMENT element, whose
