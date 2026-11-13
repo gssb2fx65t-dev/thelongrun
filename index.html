@@ -31,6 +31,32 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .header-date{font-size:11px;color:var(--pale);font-family:'DM Mono',monospace;letter-spacing:.05em}
 .guide-btn{font-size:18px;cursor:pointer;opacity:.7;padding:2px 4px}
 .guide-btn:active{opacity:1}
+/* FUEL TAB (change #21) */
+.tgt{display:flex;align-items:baseline;gap:10px;padding:10px 14px;border-top:1px solid rgba(255,255,255,.055)}
+.tgt-day{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--pale);width:74px;flex-shrink:0}
+.tgt-num{font-family:'DM Serif Display',serif;font-size:21px;line-height:1;flex-shrink:0;width:74px}
+.tgt-note{font-size:11.5px;color:var(--muted);line-height:1.4}
+.tgt.big .tgt-num,.tgt.big .tgt-day{color:var(--amber-light)}
+.fuel-sect{font-size:10.5px;font-family:'DM Mono',monospace;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:3px 2px 8px}
+.fuel-day{background:var(--navy-mid);border:1px solid rgba(255,255,255,.07);border-radius:12px;margin-bottom:6px;overflow:hidden;cursor:pointer}
+.fuel-day.open{border-color:rgba(255,255,255,.14)}
+.fuel-row{display:flex;align-items:center;gap:10px;padding:11px 13px}
+.fuel-load{flex:1;min-width:0;font-size:14px}
+.fuel-lift{font-size:10px;color:#c4b5fd;font-family:'DM Mono',monospace;letter-spacing:.04em;margin-left:7px}
+.fuel-lift.lr{color:var(--amber-light)}
+.fuel-cal{font-family:'DM Mono',monospace;font-size:12.5px;color:var(--pale);flex-shrink:0;font-variant-numeric:tabular-nums}
+.fuel-day.lr .fuel-cal{color:var(--amber-light)}
+.fuel-chev{color:var(--muted);font-size:16px;flex-shrink:0;width:12px;text-align:center}
+.fuel-shape{display:none;border-top:1px solid rgba(255,255,255,.055);padding:3px 13px 11px}
+.fuel-day.open .fuel-shape{display:block}
+.fsl{display:flex;gap:11px;padding:7px 0;align-items:flex-start}
+.fsl + .fsl{border-top:1px solid rgba(255,255,255,.04)}
+.fsl-when{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);flex:0 0 94px;padding-top:2px;line-height:1.4}
+.fsl-what{flex:1;min-width:0;font-size:13px;line-height:1.4}
+.fsl-what em{color:var(--muted);font-style:normal;font-size:11.5px;display:block;margin-top:2px}
+.fuel-note{font-size:11px;color:var(--amber-light);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18);border-radius:8px;padding:8px 10px;margin-top:9px;line-height:1.5}
+.fuel-model{font-size:10.5px;color:var(--muted);line-height:1.6;padding:12px 4px 0;font-family:'DM Mono',monospace}
+.fuel-model b{color:var(--pale);font-weight:400}
 /* LINKS DRAWER */
 .guide-overlay{display:none;position:fixed;inset:0;z-index:100;background:rgba(10,16,25,.92);overflow-y:auto;padding:calc(env(safe-area-inset-top,20px) + 16px) 20px 40px}
 .guide-overlay.open{display:block}
@@ -361,6 +387,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
       <div class="tab" onclick="showPage('comfort')">Now</div>
       <div class="tab" onclick="showPage('forecast')">7-Day</div>
       <div class="tab" onclick="showPage('longrun')">Long Run</div>
+      <div class="tab" onclick="showPage('fuel')">Fuel</div>
     </div>
   </div>
   <div class="content">
@@ -383,6 +410,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
       <div class="loc-selector" id="lrLocSelector"></div>
       <div id="longrunContent"></div>
     </div>
+    <div class="page" id="page-fuel"><div id="fuelContent"></div></div>
   </div>
 </div>
 <!-- LINKS DRAWER -->
@@ -1550,6 +1578,130 @@ function renderLongRun(){
     '<div class="lr-foot">Dew point is an air-mass property \u2014 it barely moves across a morning, so the 6am reading holds through an early start. Adjust the Home tab with <b>Edit</b> to log what you actually run.</div>';
 }
 
+// ══ FUEL (change #21, Nov 13 2026) ═════════════════════════════════
+// Targets DERIVE from weight + the week's load. Nothing per-week is hardcoded.
+// ⛔ The only manual input in the whole tab is WEIGHT_LB. If anything else ever
+// needs typing, the design has regressed — that is what made the Fuel Week
+// artifact go silently stale (hand-typed mileage persisting across weeks).
+var WEIGHT_LB=170, HEIGHT_IN=71, AGE_Y=48;
+function fKg(){return WEIGHT_LB*0.45359237;}
+// Mifflin–St Jeor (male). 170 lb / 5'11" / 48 -> 1,663
+function fBMR(){return 10*fKg()+6.25*(HEIGHT_IN*2.54)-5*AGE_Y+5;}
+function fBase(){return fBMR()*1.2;}                      // ~2,000/day
+// NET cost of running. 0.90 kcal/kg/km reproduces the recorded 115/mi at 175 lb
+// and gives 112/mi at 170 — weight-indexed rather than frozen. Checked against
+// the ACSM equation (~124) and the 1 kcal/kg/km rule (~110); 0.90 sits mid-range.
+function fPerMile(){return 0.90*fKg()*1.609344;}
+var F_LIFT=150, F_FLOOR=2200, F_LOADSHARE=0.15, F_DINNER='7:00';
+
+function fMiles(v){if(v===null||v===undefined||isSkiVal(v))return 0;if(v==='RACE')return 13.1;return parseFloat(v)||0;}
+function fPrev(dk){return DAYS[(DAYS.indexOf(dk)+6)%7];}
+function fNext(dk){return DAYS[(DAYS.indexOf(dk)+1)%7];}
+function fRaw(idx,dk){var d=getWeekDays(idx)[dk];return fBase()+fPerMile()*fMiles(d)+(strSession(idx,dk)?F_LIFT:0);}
+function fLongRun(idx){var days=getWeekDays(idx),best=null,bm=0;DAYS.forEach(function(dk){var m=fMiles(days[dk]);if(m>bm){bm=m;best=dk;}});return bm>0?best:null;}
+
+// Grouping: every day EXCEPT the long run and the loading day is banded at their mean.
+// With a Saturday long run that is Sun–Thu, but it derives — move the long run and the
+// grouping moves with it. Loading is a TRANSFER: Friday's gain is Saturday's loss, so
+// the week total never changes. (The old §6 added the bump on top — ~800/wk of silent surplus.)
+function fWeek(idx){
+  var lr=fLongRun(idx), load=lr?fPrev(lr):null;
+  var raw={}, band=[], w={lr:lr,load:load,window:load?fPrev(load):null,recover:lr?fNext(lr):null,raw:raw,target:{}};
+  DAYS.forEach(function(dk){raw[dk]=fRaw(idx,dk);});
+  DAYS.forEach(function(dk){if(dk!==lr&&dk!==load)band.push(raw[dk]);});
+  w.band=band.length?band.reduce(function(a,b){return a+b;},0)/band.length:fBase();
+  w.moved=(lr&&load)?F_LOADSHARE*(raw[lr]-fBase()):0;
+  var tot=0;
+  DAYS.forEach(function(dk){
+    var t = dk===lr ? raw[lr]-w.moved : (dk===load ? raw[load]+w.moved : w.band);
+    w.target[dk]=Math.max(F_FLOOR,t); tot+=w.target[dk];
+  });
+  w.total=tot;
+  return w;
+}
+
+function fR50(n){return Math.round(n/50)*50;}
+function fComma(n){return String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+
+// Meal SHAPE — generic by day type. Deliberately no quantities: scoop and chew counts
+// depend on route, temperature and whether the car is reachable, which is a conversation.
+function fShape(idx,dk,w){
+  var d=getWeekDays(idx)[dk], run=fMiles(d)>0, lift=!!strSession(idx,dk), out=[];
+  var dinner='Normal', dsub='finish by '+F_DINNER;
+  if(dk===w.window){dinner='Start of the 36-hour window';dsub='low fat, low fibre, nothing new · finish by '+F_DINNER;}
+  if(dk===w.load){dinner='The critical one';dsub='white rice or pasta, lean protein, low fat and fibre · finish by '+F_DINNER;}
+  if(dk===w.lr){
+    out.push(['2½ h before','Oats + honey','§2a stage 1']);
+    out.push(['30 min before','White toast + honey','§2a stage 2']);
+    out.push(['During','Tailwind and chews','']);
+    out.push(['Within 45 min','Protein + carb','']);
+    out.push(['Rest of day','Carb-forward — the day to eat more','']);
+  }else{
+    if(run){
+      out.push(['Pre-run','Banana, or nothing','']);
+      out.push(['Post-run','Protein + carb','within 45 min']);
+    }else{
+      out.push(['Breakfast','Normal','']);
+    }
+    if(dk===w.recover)out.push(['Through the day','Carb-forward','finishing the refill']);
+    out.push(['Lunch','Normal','']);
+    out.push(['Afternoon',(dk===w.load?'Carb-forward snack':'Protein-forward snack'),'']);
+  }
+  out.push(['Dinner',dinner,dsub]);
+  if(lift)out.push(['Around the lift','Protein with or after dinner','']);
+  return out;
+}
+
+function renderFuel(){
+  var idx=currentWeekIdx, wk=WEEKS[idx], w=fWeek(idx), days=getWeekDays(idx);
+  var today=new Date(), todayIdx=JS_TO_IDX[today.getDay()];
+  var miles=0,lifts=0;
+  DAYS.forEach(function(dk){miles+=fMiles(days[dk]);if(strSession(idx,dk))lifts++;});
+
+  // the three headline numbers
+  var bandDays=DAYS.filter(function(dk){return dk!==w.lr&&dk!==w.load;});
+  // ⚠️ The band WRAPS the week: excluding Fri+Sat leaves Sun..Thu, so first/last of the
+  // array reads "Mon–Sun" and implies all seven days. Take the ends from the long run.
+  var bandLabel=(w.lr&&w.load)?DAY_LABELS[DAYS.indexOf(fNext(w.lr))]+'–'+DAY_LABELS[DAYS.indexOf(fPrev(w.load))]:'All week';
+  var h='<div class="card"><div class="card-head" style="padding:13px 14px 12px">'+
+    '<div class="wk-label">Week '+wk.n+' · '+wk.date+'</div>'+
+    '<div style="display:flex;align-items:baseline"><span style="font-family:\'DM Serif Display\',serif;font-size:38px;line-height:1;color:var(--blue-pale)">'+fComma(fR50(w.total))+'</span>'+
+    '<span style="font-size:13px;color:var(--muted);margin-left:6px">cal · '+(Math.round(miles*10)/10)+' mi · '+lifts+' lift'+(lifts===1?'':'s')+'</span></div>'+
+    '<div style="font-size:11.5px;color:var(--muted);margin-top:4px">Three numbers, not seven.</div></div>';
+  // Weeks 45–52 are still zeroed TBD. With no mileage every day lands on the 2,200 floor,
+  // which would read as a target rather than as an absence. Say so instead.
+  if(miles===0){
+    h+='<div class="tgt"><div class="tgt-note" style="color:var(--amber-light)">No runs in the plan for this week yet — targets appear once the week is filled in.</div></div>';
+  }else{
+    h+='<div class="tgt"><div class="tgt-day">'+bandLabel+'</div><div class="tgt-num">~'+fComma(fR50(w.band))+'</div><div class="tgt-note">'+bandDays.length+' days, one number</div></div>';
+    if(w.load)h+='<div class="tgt"><div class="tgt-day">'+DAY_LABELS[DAYS.indexOf(w.load)]+'</div><div class="tgt-num">~'+fComma(fR50(w.target[w.load]))+'</div><div class="tgt-note">Loading — carb-forward</div></div>';
+    if(w.lr)h+='<div class="tgt big"><div class="tgt-day">'+DAY_LABELS[DAYS.indexOf(w.lr)]+'</div><div class="tgt-num">~'+fComma(fR50(w.target[w.lr]))+'</div><div class="tgt-note">The day that matters</div></div>';
+  }
+  h+='</div><div class="fuel-sect">The week</div>';
+
+  DAYS.forEach(function(dk,i){
+    var d=days[dk], mi=fMiles(d), sess=strSession(idx,dk), open=(i===todayIdx)||(dk===w.lr);
+    var load=(d===null||d===undefined)?'Rest':(isSkiVal(d)?'Ski':(d==='RACE'?'Race day':mi+' mi'));
+    var tag=sess?'<span class="fuel-lift'+(dk===w.lr?' lr':'')+'">· '+sess.title+'</span>':(dk===w.lr?'<span class="fuel-lift lr">· LONG RUN</span>':'');
+    h+='<div class="fuel-day'+(open?' open':'')+(dk===w.lr?' lr':'')+'" onclick="toggleFuelDay(\''+dk+'\')" id="fd-'+dk+'">'+
+       '<div class="fuel-row"><div class="day-name">'+DAY_LABELS[i]+'</div>'+
+       '<div class="fuel-load">'+load+tag+'</div>'+
+       '<div class="fuel-cal">'+(miles===0?'—':'~'+fComma(fR50(w.target[dk])))+'</div>'+
+       '<div class="fuel-chev">'+(open?'⌄':'›')+'</div></div>';
+    h+='<div class="fuel-shape">';
+    fShape(idx,dk,w).forEach(function(r){
+      h+='<div class="fsl"><div class="fsl-when">'+r[0]+'</div><div class="fsl-what">'+r[1]+(r[2]?'<em>'+r[2]+'</em>':'')+'</div></div>';
+    });
+    if(dk===w.lr)h+='<div class="fuel-note">A shape to recognise, not a budget to hit. The question is not whether you reached '+fComma(fR50(w.target[dk]))+' — it is whether you ate noticeably more than a normal day.</div>';
+    h+='</div></div>';
+  });
+
+  h+='<div class="fuel-model"><b>'+WEIGHT_LB+' lb</b> · BMR '+fComma(fBMR())+' · baseline '+fComma(fR50(fBase()))+'/day · '+Math.round(fPerMile())+'/mi · '+F_LIFT+'/lift<br>'+
+    'Estimates carrying ±10%. The shape is reliable; a single day’s third digit is not.</div>';
+  document.getElementById('fuelContent').innerHTML=h;
+}
+function toggleFuelDay(dk){var el=document.getElementById('fd-'+dk);if(el)el.classList.toggle('open');}
+
 // ── LINKS DRAWER ─────────────────────────────────────────────────
 function openGuide(){document.getElementById('guideOverlay').classList.add('open');}
 function closeGuide(){document.getElementById('guideOverlay').classList.remove('open');}
@@ -1558,10 +1710,11 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});
   document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active');});
   document.getElementById('page-'+id).classList.add('active');
-  var tabMap={home:0,history:1,comfort:2,forecast:3,longrun:4};
+  var tabMap={home:0,history:1,comfort:2,forecast:3,longrun:4,fuel:5};
   document.querySelectorAll('.tab')[tabMap[id]].classList.add('active');
   document.querySelector('.content').scrollTop=0;
   if(id==='history')renderHistory();
+  if(id==='fuel')renderFuel();
   if(id==='longrun'){
     renderLRLocSelector();
     if(Object.keys(forecastCache).length>0)renderLongRun();
