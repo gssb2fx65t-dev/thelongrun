@@ -1227,8 +1227,16 @@ function setupDragDrop(idx){
   var checkBtns=document.querySelectorAll('#home-slots .check-btn');
   checkBtns.forEach(function(btn){
     var wi=parseInt(btn.getAttribute('data-week')),dk=btn.getAttribute('data-checkday');
-    btn.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:false});
-    btn.addEventListener('touchend',function(e){e.stopPropagation();e.preventDefault();toggleCompleted(wi,dk);});
+    // ⛔ change #18, Nov 13 2026 — DO NOT re-add a touchend handler here.
+    // It fired toggleCompleted, which calls renderHome() and destroys this very button.
+    // The browser then delivered the synthesized click to the REPLACEMENT element, whose
+    // own listener toggled it straight back off. Net effect: the tap did nothing, and
+    // repeated jabbing "worked" only when one of the two events got lost in the re-render.
+    // preventDefault() on touchend could not suppress that click, because it was called on
+    // a node that no longer existed. touchstart keeps stopPropagation to block the slot's
+    // 400 ms long-press drag; click alone does the toggling, and fires with no delay
+    // because the viewport meta declares width=device-width.
+    btn.addEventListener('touchstart',function(e){e.stopPropagation();},{passive:true});
     btn.addEventListener('mousedown',function(e){e.stopPropagation();});
     btn.addEventListener('click',function(e){e.stopPropagation();toggleCompleted(wi,dk);});
   });
