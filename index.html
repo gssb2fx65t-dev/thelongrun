@@ -81,7 +81,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .day-slot.run-other .day-run-dist{color:var(--green-light)}
 .day-slot.rest .day-run-dist{font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);font-weight:300}
 .day-slots-wrap{padding:6px 12px 6px;display:flex;flex-direction:column;gap:5px}
-.check-btn{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:14px;color:transparent;position:relative;margin-left:5px}.check-btn::before{content:'';position:absolute;left:50%;top:50%;width:44px;height:44px;transform:translate(-50%,-50%);border-radius:50%}
+/* change #16, Nov 13 2026 — VISIBLE button enlarged 32->40, gap to the badge 5->12.
+   #12 grew the invisible ::before hit area to 44 and left the visible circle at 32.
+   You aim at what you can see, so the perceived target never changed. Do not shrink
+   the visible size again and compensate with a bigger halo — that is what failed. */
+.check-btn{width:40px;height:40px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;border:1.5px solid rgba(255,255,255,.25);background:transparent;cursor:pointer;font-size:17px;color:transparent;position:relative;margin-left:12px}.check-btn::before{content:'';position:absolute;left:50%;top:50%;width:48px;height:48px;transform:translate(-50%,-50%);border-radius:50%}
 .day-slot.run-anchor .check-btn{border-color:rgba(255,255,255,.4)}
 .day-slot.completed .check-btn{background:var(--green-light);border-color:var(--green-light);color:white}
 /* ── STRENGTH ROWS ── */
@@ -654,6 +658,52 @@ var TUE_FULL={title:'Lower',mins:54,ex:[
   {id:'calfseat',n:'Seated calf raise (DBs on knees)',s:'3 \u00d7 15'},
   {id:'sidelying',n:'Side-lying leg raise',s:'2 \u00d7 15/leg',bw:1},
   {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+// \u2550\u2550 STRENGTH V2 (change #17, Nov 13 2026) \u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550\u2550
+// Four sessions on Sun / Mon / Tue / Fri, replacing the two-day Tue/Fri structure.
+// Progression here is by LOAD, not by adding movements, so these four are fixed and the
+// STRENGTH_PHASES composition ladder stops applying once a day crosses its start week.
+// \u26a0\ufe0f EXERCISE IDS ARE WEIGHT-HISTORY KEYS. 'row' and 'triov' keep their ids and change
+// only their label: Chris has always done the chest-supported row and skullcrushers, so
+// the logged weights belong to those movements. 'frsquat' must NOT reuse 'goblet' \u2014 a
+// 30 lb goblet history shown against a front-rack load would read as a regression.
+var LOWER_UNI={title:'Lower \u00b7 unilateral',mins:45,ex:[
+  {id:'box',n:'Box jump (step down)',s:'3 \u00d7 5',bw:1},
+  {id:'bulgarian',n:'Bulgarian split squat',s:'3 \u00d7 8/leg'},
+  {id:'slrdl',n:'Single-leg RDL',s:'3 \u00d7 8/leg'},
+  {id:'calfsl',n:'Single-leg calf raise',sub:'Hold a DB \u2014 the week\u2019s only gastroc work',s:'3 \u00d7 15/leg'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var LOWER_HEAVY={title:'Lower \u00b7 heavy',mins:50,ex:[
+  {id:'frsquat',n:'DB front-rack squat',s:'4 \u00d7 6\u20138'},
+  {id:'rdl',n:'Romanian deadlift',s:'4 \u00d7 8\u201310'},
+  {id:'hamcurl',n:'Machine hamstring curl',s:'3 \u00d7 10\u201312'},
+  {id:'calfseat',n:'Seated calf raise',sub:'Soleus \u2014 knee bent',s:'3 \u00d7 15'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var UPPER_A={title:'Upper A',mins:65,ex:[
+  {id:'ohp',n:'Overhead press',s:'4 \u00d7 6\u20138'},
+  {id:'row',n:'Chest-supported row',s:'4 \u00d7 8\u201310'},
+  {id:'dbbench',n:'DB bench press',s:'4 \u00d7 6\u20138'},
+  {id:'pulldown',n:'Lat pulldown',s:'4 \u00d7 8\u201310'},
+  {id:'curl',n:'DB curl',sub:'Superset with the skullcrusher below',s:'2 \u00d7 10\u201312'},
+  {id:'triov',n:'Skullcrusher',s:'2 \u00d7 12\u201315'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+var UPPER_B={title:'Upper B',mins:50,ex:[
+  {id:'dbrow',n:'Single-arm DB row',s:'3 \u00d7 8\u201310'},
+  {id:'incline',n:'Incline DB press',s:'3 \u00d7 8\u201310'},
+  {id:'latraise',n:'DB lateral raise',s:'3 \u00d7 12\u201315'},
+  {id:'hammer',n:'Hammer curl',s:'3 \u00d7 10\u201312'},
+  {id:'pushdown',n:'Cable triceps pushdown',s:'3 \u00d7 12\u201315'},
+  {id:'core',n:'Core superset',sub:'Dead bug \u00b7 Side plank L/R \u00b7 Bird dog \u00b7 SL glute bridge L/R',s:'2 rounds<br>45s each',bw:1}]};
+// Phase-in. \u26a0\ufe0f idx is the 0-BASED array index: week number = idx + 1.
+//   tue + fri -> idx 39 = week 40 (Nov 30)  LOWER_HEAVY / UPPER_A
+//   sun + mon -> idx 40 = week 41 (Dec  7)  LOWER_UNI   / UPPER_B
+// Below each day's start the pre-#17 Tue/Fri behaviour runs untouched, so past weeks
+// still render as they were actually prescribed.
+var STR_V2={
+  tue:{from:39,s:LOWER_HEAVY},
+  fri:{from:39,s:UPPER_A},
+  sun:{from:40,s:LOWER_UNI},
+  mon:{from:40,s:UPPER_B}
+};
 var STRENGTH_PHASES=[
  {from:27,to:28,name:'Foundation',tue:TUE_FOUNDATION,deload:false},
  {from:29,to:29,name:'Volume',tue:TUE_VOLUME,deload:false},
@@ -667,7 +717,15 @@ var STRENGTH_PHASES=[
 ];
 var strDone={},strWeights={};
 function strPhase(idx){for(var i=0;i<STRENGTH_PHASES.length;i++){var p=STRENGTH_PHASES[i];if(idx>=p.from&&idx<=p.to)return p;}return null;}
-function strSession(idx,dk){if(idx<STRENGTH_START)return null;if(dk!=='tue'&&dk!=='fri')return null;var p=strPhase(idx);if(!p)return null;if(dk==='tue')return p.tue;return p.deload?UPPER_DELOAD:UPPER_FULL;}
+function strSession(idx,dk){
+  if(idx<STRENGTH_START)return null;
+  var v=STR_V2[dk];                      // change #17 — V2 wins once the day's start week is reached
+  if(v&&idx>=v.from)return v.s;
+  if(dk!=='tue'&&dk!=='fri')return null; // pre-#17 behaviour below the boundary
+  var p=strPhase(idx);if(!p)return null;
+  if(dk==='tue')return p.tue;
+  return p.deload?UPPER_DELOAD:UPPER_FULL;
+}
 function strIsDone(idx,dk){return !!(strDone[idx]&&strDone[idx][dk]);}
 function toggleStrDone(idx,dk){if(!strDone[idx])strDone[idx]={};if(strDone[idx][dk])delete strDone[idx][dk];else strDone[idx][dk]=true;sSet('strDone',strDone);renderHome();}
 function toggleStrExpand(idx,dk){var el=document.getElementById('sexpand-'+dk);if(!el)return;el.classList.toggle('open');var b=document.getElementById('sbadge-'+dk);if(b)b.classList.toggle('open');}
