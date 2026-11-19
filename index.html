@@ -679,11 +679,19 @@ var UPPER_B={title:'Upper B',mins:50,ex:[
 //   sun + mon -> idx 40 = week 41 (Dec  7)  LOWER_UNI   / UPPER_B
 // Below each day's start the pre-#17 Tue/Fri behaviour runs untouched, so past weeks
 // still render as they were actually prescribed.
+// change #27 (Nov 19) — the two UPPER days pulled forward at Chris's request. ⛔ idx = week − 1.
+//   fri 39 → 37  = UPPER_A from WEEK 38, first session Fri Nov 20 (a swap: Friday already lifts)
+//   mon 40 → 38  = UPPER_B from WEEK 39, first session Mon Nov 23 (genuinely new volume)
+// Smooths the ramp from 2 → 2 → 4 to 2 → 3 → 3 → 4. tue and sun are UNCHANGED, so LOWER_HEAVY
+// still arrives week 40 and LOWER_UNI week 41. Neither new start point is in the past, so #17's
+// "do not let the four-day structure appear retroactively" constraint is not violated.
+// ⚠️ SIDE EFFECT, deliberate: week 39 is a deload week, and V2 short-circuits the phase logic
+// (see #23), so its Friday now renders UPPER_A in full where it would have been UPPER_DELOAD.
 var STR_V2={
   tue:{from:39,s:LOWER_HEAVY},
-  fri:{from:39,s:UPPER_A},
+  fri:{from:37,s:UPPER_A},
   sun:{from:40,s:LOWER_UNI},
-  mon:{from:40,s:UPPER_B}
+  mon:{from:38,s:UPPER_B}
 };
 var STRENGTH_PHASES=[
  {from:27,to:28,name:'Foundation',tue:TUE_FOUNDATION,deload:false},
