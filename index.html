@@ -124,7 +124,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
 .tag.effort.capped{background:var(--green-pale);color:var(--green);border-color:transparent}
 .tag.effort.hard{background:var(--purple-pale);color:var(--purple);border-color:transparent}
 .tag.effort.pace{background:var(--green-pale);color:var(--green);border-color:transparent}
-.day-slot.run-anchor .tag.effort{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.9)}
+/* change #29 (Nov 22 2026) — this rule is for the OUTLINED effort tag only. It is 4 classes and
+   sits last, so it was overriding .capped / .hard / .pace (3 classes each) on colour and border
+   while leaving their backgrounds intact — pale-green fill with near-white text on any run-anchor
+   day, which is what shipped on week 40's Tuesday push card and is unreadable. The :not() chain
+   excludes the three FILLED variants, which carry their own contrast and need no anchor treatment.
+   ⚠️ A new filled .tag.effort variant MUST be added to this chain or it will inherit the same bug. */
+.day-slot.run-anchor .tag.effort:not(.hard):not(.capped):not(.pace){border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.9)}
 .day-slot.completed .tag{opacity:.45}
 .day-run-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
 .day-slot.run-anchor .day-run-label{color:rgba(255,255,255,.6)}
