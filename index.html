@@ -119,9 +119,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--navy);color:var(--cream);
      padding:2.5px 7px;border-radius:5px;white-space:nowrap;line-height:1.35}
 .tag.strides{background:var(--blue-pale);color:var(--blue)}
 .tag.hills{background:var(--amber-pale);color:var(--amber)}
+.tag.push{background:var(--green-pale);color:var(--green)}
 .tag.effort{background:transparent;border:1px solid rgba(255,255,255,.22);color:var(--pale)}
 .tag.effort.capped{background:var(--green-pale);color:var(--green);border-color:transparent}
 .tag.effort.hard{background:var(--purple-pale);color:var(--purple);border-color:transparent}
+.tag.effort.pace{background:var(--green-pale);color:var(--green);border-color:transparent}
 .day-slot.run-anchor .tag.effort{border-color:rgba(255,255,255,.4);color:rgba(255,255,255,.9)}
 .day-slot.completed .tag{opacity:.45}
 .day-run-label{font-size:10px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:1px}
@@ -714,13 +716,36 @@ var STRENGTH_PHASES=[
 ];
 var strDone={},strWeights={};
 function strPhase(idx){for(var i=0;i<STRENGTH_PHASES.length;i++){var p=STRENGTH_PHASES[i];if(idx>=p.from&&idx<=p.to)return p;}return null;}
+// ── V2 DELOAD (change #28, Nov 22 2026) ──
+// CLOSES the open item carried since change #23 and surfaced four times. STR_V2 returns its
+// session BEFORE the phase logic is reached, so strPhase().deload never touched the four
+// change-#17 sessions: a recovery week suppressed strides and hills and then ran Upper B /
+// Lower heavy / Upper A / Lower unilateral at FULL load inside a 24-mile week.
+// POLICY, agreed Nov 22: CUT VOLUME, KEEP INTENSITY. Working sets roughly halve (floor of 2);
+// exercises, rep ranges and loads are untouched. Dropping weight detrains; dropping sets does not.
+// Sessions are KEPT rather than removed because week 43 is the week of Dec 21, and an empty slot
+// in a holiday week is far harder to restart than a short one — attrition is this file's #1
+// documented risk. It also keeps the Whoop rebound test interpretable: four full-load sessions
+// run through a running deload make a failed rebound impossible to attribute.
+// ⚠️ e.id MUST survive the map — the weight history (strWeights / strLastWeight) is keyed on it,
+// and so must e.bw, or bodyweight movements would render a weight input.
+// The floor of 2 means 2-set exercises and the core superset ('2 rounds') pass through unchanged.
+function deloadSets(s){
+  return {title:s.title+' · deload',mins:Math.round(s.mins*0.6),ex:s.ex.map(function(e){
+    return {id:e.id,n:e.n,sub:e.sub,bw:e.bw,
+      s:(''+e.s).replace(/^(\d+)/,function(m,n){var h=Math.ceil(parseInt(n,10)/2);return h<2?2:h;})};
+  })};
+}
 function strSession(idx,dk){
   if(idx<STRENGTH_START)return null;
   var v=STR_V2[dk];                      // change #17 — V2 wins once the day's start week is reached
   // change #25 — Sunday drops the box jump in any week carrying a hill session. Hills and box
   // jumps are the same stimulus (explosive / elastic); running both is three calf-and-Achilles
   // loadings in one week alongside Tuesday's heavy bilateral. The single-leg calf raise STAYS.
-  if(v&&idx>=v.from)return (dk==='sun')?lowerUniFor(idx):v.s;
+  if(v&&idx>=v.from){                    // change #28 — the deload flag now reaches the V2 sessions
+    var vs=(dk==='sun')?lowerUniFor(idx):v.s, vp=strPhase(idx);
+    return (vp&&vp.deload)?deloadSets(vs):vs;
+  }
   if(dk!=='tue'&&dk!=='fri')return null; // pre-#17 behaviour below the boundary
   var p=strPhase(idx);if(!p)return null;
   if(dk==='tue')return p.tue;
@@ -1005,16 +1030,42 @@ function strideN(idx,dk){
   return idx<=39?4:6;                             // wks 38 & 40: 4 · wk 41 onward: 6
 }
 
-// ── HILLS (change #24, Nov 16 2026) ──
-// Thursday quality session for the December block. Same 0-BASED idx convention as everything else.
-// idx 40..43  =>  weeks 41..44.  idx 41 IS week 42, which is the 8-rep week.
-// strPhase().deload clears week 43 automatically, exactly as it does for strides.
-var HILL_START=40,HILL_END=43;
+// ── HILLS (change #24, Nov 16 2026 · AMENDED change #28, Nov 22 2026) ──
+// Thursday quality session. Same 0-BASED idx convention as everything else.
+// ⚠️ AMENDMENT (#28): QUALITY WORK NOW ALTERNATES — a Tuesday push run and a Thursday hill session
+// never fall in the same week. Stacking them gave three hard days (Tue + Thu + a 14–15 mi Saturday)
+// inside a 35-mile DESCENT week, with attrition the documented #1 risk. Chris's own proposal from
+// Nov 19, applied a month early.
+// Cost: idx 41 (week 42) loses its Thursday hills to a Tuesday push, so #24's 6 → 8 → deload → 6
+// progression loses its 8-rep peak. Chris chose to hold BOTH surviving sessions at 6 rather than
+// move the 8 to week 44, whose Thursday is only 4 miles. Hills hold through December and progress
+// in January.
+// The old HILL_START/HILL_END range is replaced by an explicit map — alternation is not a range.
+var HILL_WEEKS={40:6,43:6};                       // idx 40 => wk 41 · idx 43 => wk 44
 function hillN(idx,dk){
   if(dk!=='thu')return 0;
-  if(idx<HILL_START||idx>HILL_END)return 0;
-  var p=strPhase(idx); if(p&&p.deload)return 0;   // wk 43 recovery: no hills
-  return idx===41?8:6;                            // wk 42: 8 reps · wks 41 & 44: 6
+  var n=HILL_WEEKS[idx]; if(!n)return 0;
+  var p=strPhase(idx); if(p&&p.deload)return 0;   // belt and braces — idx 42 is not in the map anyway
+  return n;
+}
+
+// ── PUSH RUNS (change #28, Nov 22 2026) ──
+// Tuesday quality session. Alternates with Thursday hills — never the same week.
+// Chris's effort vocabulary, established Nov 21 (`EFFORTS.md`): Base 10:05–10:20 (RPE 5–6) ·
+// Push 9:15–9:30 (RPE 6–7). Push was measured ONCE — 9:24 for 4 mi from mile 11 of a 16 — so the
+// band is a working range, not a target. If a Tuesday push comes back at RPE 4–5 it is soft and moves.
+// Structure is base / push / base in ONE CONTINUOUS run. Continuous, not reps: the point is learning
+// what the gear feels like once it settles, which intervals hide. Lap at both transitions so the
+// Monday pull reads the three segments separately.
+// ⚠️ 0-BASED idx. idx 39 => week 40 (2 push mi) · idx 41 => week 42 (3 push mi).
+// Week 40 opens at 2 rather than 3 because LOWER_HEAVY debuts that same Tuesday — front-rack squats
+// 4×6–8 is a new movement and first-time soreness peaks 24–48 h later. Week 40 is the ONLY week in
+// the block whose Wed and Thu are both easy, which is why the strength debut stays there.
+var PUSH_WEEKS={39:{warm:2,push:2,cool:4},41:{warm:2,push:3,cool:3}};
+function pushBlock(idx,dk){
+  if(dk!=='tue')return null;
+  var p=strPhase(idx); if(p&&p.deload)return null; // recovery weeks get no quality work
+  return PUSH_WEEKS[idx]||null;
 }
 
 // ── EFFORT (change #26, Nov 16 2026) ──
@@ -1030,12 +1081,24 @@ function effortText(idx){
 // ── THE TAG ROW (change #26) ──
 // Session tags say WHAT, the effort tag says HOW HARD. Previously strides were appended straight
 // onto the distance string; three facts on that line wrap badly and bury the number.
+// change #28 — the push block joins the row. The effort tag is a SLOT, not a stack: a day with its
+// own effort instruction replaces December's standing "Record HR · no cap" rather than adding to it,
+// exactly as the hill day already did. Max two tags on any day, which is what the #26 wrap test
+// measured at 320px and 375px.
 function buildTagRow(idx,dk,dist){
   if(dist==='RACE')return '';
-  var t='',h=hillN(idx,dk),s=strideN(idx,dk);
+  var t='',h=hillN(idx,dk),s=strideN(idx,dk),pb=pushBlock(idx,dk);
   if(h)t+='<span class="tag hills">'+h+' × 45s hills</span>';
+  if(pb)t+='<span class="tag push">'+pb.warm+' · '+pb.push+' push · '+pb.cool+'</span>';
   if(s)t+='<span class="tag strides">'+s+' × 20s strides</span>';
   if(h){t+='<span class="tag effort hard">5K effort</span>';}
+  // ⚠️ KEPT SHORT DELIBERATELY. The #28 wrap measurement could only be taken with DM Mono
+  // UNLOADED (the test environment has no network to Google Fonts), so every width came from a
+  // fallback monospace and is not trustworthy. '9:15–9:30 · RPE 6–7' measured at 100% of the
+  // available row — zero margin on a number that may itself be wrong. The pace is the executable
+  // instruction; the RPE band lives in EFFORTS.md and is logged AFTER the run, not read off the
+  // card during it. If this is ever re-measured with the real font loaded, it can grow back.
+  else if(pb){t+='<span class="tag effort pace">9:15–9:30</span>';}
   else{var e=effortText(idx);if(e)t+='<span class="tag effort">'+e+'</span>';}
   return t?'<div class="tag-row">'+t+'</div>':'';
 }
