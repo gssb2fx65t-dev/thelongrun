@@ -499,9 +499,28 @@ var WEEKS=[
   // change #22 (Nov 16) — weeks 40-44 rebuilt. The rows below had held the retired Water Gap 50k
   // descent (34.5/31.5/28.5/25/23). Replaced by the December plan: hold 36/35/36, recover at 24,
   // open the trough at 28. Long runs 14/14/15/10/11 — floor of 11 per 2027_PLAN.md.
-  {n:40,date:"Nov 30",type:"maintain",label:"DESCENT",days:{mon:null,tue:8,wed:5,thu:5,fri:null,sat:14,sun:4},total:36},
-  {n:41,date:"Dec 7",type:"maintain",label:"DESCENT",days:{mon:null,tue:8,wed:5,thu:5,fri:null,sat:14,sun:3},total:35},
-  {n:42,date:"Dec 14",type:"maintain",label:"DESCENT",days:{mon:null,tue:8,wed:5,thu:5,fri:null,sat:15,sun:3},total:36},
+  // ── change #30 (Nov 23 2026) — DESCENT 36/35/36 becomes CONVERSION 38/38/38 ──
+  // The December fork in `2027_PLAN.md` Phase 0 was pre-registered for decision "~Nov 23, on week
+  // 38's data", with Path A (hold, then drop) as DEFAULT and Path B taken only "if week 38 shows
+  // HRV falling and RHR rising together". Week 38 did the opposite — HRV z +0.85, RHR z −0.68, the
+  // best autonomic week on file — so the trigger was missed in the favourable direction and Path A
+  // stands. (Path B's numbers were the retired Water Gap 50k descent, already removed by #22.)
+  // The 36/35/36 these rows carried was a hedge loaded while the fork was still open; it was never
+  // chosen over Path A.
+  // ⚠️ VOLUME IS NOT THE STORY HERE, which is why the label changed. Running holds ~2 mi below the
+  // wk38 peak while strength goes 2 → 4 sessions (+108 min/wk) and quality running starts. TOTAL
+  // load RISES. "DESCENT" described only the running column and read as though the block were easy.
+  // `type` moves maintain → build for the same reason; it is cosmetic (identical badge render) and
+  // leaves wk44 as the sole `maintain` user until the Dec 21 decision.
+  // Day shape is Chris's: Tue 9→8, Thu 5→6, so Tuesday stops being the biggest day of the week
+  // (8 mi + 50 min heavy lower ≈ 132 min vs Saturday's ~155) and the wk41 hill block gets a real
+  // warmup and cooldown around it inside a 6-miler instead of a 5.
+  // ✅ PUSH_WEEKS needed NO change — 2+2+4 and 2+3+3 already sum to an 8-mile Tuesday.
+  // ⬜ wk40 is FIRM. wk41–42 are PROVISIONAL, reviewed at the Dec 7 pull: wk41 is the first
+  // four-session strength week ever, and nothing in the record speaks to it.
+  {n:40,date:"Nov 30",type:"build",label:"CONVERSION",days:{mon:null,tue:8,wed:5,thu:6,fri:null,sat:15,sun:4},total:38},
+  {n:41,date:"Dec 7",type:"build",label:"CONVERSION",days:{mon:null,tue:8,wed:5,thu:6,fri:null,sat:15,sun:4},total:38},
+  {n:42,date:"Dec 14",type:"build",label:"CONVERSION",days:{mon:null,tue:8,wed:5,thu:6,fri:null,sat:15,sun:4},total:38},
   {n:43,date:"Dec 21",type:"recover",label:"RECOVERY",days:{mon:null,tue:5,wed:4,thu:3,fri:null,sat:10,sun:2},total:24},
   {n:44,date:"Dec 28",type:"maintain",label:"TROUGH OPENS",days:{mon:null,tue:6,wed:4,thu:4,fri:null,sat:11,sun:3},total:28},
   {n:45,date:"Jan 4",type:"reset",label:"TBD",days:{mon:null,tue:null,wed:null,thu:null,fri:null,sat:null,sun:null},total:0},
